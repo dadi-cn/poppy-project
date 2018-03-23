@@ -1,0 +1,97 @@
+{
+	"name": "laravel/laravel",
+	"description": "The Laravel Framework.",
+	"keywords": [
+		"framework",
+		"laravel"
+	],
+	"license": "MIT",
+	"type": "project",
+	"require": {
+		"php": ">=7.0",
+		"laravel/framework": "5.5.*",
+		"intervention/image": "2.*",
+		"laravel/tinker": "~1.0",
+		"laravelcollective/html": "5.5.*",
+		"mews/purifier": "~2.0",
+		"mews/captcha": "~2.0",
+		"nesbot/carbon": "~1.21",
+		"predis/predis": "~1.1",
+		"doctrine/dbal": "^2.5",
+		"guzzlehttp/guzzle": "6.*",
+		"php-curl-class/php-curl-class": "~4.8",
+		"maatwebsite/excel": "~2.1",
+		"tymon/jwt-auth": "1.0.*@dev",
+		"jenssegers/date": "^3.2",
+		"webonyx/graphql-php": "0.11.*",
+		"tucker-eric/eloquentfilter": "^1.2",
+		"socialiteproviders/manager": "~3.3",
+		"gregwar/captcha": "^1.1",
+		"laracomponents/centrifuge-broadcaster": "^1.0",
+		"sabberworm/php-css-parser": "*",
+		"overtrue/phplint": "^1.0",
+		"poppy/framework": "dev-master",
+		"symfony/var-dumper" : "3.3.16",
+		"poppy/ext-ip_store": "dev-master"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~6.0",
+		"itsgoingd/clockwork": "~2.2",
+		"barryvdh/laravel-ide-helper": "~2.4",
+		"fzaninotto/faker": "~1.7",
+		"phpspec/phpspec": "^4.3"
+	},
+	"autoload": {
+		"classmap": [
+		],
+		"psr-4": {
+			"System\\": "modules/system/src/",
+			"User\\": "modules/user/src/"
+		}
+	},
+	"autoload-dev": {
+		"classmap": [
+		],
+		"psr-4": {
+			"Poppy\\Extension\\IpStore\\": "extensions/ext-ip_store/src"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"dont-discover": []
+		}
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"php artisan clear-compiled",
+			"php artisan ide-helper:generate"
+		],
+		"pre-update-cmd": [
+		],
+		"post-update-cmd": [
+			"php artisan clear-compiled",
+			"php artisan ide-helper:generate",
+			"php artisan ide-helper:meta"
+		],
+		"post-root-package-install": [
+			"php -r \"copy('.env.example', '.env');\""
+		],
+		"post-create-project-cmd": [
+			"php -r \"copy('.env.example', '.env');\"",
+			"php artisan key:generate"
+		]
+	},
+	"config": {
+		"preferred-install": "dist"
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://packagist.laravel-china.org"
+		},
+		{
+			"packagist": false
+		}
+	],
+	"prefer-stable": true
+}

@@ -1,0 +1,9 @@
+path: ./
+jobs: 10
+cache: storage/phplint/phplint.cache
+extensions:
+  - php
+exclude:
+  - vendor
+  - public
+  - resources
