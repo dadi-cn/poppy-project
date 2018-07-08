@@ -57,6 +57,13 @@ return [
 			],
 		],
 
+		'autosize' => [
+			'js' => [
+				'main' => 'dist/autosize.js',
+				'aim'  => 'autosize/{VERSION}/autosize.js',
+			],
+		],
+
 		'bootstrap' => [
 			'js'   => [
 				'main' => 'dist/js/bootstrap.js',
@@ -71,12 +78,31 @@ return [
 			'key'  => 'bt3',
 		],
 
+		'bootstrap4' => [
+			'js'   => [
+				'main' => 'dist/js/bootstrap.js',
+				'aim'  => 'bt4/{VERSION}/bootstrap.js',
+			],
+			'css'  => [
+				'dist/css/bootstrap.css'        => 'bt4/{VERSION}/css/bootstrap.css',
+				'dist/css/bootstrap-grid.css'   => 'bt4/{VERSION}/css/bootstrap-grid.css',
+				'dist/css/bootstrap-reboot.css' => 'bt4/{VERSION}/css/bootstrap-reboot.css',
+			],
+			'shim' => ['jquery'],
+			'key'  => 'bt4',
+		],
+
 		'bootstrap-hover-dropdown' => [
 			'js'   => [
 				'aim' => 'bt3/hover-dropdown/{VERSION}/bt3.hover-dropdown.js',
 			],
 			'shim' => ['jquery', 'bt3'],
 			'key'  => 'bt3.hover-dropdown',
+		],
+		'bootstrap-sass' => [
+			'css' => [
+				'assets/stylesheets/*' => 'bt3/{VERSION}/scss/',
+			],
 		],
 		'bootstrap-validator'      => [
 			'js'   => [
@@ -93,6 +119,20 @@ return [
 		'clipboard'                => [
 			'js' => [
 				'aim' => 'clipboard/{VERSION}/clipboard.min.js',
+			],
+		],
+
+		'codemirror' => [
+			'js'  => [
+				'main'    => 'lib/codemirror.js',
+				'aim'     => 'codemirror/{VERSION}/lib/codemirror.js',
+				'dispose' => [
+					'addon/*' => 'codemirror/{VERSION}/addon/',
+					'mode/*'  => 'codemirror/{VERSION}/mode/',
+				],
+			],
+			'css' => [
+				'lib/codemirror.css' => 'codemirror/codemirror.css',
 			],
 		],
 
@@ -127,9 +167,25 @@ return [
 			'shim' => ['jquery'],
 		],
 
+		'highlight' => [
+			'js'   => [
+				'main'    => 'src/highlight.js',
+				'aim'     => 'highlight/{VERSION}/highlight.js',
+				'dispose' => [
+					'src/languages/*' => 'highlight/{VERSION}/languages/',
+				],
+			],
+			'css'  => [
+				'src/styles/*' => 'highlight/',
+			],
+			'shim' => [
+				'exports' => 'hljs',
+			],
+		],
+
 		'jquery' => [
 			'js' => [
-				'main' => 'jquery.min.js',
+				'main' => 'dist/jquery.min.js',
 				'aim'  => 'jquery/{VERSION}/jquery.min.js',
 			],
 		],
@@ -141,6 +197,20 @@ return [
 			],
 			'css'  => [
 				'src/theme/*' => 'jquery/layer/',
+			],
+			'key'  => 'jquery.layer',
+			'shim' => ['jquery'],
+		],
+
+		'layui' => [
+			'js'   => [
+				'main' => 'dist/layui.all.js',
+				'aim'  => 'layui/{VERSION}/layui.all.js',
+			],
+			'css'  => [
+				'dist/css/*'    => 'layui/css/',
+				'dist/font/*'   => 'layui/font/',
+				'dist/images/*' => 'layui/images/',
 			],
 			'key'  => 'jquery.layer',
 			'shim' => ['jquery'],
@@ -162,7 +232,21 @@ return [
 				'aim' => 'sockjs/{VERSION}/sockjs.js',
 			],
 		],
-
+		'inline-attachment' => [
+			'js'   => [
+				'main'    => 'src/inline-attachment.js',
+				'aim'     => 'inline-attachment/{VERSION}/inline-attachment.js',
+				'dispose' => [
+					'src/codemirror.inline-attachment.js' => 'inline-attachment/{VERSION}/codemirror.inline-attachment.js',
+				],
+				'config'  => [
+					'inline-attachment.codemirror' => '/codemirror.inline-attachment',
+				],
+			],
+			'shim' => [
+				'exports' => 'inlineAttachment',
+			],
+		],
 		'toastr' => [
 			'js'   => [
 				'main' => 'toastr.min.js',
@@ -231,12 +315,44 @@ return [
 			],
 		],
 
-		'smooth-scroll' => [
+		'requirejs' => [
 			'js'  => [
+				'main' => 'require.js',
+				'aim'  => 'requirejs/require.js',
+			],
+			'key' => 'requirejs',
+		],
+
+		'smooth-scroll' => [
+			'js' => [
 				'main' => 'smooth-scroll.js',
 				'aim'  => 'smooth-scroll/{VERSION}/smooth-scroll.js',
 			],
-			'key' => 'smooth-scroll',
+		],
+		'simplemde'     => [
+			'js'   => [
+				'main' => 'dist/simplemde.min.js',
+				'aim'  => 'simplemde/{VERSION}/simplemde.min.js',
+			],
+			'css'  => [
+				'dist/simplemde.min.css' => 'simplemde/simplemde.css',
+			],
+			'shim' => [
+				'exports' => 'SimpleMDE',
+			],
+		],
+
+		'sockjs' => [
+			'js' => [
+				'aim' => 'sockjs/{VERSION}/sockjs.js',
+			],
+		],
+
+		'underscore' => [
+			'js' => [
+				'main' => 'underscore.js',
+				'aim'  => 'underscore/{VERSION}/underscore.js',
+			],
 		],
 
 		'vkBeautify' => [
@@ -247,6 +363,13 @@ return [
 			'key'  => 'vkbeautify',
 			'shim' => [
 				'exports' => 'vkbeautify',
+			],
+		],
+
+		'markdown-it' => [
+			'js' => [
+				'main' => 'dist/markdown-it.js',
+				'aim'  => 'markdown-it/{VERSION}/markdown-it.js',
 			],
 		],
 
@@ -261,12 +384,20 @@ return [
 			'key' => 'jquery.metis-menu',
 		],
 
-		'requirejs' => [
-			'js'  => [
-				'main' => 'require.js',
-				'aim'  => 'requirejs/require.js',
+		'vue' => [
+			'js' => [
+				'main' => 'dist/vue.min.js',
+				'aim'  => 'vue/{VERSION}/vue.min.js',
 			],
-			'key' => 'requirejs',
+		],
+
+		'wow' => [
+			'js'   => [
+				'aim' => 'wow/{VERSION}/wow.min.js',
+			],
+			'shim' => [
+				'exports' => 'WOW',
+			],
 		],
 
 		'PACE' => [
@@ -291,6 +422,13 @@ return [
 				'main' => 'dist/vue.min.js',
 				'aim'  => 'vue/{VERSION}/vue.min.js',
 			],
+		],
+		'popper.js' => [
+			'js'  => [
+				'main' => 'dist/umd/popper.min.js',
+				'aim'  => 'popper/{VERSION}/popper.min.js',
+			],
+			'key' => 'popper',
 		],
 
 	],

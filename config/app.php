@@ -81,6 +81,7 @@ return [
 
 	'key' => env('APP_KEY', 'SomeRandomString'),
 
+
 	'cipher' => 'AES-256-CBC',
 
 	/*
@@ -137,7 +138,6 @@ return [
 		Illuminate\Broadcasting\BroadcastServiceProvider::class,
 
 		Poppy\Framework\FrameworkServiceProvider::class,
-		Poppy\Extension\IpStore\ExtensionServiceProvider::class
 	],
 
 	/*
@@ -173,6 +173,7 @@ return [
 		'Log'          => Illuminate\Support\Facades\Log::class,
 		'Mail'         => Illuminate\Support\Facades\Mail::class,
 		'Password'     => Illuminate\Support\Facades\Password::class,
+		'Notification' => Illuminate\Support\Facades\Notification::class,
 		'Queue'        => Illuminate\Support\Facades\Queue::class,
 		'Redirect'     => Illuminate\Support\Facades\Redirect::class,
 		'Redis'        => Illuminate\Support\Facades\Redis::class,
@@ -184,8 +185,6 @@ return [
 		'Url'          => Illuminate\Support\Facades\URL::class,
 		'Validator'    => Illuminate\Support\Facades\Validator::class,
 		'View'         => Illuminate\Support\Facades\View::class,
-		'Notification' => Illuminate\Support\Facades\Notification::class,
-		// 'Socialite'  => Laravel\Socialite\Facades\Socialite::class,
 	],
 
 	'cookie_prefix' => env('COOKIE_PREFIX') ?: '',
