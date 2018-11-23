@@ -50,8 +50,6 @@ Thumbs.db
 ################
 .sass-cache
 /storage/framework/*.php
-/vendor
-!/vendor/.gitkeep
 /node_modules
 .env
 composer.lock
