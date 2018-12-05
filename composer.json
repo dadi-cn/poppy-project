@@ -9,6 +9,8 @@
 	"type" : "project",
 	"require" : {
 		"php" : ">=7.0",
+		"ext-json" : "*",
+		"ext-simplexml" : "*",
 		"laravel/framework" : "5.5.*",
 		"intervention/image" : "2.*",
 		"laravel/tinker" : "~1.0",
@@ -28,10 +30,11 @@
 		"overtrue/phplint" : "^1.0",
 		"poppy/framework" : "dev-master",
 		"symfony/var-dumper" : "3.3.16",
+		"hieu-le/active" : "^3.5"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "~6.0",
-		"itsgoingd/clockwork" : "~2.2",
+		"itsgoingd/clockwork" : "~3.0",
 		"barryvdh/laravel-ide-helper" : "~2.4",
 		"fzaninotto/faker" : "~1.7",
 		"phpspec/phpspec" : "^4.3"
@@ -50,7 +53,9 @@
 	},
 	"extra" : {
 		"laravel" : {
-			"dont-discover" : []
+			"dont-discover" : [
+				"laravelcollective/html"
+			]
 		}
 	},
 	"scripts" : {

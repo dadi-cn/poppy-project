@@ -138,6 +138,7 @@ return [
 		Illuminate\Broadcasting\BroadcastServiceProvider::class,
 
 		Poppy\Framework\FrameworkServiceProvider::class,
+		Collective\Html\HtmlServiceProvider::class,
 	],
 
 	/*
