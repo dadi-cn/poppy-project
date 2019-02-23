@@ -63,11 +63,7 @@ return [
 	*/
 
 	'model_locations' => [
-		'modules/order/src/models',
-		'modules/slt/src/models',
 		'modules/system/src/models',
-		'modules/user/src/models',
-		'modules/util/src/models',
 	],
 
 	/*

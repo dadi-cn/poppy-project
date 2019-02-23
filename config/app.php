@@ -136,9 +136,12 @@ return [
 		Illuminate\Validation\ValidationServiceProvider::class,
 		Illuminate\View\ViewServiceProvider::class,
 		Illuminate\Broadcasting\BroadcastServiceProvider::class,
+		Illuminate\Notifications\NotificationServiceProvider::class,
 
 		Poppy\Framework\FrameworkServiceProvider::class,
-		Collective\Html\HtmlServiceProvider::class,
+		Intervention\Image\ImageServiceProvider::class,
+		Maatwebsite\Excel\ExcelServiceProvider::class,
+		Collective\Html\HtmlServiceProvider::class,                                  // Form
 	],
 
 	/*
@@ -174,7 +177,6 @@ return [
 		'Log'          => Illuminate\Support\Facades\Log::class,
 		'Mail'         => Illuminate\Support\Facades\Mail::class,
 		'Password'     => Illuminate\Support\Facades\Password::class,
-		'Notification' => Illuminate\Support\Facades\Notification::class,
 		'Queue'        => Illuminate\Support\Facades\Queue::class,
 		'Redirect'     => Illuminate\Support\Facades\Redirect::class,
 		'Redis'        => Illuminate\Support\Facades\Redis::class,
@@ -186,6 +188,11 @@ return [
 		'Url'          => Illuminate\Support\Facades\URL::class,
 		'Validator'    => Illuminate\Support\Facades\Validator::class,
 		'View'         => Illuminate\Support\Facades\View::class,
+		'Notification' => Illuminate\Support\Facades\Notification::class,
+		'Html'    => Collective\Html\HtmlFacade::class,
+		'Form'    => System\Classes\Facade\FormFacade::class,
+		'Backend' => System\Backend\Facades\Backend::class,
+		'Image'   => Intervention\Image\Facades\Image::class,
 	],
 
 	'cookie_prefix' => env('COOKIE_PREFIX') ?: '',

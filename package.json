@@ -9,10 +9,9 @@
 	"devDependencies" : {
 		"browser-sync" : "^2.26.3",
 		"browser-sync-webpack-plugin" : "~2.2",
-		"cross-env" : "^5.0.1",
-		"laravel-mix" : "~3.0"
+		"cross-env": "^5.2",
+		"laravel-mix" : "~4.0"
 	},
-	"dependencies": {},
 	"apidoc": {
 		"title": "接口文档",
 		"url": "http://{api.domain.com}/"

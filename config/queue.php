@@ -37,7 +37,7 @@ return [
 
 		'database' => [
 			'driver' => 'database',
-			'table'  => 'l5_job',
+			'table'  => 'sys_job',
 			'queue'  => 'default',
 			'expire' => 60,
 		],
@@ -69,7 +69,7 @@ return [
 		'redis' => [
 			'driver'     => 'redis',
 			'connection' => 'default',
-			'queue'      => env('QUEUE_NAME', 'dailian'),
+			'queue'      => env('QUEUE_NAME', 'poppy'),
 			'expire'     => 60,
 		],
 
@@ -88,7 +88,7 @@ return [
 
 	'failed' => [
 		'database' => 'mysql',
-		'table'    => 'l5_failed_jobs',
+		'table'    => 'sys_failed_jobs',
 	],
 
 ];

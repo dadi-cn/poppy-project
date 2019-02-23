@@ -12,7 +12,7 @@
 
 
 $app = new Poppy\Framework\Foundation\Application(
-	realpath(__DIR__ . '/../../')
+	realpath(dirname(__DIR__, 2) . '/')
 );
 
 /*

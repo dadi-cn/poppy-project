@@ -1,26 +1,29 @@
 @if ($paginator->hasPages())
-    <ul class="pagination">
+    <div class="layui-laypage layui-laypage-default">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
-            <li class="disabled"><span>&laquo;</span></li>
+            <a class="layui-laypage-prev layui-disabled">&laquo;</a>
         @else
-            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a></li>
+            <a class="layui-laypage-prev" href="{{ $paginator->previousPageUrl() }}">&laquo;</a>
         @endif
 
         {{-- Pagination Elements --}}
         @foreach ($elements as $element)
             {{-- "Three Dots" Separator --}}
             @if (is_string($element))
-                <li class="disabled"><span>{{ $element }}</span></li>
+                <a class="layui-laypage-spr">{{ $element }}</a>
             @endif
 
             {{-- Array Of Links --}}
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li class="active"><span>{{ $page }}</span></li>
+                        <a class="layui-laypage-curr">
+                            <em class="layui-laypage-em"></em>
+                            <em>{{ $page }}</em>
+                        </a>
                     @else
-                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                        <a href="{{ $url }}">{{ $page }}</a>
                     @endif
                 @endforeach
             @endif
@@ -28,9 +31,9 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a></li>
+            <a class="layui-laypage-next" href="{{ $paginator->nextPageUrl() }}">&raquo;</a>
         @else
-            <li class="disabled"><span>&raquo;</span></li>
+            <a class="layui-laypage-next layui-disabled">&raquo;</a>
         @endif
-    </ul>
+    </div>
 @endif
