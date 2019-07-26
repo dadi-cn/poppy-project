@@ -88,7 +88,7 @@ return [
 		'pam_develop' => [
 			'driver' => 'pam.develop',
 		],
-		'pam' => [
+		'pam'         => [
 			'driver' => 'pam',
 		],
 	],

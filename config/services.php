@@ -1,6 +1,7 @@
 <?php
 
 return [
+
 	/*
 	|--------------------------------------------------------------------------
 	| Third Party Services
@@ -27,34 +28,19 @@ return [
 		'secret' => '',
 		'region' => 'us-east-1',
 	],
-
 	'stripe'    => [
 		'model'  => 'User',
 		'secret' => '',
 	],
-
 	'sendcloud' => [
 		'api_user'     => '',
 		'api_key'      => '',
 		'from_address' => '',
 		'from_name'    => '',
 	],
-
 	'qq'        => [
 		'client_id'     => env('QQ_KEY'),
 		'client_secret' => env('QQ_SECRET'),
 		'redirect'      => env('URL_SITE') . '/' . env('QQ_REDIRECT_URI'),
-	],
-
-	'qq_mobile' => [
-		'client_id'     => '',
-		'client_secret' => '',
-		'redirect'      => '',
-	],
-
-	'weixin'    => [
-		'client_id'     => env('WEIXIN_KEY'),
-		'client_secret' => env('WEIXIN_SECRET'),
-		'redirect'      => env('WEIXIN_REDIRECT_URI'),
 	],
 ];

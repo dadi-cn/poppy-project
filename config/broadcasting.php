@@ -35,10 +35,10 @@ return [
 			'app_id' => env('PUSHER_APP_ID'),
 		],
 
-        'redis' => [
-            'driver' => 'redis',
-            'connection' => 'default',
-        ],
+		'redis' => [
+			'driver'     => 'redis',
+			'connection' => 'default',
+		],
 
 		'log' => [
 			'driver' => 'log',

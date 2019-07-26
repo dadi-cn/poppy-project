@@ -70,6 +70,14 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
+	| Application Faker Locale
+	|--------------------------------------------------------------------------
+	|
+	*/
+	'faker_locale'    => 'zh_CN',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Encryption Key
 	|--------------------------------------------------------------------------
 	|
@@ -80,7 +88,6 @@ return [
 	*/
 
 	'key' => env('APP_KEY', 'SomeRandomString'),
-
 
 	'cipher' => 'AES-256-CBC',
 
@@ -137,11 +144,10 @@ return [
 		Illuminate\View\ViewServiceProvider::class,
 		Illuminate\Broadcasting\BroadcastServiceProvider::class,
 		Illuminate\Notifications\NotificationServiceProvider::class,
-
-		Poppy\Framework\FrameworkServiceProvider::class,
-		Intervention\Image\ImageServiceProvider::class,
-		Maatwebsite\Excel\ExcelServiceProvider::class,
+		
+		// project
 		Collective\Html\HtmlServiceProvider::class,                                  // Form
+		Poppy\Framework\FrameworkServiceProvider::class,	
 	],
 
 	/*
@@ -177,6 +183,7 @@ return [
 		'Log'          => Illuminate\Support\Facades\Log::class,
 		'Mail'         => Illuminate\Support\Facades\Mail::class,
 		'Password'     => Illuminate\Support\Facades\Password::class,
+		'Notification' => Illuminate\Support\Facades\Notification::class,
 		'Queue'        => Illuminate\Support\Facades\Queue::class,
 		'Redirect'     => Illuminate\Support\Facades\Redirect::class,
 		'Redis'        => Illuminate\Support\Facades\Redis::class,
@@ -188,10 +195,10 @@ return [
 		'Url'          => Illuminate\Support\Facades\URL::class,
 		'Validator'    => Illuminate\Support\Facades\Validator::class,
 		'View'         => Illuminate\Support\Facades\View::class,
-		'Notification' => Illuminate\Support\Facades\Notification::class,
+
 		'Html'    => Collective\Html\HtmlFacade::class,
 		'Form'    => System\Classes\Facade\FormFacade::class,
-		'Backend' => System\Backend\Facades\Backend::class,
+
 		'Image'   => Intervention\Image\Facades\Image::class,
 	],
 

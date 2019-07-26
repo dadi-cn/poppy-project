@@ -50,6 +50,9 @@ Thumbs.db
 ################
 .sass-cache
 /storage/framework/*.php
+/public/uploads/*
+/public/dev/*
+!/public/uploads/.gitkeep
 /node_modules
 .env
 composer.lock
@@ -58,3 +61,4 @@ yarn.lock
 _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
+/storage/clockwork/index
