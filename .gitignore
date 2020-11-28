@@ -49,6 +49,7 @@ Thumbs.db
 # Project User #
 ################
 .sass-cache
+/vendor
 /storage/framework/*.php
 /public/uploads/*
 /public/dev/*

@@ -35,30 +35,6 @@ return [
 	*/
 
 	'guards' => [
-		'web'         => [
-			'driver'   => 'session',
-			'provider' => 'pam_web',
-		],
-		'backend'     => [
-			'driver'   => 'session',
-			'provider' => 'pam_backend',
-		],
-		'develop'     => [
-			'driver'   => 'session',
-			'provider' => 'pam_develop',
-		],
-		'jwt_backend' => [
-			'driver'   => 'jwt',
-			'provider' => 'pam_backend',
-		],
-		'jwt_web'     => [
-			'driver'   => 'jwt',
-			'provider' => 'pam_web',
-		],
-		'jwt'         => [
-			'driver'   => 'jwt',
-			'provider' => 'pam',
-		],
 	],
 
 	/*
@@ -78,19 +54,6 @@ return [
 	|
 	*/
 
-	'providers' => [
-		'pam_backend' => [
-			'driver' => 'pam.backend',
-		],
-		'pam_web'     => [
-			'driver' => 'pam.web',
-		],
-		'pam_develop' => [
-			'driver' => 'pam.develop',
-		],
-		'pam'         => [
-			'driver' => 'pam',
-		],
-	],
+	'providers' => [],
 
 ];
