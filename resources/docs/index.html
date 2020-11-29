@@ -10,11 +10,11 @@
 </head>
 <body>
 <nav>
-	<a href="#/readme.md">readme</a>
-	<a href="#/framework/">框架</a>
-	<a href="#/module/">模块</a>
-	<a href="#/core/">核心</a>
-	<a href="#/system/">系统</a>
+	<a href="#/readme">readme</a>
+	<a href="#/framework/readme">框架</a>
+	<a href="#/module/readme">模块</a>
+	<a href="#/core/readme">核心</a>
+	<a href="#/system/readme">系统</a>
 </nav>
 <div id="app"></div>
 <script>
@@ -27,9 +27,6 @@ window.$docsify = {
 	name        : '',
 	repo        : ''
 };
-if (typeof navigator.serviceWorker !== 'undefined') {
-	navigator.serviceWorker.register('sw.js')
-}
 </script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
 </body>

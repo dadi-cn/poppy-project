@@ -14,3 +14,9 @@
 
 文档使用 `php -S 0.0.0.0:8848 -t resources/docs` 内建服务器运行
 
+**推送到 github pages**
+
+```
+$ git subtree push --prefix=resources/docs origin gh-pages
+```
+
