@@ -119,19 +119,4 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 
         return storage_path('logs/console-' . $day . '.log');
     }
-
-    protected function mergeConfigFrom($path, $key)
-    {
-        if (!$this->app->configurationIsCached()) {
-
-
-            $this->app['config']->set($key, array_merge(
-                require $path, $this->app['config']->get($key, [])
-            ));
-            if ($key === 'poppy') {
-                dump(require $path);
-                dump($this->app['config']->get($key, []));
-            }
-        }
-    }
 }

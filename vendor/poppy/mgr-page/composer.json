@@ -19,13 +19,6 @@
 			"Poppy\\MgrPage\\Tests\\": "tests/"
 		}
 	},
-	"extra": {
-		"laravel": {
-			"aliases": {
-				"PyForm": "Poppy\\MgrPage\\Facade\\FormFacade"
-			}
-		}
-	},
 	"config": {
 		"preferred-install": "dist"
 	},

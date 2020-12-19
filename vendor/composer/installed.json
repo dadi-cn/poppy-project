@@ -3044,27 +3044,20 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/core.git",
-            "reference": "90584fa4f0a8fc428637c265b20a344db4de48fb"
+            "reference": "08f96208365e93552ce1e00c89186e20657ed0fa"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-082485.zip",
-            "reference": "90584fa4f0a8fc428637c265b20a344db4de48fb",
-            "shasum": "9a4c6664ae1124ac41872f549f6c3c0a017a502d"
+            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-a8a527.zip",
+            "reference": "08f96208365e93552ce1e00c89186e20657ed0fa",
+            "shasum": "c2eba86748ed87e2f706e1b065935bbbffb77833"
         },
         "require": {
             "ext-bcmath": "*",
             "php": ">=7.0.0"
         },
-        "time": "2020-12-19T17:29:47+00:00",
+        "time": "2020-12-19T18:11:03+00:00",
         "type": "library",
-        "extra": {
-            "laravel": {
-                "providers": [
-                    "\\Poppy\\Core\\ServiceProvider"
-                ]
-            }
-        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
@@ -3147,13 +3140,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/framework.git",
-            "reference": "5798816afb0fe313424445b12ba4a8d8537fc8cd"
+            "reference": "eb036409581194411ce0a6a3aed2160d1b41a761"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-a3f012.zip",
-            "reference": "5798816afb0fe313424445b12ba4a8d8537fc8cd",
-            "shasum": "3f690cff911b30b513000894d4f821ff604b46d0"
+            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-9a07b2.zip",
+            "reference": "eb036409581194411ce0a6a3aed2160d1b41a761",
+            "shasum": "ba6ea967fa5a38e3c0a474d0cdbc57ce67f058ac"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3162,7 +3155,7 @@
             "php": ">=7.0.0",
             "symfony/yaml": "^5.1"
         },
-        "time": "2020-12-19T17:29:47+00:00",
+        "time": "2020-12-19T18:49:36+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -3199,31 +3192,21 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/mgr-page.git",
-            "reference": "4b37d8c01044b0768a829ba12f77fb2599e5ca58"
+            "reference": "ffd7f2ae2331acda20d1da9e62f7cebbc07c76d7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-8fa770.zip",
-            "reference": "4b37d8c01044b0768a829ba12f77fb2599e5ca58",
-            "shasum": "40d955497e7ddb3c74694dadd34a2cead161905d"
+            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-4c0c25.zip",
+            "reference": "ffd7f2ae2331acda20d1da9e62f7cebbc07c76d7",
+            "shasum": "fa1dbf266eab3813181dad94ac1c88eae04efac0"
         },
         "require": {
             "mews/captcha": "3.*",
             "php": ">=7.2.0",
             "poppy/system": "3.0.x-dev"
         },
-        "time": "2020-12-19T17:29:47+00:00",
+        "time": "2020-12-19T18:11:03+00:00",
         "type": "library",
-        "extra": {
-            "laravel": {
-                "providers": [
-                    "Poppy\\MgrPage\\ServiceProvider"
-                ],
-                "aliases": {
-                    "PyForm": "Poppy\\MgrPage\\Facade\\FormFacade"
-                }
-            }
-        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
@@ -3249,13 +3232,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/system.git",
-            "reference": "ca7f33dbd0d50063212281bf78e489b5fb25d0ed"
+            "reference": "96f20416ee05c8600d2e6f46969c2fbdf585b95a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-33fd5f.zip",
-            "reference": "ca7f33dbd0d50063212281bf78e489b5fb25d0ed",
-            "shasum": "05a39d8da4c137432d8d9970cf1ce9fbefd2b763"
+            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-bfefc6.zip",
+            "reference": "96f20416ee05c8600d2e6f46969c2fbdf585b95a",
+            "shasum": "c0526da10cb1b3eea2c1c2382e6bb34811dc885b"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3267,15 +3250,8 @@
             "tucker-eric/eloquentfilter": "^2",
             "tymon/jwt-auth": "1.0.*"
         },
-        "time": "2020-12-19T17:29:47+00:00",
+        "time": "2020-12-19T18:11:03+00:00",
         "type": "library",
-        "extra": {
-            "laravel": {
-                "providers": [
-                    "\\Poppy\\System\\ServiceProvider"
-                ]
-            }
-        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {

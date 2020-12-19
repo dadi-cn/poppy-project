@@ -6,8 +6,8 @@
 |
 */
 Route::group([
-	'middleware' => ['cross'],
-	'namespace'  => 'DummyNamespace\Http\Request\Web',
+    'middleware' => ['cross'],
+    'namespace'  => 'DummyNamespace\Http\Request\Web',
 ], function (Illuminate\Routing\Router $route) {
-	$route->get('/', 'DemoController@index');
+    $route->get('/', 'DemoController@index');
 });

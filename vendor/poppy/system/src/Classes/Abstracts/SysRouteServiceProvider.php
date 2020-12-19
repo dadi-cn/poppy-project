@@ -27,7 +27,5 @@ abstract class SysRouteServiceProvider extends ServiceProvider
         parent::__construct($app);
         $this->backendPrefix = config('poppy.system.prefix') ?: 'backend';
         $this->prefix        = config('poppy.system.prefix') ?: 'backend';
-        dump(config('poppy.system.prefix'));
-        dump($this->prefix);
     }
 }
