@@ -34,23 +34,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Backend Control Panel
-    |--------------------------------------------------------------------------
-    | Default : \System\Http\Request\Backend\HomeController@index
-    */
-    'backend_cp'       => '',
-
-    /*
-    |--------------------------------------------------------------------------
     | Message Template For Differ Modules.
     |--------------------------------------------------------------------------
     |
     */
     'message_template' => [
         'futian' => 'futian::tpl.inc_message',
-    ],
-
-    'guard_location' => [
-        'web' => 'site:user.login',
     ],
 ];

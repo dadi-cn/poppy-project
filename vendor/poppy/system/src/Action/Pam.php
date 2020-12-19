@@ -173,7 +173,7 @@ class Pam
             $rule['password'] += [
                 Rule::between(6, 16),
                 Rule::required(),
-                'pwd',
+                Rule::simplePwd(),
             ];
         }
 

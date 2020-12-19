@@ -85,7 +85,7 @@ class FrameworkServiceProvider extends ServiceProvider
         app('validator')->extend('chid', function ($attribute, $value, $parameters) {
             return UtilHelper::isChId($value);
         });
-        \Validator::extend('pwd', function ($attribute, $value, $parameters) {
+        app('validator')->extend('simple_pwd', function ($attribute, $value, $parameters) {
             return UtilHelper::isPwd($value);
         });
     }

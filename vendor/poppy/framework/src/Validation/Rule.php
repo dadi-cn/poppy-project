@@ -195,7 +195,7 @@ class Rule extends IlluminateRule
      */
     public static function simplePwd(): string
     {
-        return 'simple-pwd';
+        return 'simple_pwd';
     }
 
     /**

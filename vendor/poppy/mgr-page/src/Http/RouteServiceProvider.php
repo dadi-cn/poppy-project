@@ -30,7 +30,7 @@ class RouteServiceProvider extends SysRouteServiceProvider
     {
         // backend
         Route::group([
-            'prefix' => $this->backendPrefix,
+            'prefix' => $this->prefix,
         ], function (Router $router) {
             $router->any('/', 'Poppy\MgrPage\Http\Request\Backend\HomeController@index')
                 ->middleware('backend-auth')
@@ -41,7 +41,7 @@ class RouteServiceProvider extends SysRouteServiceProvider
         });
 
         Route::group([
-            'prefix'     => $this->backendPrefix . '/system',
+            'prefix'     => $this->prefix . '/system',
             'middleware' => 'backend-auth',
         ], function () {
             require_once __DIR__ . '/Routes/backend.php';
@@ -58,7 +58,7 @@ class RouteServiceProvider extends SysRouteServiceProvider
         // develop
         Route::group([
             'middleware' => 'web',
-            'prefix'     => $this->developPrefix,
+            'prefix'     => $this->prefix . '/develop',
         ], function (Router $router) {
             $router->any('login', 'Poppy\MgrPage\Http\Request\Develop\PamController@login')
                 ->name('py-mgr-page:develop.pam.login');
@@ -68,7 +68,7 @@ class RouteServiceProvider extends SysRouteServiceProvider
         });
         Route::group([
             'middleware' => 'develop-auth',
-            'prefix'     => $this->developPrefix . '/system',
+            'prefix'     => $this->prefix . '/develop/mgr-page',
         ], function () {
             require_once __DIR__ . '/Routes/develop.php';
         });

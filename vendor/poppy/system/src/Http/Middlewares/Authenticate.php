@@ -12,7 +12,6 @@ use Poppy\System\Models\PamAccount;
  */
 class Authenticate extends IlluminateAuthenticate
 {
-
     /**
      * 检测跳转地址
      * @param $guards
@@ -22,13 +21,13 @@ class Authenticate extends IlluminateAuthenticate
     {
         $location = '/';
         // develop
-        if (in_array(PamAccount::GUARD_DEVELOP, $guards, true) && $devLogin = config('poppy.system.dev_login')) {
+        if (in_array(PamAccount::GUARD_DEVELOP, $guards, true) && $devLogin = config('poppy.system.prefix') . '/develop/login') {
             $location = $devLogin;
         }
-        if (in_array(PamAccount::GUARD_BACKEND, $guards, true) && $backendLogin = config('poppy.system.backend_login')) {
+        if (in_array(PamAccount::GUARD_BACKEND, $guards, true) && $backendLogin = config('poppy.system.prefix') . '/login') {
             $location = $backendLogin;
         }
-        if (in_array(PamAccount::GUARD_WEB, $guards, true) && $userLogin = config('poppy.system.user_login')) {
+        if (in_array(PamAccount::GUARD_WEB, $guards, true) && $userLogin = config('poppy.system.user_location')) {
             $location = $userLogin;
         }
         return $location;

@@ -8,19 +8,24 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 
 abstract class SysRouteServiceProvider extends ServiceProvider
 {
-	protected $backendPrefix;
+    /**
+     * @var string
+     * @deprecated
+     * @see $prefix
+     */
+    protected $backendPrefix;
+
+    /**
+     * 前缀
+     * @var string
+     */
+    protected $prefix;
 
 
-	protected $developPrefix;
-
-
-	public function __construct($app)
-	{
-		parent::__construct($app);
-
-		$this->backendPrefix = config('poppy.system.prefix') ?: 'backend';
-		dump(config('poppy.system.prefix'));
-		dump($this->backendPrefix);
-		$this->developPrefix = config('poppy.system.develop.prefix') ?: 'develop';
-	}
+    public function __construct($app)
+    {
+        parent::__construct($app);
+        $this->backendPrefix = config('poppy.system.prefix') ?: 'backend';
+        $this->prefix        = config('poppy.system.prefix') ?: 'backend';
+    }
 }

@@ -32,191 +32,186 @@ use Poppy\System\Models\Policies\PamRolePolicy;
  */
 class ServiceProvider extends PoppyServiceProvider
 {
-	/**
-	 * @var string Module name
-	 */
-	protected $name = 'poppy.system';
+    /**
+     * @var string Module name
+     */
+    protected $name = 'poppy.system';
 
-	protected $listens = [
-		// laravel
-		AuthLoginEvent::class           => [
+    protected $listens = [
+        // laravel
+        AuthLoginEvent::class           => [
 
-		],
-		PermissionInitEvent::class      => [
-			Listeners\PermissionInit\InitToDbListener::class,
-		],
-		AuthFailEvent::class            => [
-			Listeners\AuthFailed\LogListener::class,
-		],
+        ],
+        PermissionInitEvent::class      => [
+            Listeners\PermissionInit\InitToDbListener::class,
+        ],
+        AuthFailEvent::class            => [
+            Listeners\AuthFailed\LogListener::class,
+        ],
 
-		// system
-		Events\LoginSuccessEvent::class => [
-			Listeners\LoginSuccess\UpdatePasswordHashListener::class,
-			Listeners\LoginSuccess\LogListener::class,
-			Listeners\LoginSuccess\UpdateLastLoginListener::class,
-		],
-	];
+        // system
+        Events\LoginSuccessEvent::class => [
+            Listeners\LoginSuccess\UpdatePasswordHashListener::class,
+            Listeners\LoginSuccess\LogListener::class,
+            Listeners\LoginSuccess\UpdateLastLoginListener::class,
+        ],
+    ];
 
-	protected $policies = [
-		PamRole::class    => PamRolePolicy::class,
-		PamAccount::class => PamAccountPolicy::class,
-	];
+    protected $policies = [
+        PamRole::class    => PamRolePolicy::class,
+        PamAccount::class => PamAccountPolicy::class,
+    ];
 
-	/**
-	 * Bootstrap the module services.
-	 * @return void
-	 * @throws ModuleNotFoundException
-	 */
-	public function boot()
-	{
-		parent::boot($this->name);
+    /**
+     * Bootstrap the module services.
+     * @return void
+     * @throws ModuleNotFoundException
+     */
+    public function boot()
+    {
+        parent::boot($this->name);
 
-		// 注册 api 文档配置
-		$this->publishes([
-			__DIR__ . '/../resources/config/system.php' => base_path('config/poppy.php'),
-		], 'poppy');
+        $this->publishes([
+            __DIR__ . '/../README.md' => resource_path('docs/system/README.md'),
+            __DIR__ . '/../docs/'     => resource_path('docs/system'),
+        ], 'poppy-docs');
 
-		$this->publishes([
-			__DIR__ . '/../README.md' => resource_path('docs/system/README.md'),
-			__DIR__ . '/../docs/'     => resource_path('docs/system'),
-		], 'poppy-docs');
+        $this->bootConfigs();
+    }
 
-		// 配置文件
-		$this->mergeConfigFrom(dirname(__DIR__) . '/resources/config/system.php', 'poppy');
+    /**
+     * Register the module services.
+     * @return void
+     */
+    public function register()
+    {
+        // 配置文件
+        $this->mergeConfigFrom(dirname(__DIR__) . '/resources/config/system.php', 'poppy.system');
 
-		$this->bootConfigs();
-	}
+        $this->app->register(Http\MiddlewareServiceProvider::class);
+        $this->app->register(Http\RouteServiceProvider::class);
+        $this->app->register(Setting\SettingServiceProvider::class);
 
-	/**
-	 * Register the module services.
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app->register(Http\MiddlewareServiceProvider::class);
-		$this->app->register(Http\RouteServiceProvider::class);
-		$this->app->register(Setting\SettingServiceProvider::class);
+        $this->registerConsole();
 
-		$this->registerConsole();
+        $this->registerAuth();
 
-		$this->registerAuth();
+        $this->registerSchedule();
 
-		$this->registerSchedule();
+        $this->registerContracts();
+    }
 
-		$this->registerContracts();
-	}
+    public function provides(): array
+    {
+        return [];
+    }
 
-	public function provides(): array
-	{
-		return [];
-	}
+    private function registerSchedule()
+    {
+        app('events')->listen('console.schedule', function (Schedule $schedule) {
+            $schedule->command('py-system:user', ['auto_enable'])
+                ->everyFiveMinutes()->appendOutputTo($this->consoleLog());
+            $schedule->command('py-system:user', ['clear_log'])
+                ->everyFiveMinutes()->appendOutputTo($this->consoleLog());
 
-	private function registerSchedule()
-	{
-		app('events')->listen('console.schedule', function (Schedule $schedule) {
-			$schedule->command('py-system:user', ['auto_enable'])
-				->everyFiveMinutes()->appendOutputTo($this->consoleLog());
-			$schedule->command('py-system:user', ['clear_log'])
-				->everyFiveMinutes()->appendOutputTo($this->consoleLog());
+            // 开发平台去生成文档
+            if (env('APP_ENV', 'production') !== 'production') {
+                // 自动生成文档
+                $schedule->command('py-core:doc api')
+                    ->everyMinute()->appendOutputTo($this->consoleLog());
+            }
+        });
+    }
 
-			// 开发平台去生成文档
-			if (env('APP_ENV', 'production') !== 'production') {
-				// 自动生成文档
-				$schedule->command('py-core:doc api')
-					->everyMinute()->appendOutputTo($this->consoleLog());
-			}
-		});
-	}
-
-	/**
-	 * register rbac and alias
-	 */
-	private function registerContracts()
-	{
-		$this->app->bind('poppy.system.api_sign', function ($app) {
-			/** @var ApiSignContract $signProvider */
-			$signProvider = config('poppy.system.api_sign_provider') ?: DefaultApiSignProvider::class;
-			return new $signProvider();
-		});
-		$this->app->alias('poppy.system.api_sign', ApiSignContract::class);
+    /**
+     * register rbac and alias
+     */
+    private function registerContracts()
+    {
+        $this->app->bind('poppy.system.api_sign', function ($app) {
+            /** @var ApiSignContract $signProvider */
+            $signProvider = config('poppy.system.api_sign_provider') ?: DefaultApiSignProvider::class;
+            return new $signProvider();
+        });
+        $this->app->alias('poppy.system.api_sign', ApiSignContract::class);
 
 
-		$this->app->bind('poppy.system.password', function ($app) {
-			$pwdClass = config('poppy.system.password_provider') ?: DefaultPasswordProvider::class;
-			return new $pwdClass();
-		});
-		$this->app->alias('poppy.system.password', PasswordContract::class);
+        $this->app->bind('poppy.system.password', function ($app) {
+            $pwdClass = config('poppy.system.password_provider') ?: DefaultPasswordProvider::class;
+            return new $pwdClass();
+        });
+        $this->app->alias('poppy.system.password', PasswordContract::class);
 
 
-		/* 文件上传提供者
-		 * ---------------------------------------- */
-		$this->app->bind('poppy.system.uploader', function ($app) {
-			$uploadType = sys_setting('py-system::oss.save_type');
-			$hooks      = sys_hook('poppy.system.upload_type');
-			if (!$uploadType) {
-				$uploadType = 'default';
-			}
-			$uploader      = $hooks[$uploadType];
-			$uploaderClass = $uploader['provider'] ?? DefaultUploadProvider::class;
-			return new $uploaderClass();
-		});
-		$this->app->alias('poppy.system.uploader', UploadContract::class);
+        /* 文件上传提供者
+         * ---------------------------------------- */
+        $this->app->bind('poppy.system.uploader', function ($app) {
+            $uploadType = sys_setting('py-system::oss.save_type');
+            $hooks      = sys_hook('poppy.system.upload_type');
+            if (!$uploadType) {
+                $uploadType = 'default';
+            }
+            $uploader      = $hooks[$uploadType];
+            $uploaderClass = $uploader['provider'] ?? DefaultUploadProvider::class;
+            return new $uploaderClass();
+        });
+        $this->app->alias('poppy.system.uploader', UploadContract::class);
 
-	}
+    }
 
-	private function registerConsole()
-	{
-		// system
-		$this->commands([
-			// system:module
-			Commands\UserCommand::class,
-			Commands\InstallCommand::class,
-		]);
-	}
+    private function registerConsole()
+    {
+        // system
+        $this->commands([
+            // system:module
+            Commands\UserCommand::class,
+            Commands\InstallCommand::class,
+        ]);
+    }
 
-	private function registerAuth()
-	{
-		app('auth')->provider('pam.web', function ($app) {
-			return new WebProvider(PamAccount::class);
-		});
-		app('auth')->provider('pam.backend', function ($app) {
-			return new BackendProvider(PamAccount::class);
-		});
-		app('auth')->provider('pam.develop', function ($app) {
-			return new DevelopProvider(PamAccount::class);
-		});
-		app('auth')->provider('pam', function ($app) {
-			return new PamProvider(PamAccount::class);
-		});
+    private function registerAuth()
+    {
+        app('auth')->provider('pam.web', function ($app) {
+            return new WebProvider(PamAccount::class);
+        });
+        app('auth')->provider('pam.backend', function ($app) {
+            return new BackendProvider(PamAccount::class);
+        });
+        app('auth')->provider('pam.develop', function ($app) {
+            return new DevelopProvider(PamAccount::class);
+        });
+        app('auth')->provider('pam', function ($app) {
+            return new PamProvider(PamAccount::class);
+        });
 
-		app('auth')->extend('jwt.backend', function (Application $app, $name, array $config) {
-			$guard = new JwtAuthGuard(
-				$app['tymon.jwt'],
-				$app['auth']->createUserProvider($config['provider']),
-				$app['request']
-			);
-			$app->refresh('request', $guard, 'setRequest');
+        app('auth')->extend('jwt.backend', function (Application $app, $name, array $config) {
+            $guard = new JwtAuthGuard(
+                $app['tymon.jwt'],
+                $app['auth']->createUserProvider($config['provider']),
+                $app['request']
+            );
+            $app->refresh('request', $guard, 'setRequest');
 
-			return $guard;
-		});
-	}
+            return $guard;
+        });
+    }
 
-	private function bootConfigs()
-	{
-		config([
-			'mail.driver'       => sys_setting('py-system::mail.driver') ?: config('mail.driver'),
-			'mail.encryption'   => sys_setting('py-system::mail.encryption') ?: config('mail.encryption'),
-			'mail.port'         => sys_setting('py-system::mail.port') ?: config('mail.port'),
-			'mail.host'         => sys_setting('py-system::mail.host') ?: config('mail.host'),
-			'mail.from.address' => sys_setting('py-system::mail.from') ?: config('mail.from.address'),
-			'mail.from.name'    => sys_setting('py-system::mail.from') ?: config('mail.from.name'),
-			'mail.username'     => sys_setting('py-system::mail.username') ?: config('mail.username'),
-			'mail.password'     => sys_setting('py-system::mail.password') ?: config('mail.password'),
-		]);
+    private function bootConfigs()
+    {
+        config([
+            'mail.driver'       => sys_setting('py-system::mail.driver') ?: config('mail.driver'),
+            'mail.encryption'   => sys_setting('py-system::mail.encryption') ?: config('mail.encryption'),
+            'mail.port'         => sys_setting('py-system::mail.port') ?: config('mail.port'),
+            'mail.host'         => sys_setting('py-system::mail.host') ?: config('mail.host'),
+            'mail.from.address' => sys_setting('py-system::mail.from') ?: config('mail.from.address'),
+            'mail.from.name'    => sys_setting('py-system::mail.from') ?: config('mail.from.name'),
+            'mail.username'     => sys_setting('py-system::mail.username') ?: config('mail.username'),
+            'mail.password'     => sys_setting('py-system::mail.password') ?: config('mail.password'),
+        ]);
 
-		config([
-			'poppy.framework.title'       => sys_setting('py-system::site.name'),
-			'poppy.framework.description' => sys_setting('py-system::site.description'),
-		]);
-	}
+        config([
+            'poppy.framework.title'       => sys_setting('py-system::site.name'),
+            'poppy.framework.description' => sys_setting('py-system::site.description'),
+        ]);
+    }
 }

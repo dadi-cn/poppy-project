@@ -11,46 +11,44 @@ use Poppy\System\Models\PamRoleAccount;
 
 return [
 
-	'core' => [
-		/*
-		|--------------------------------------------------------------------------
-		| 后台可以隐藏的路由, 写在这里, 后台列表不予显示
-		|--------------------------------------------------------------------------
-		|
-		*/
-		'route_hide' => [
-		],
+    /*
+    |--------------------------------------------------------------------------
+    | 后台可以隐藏的路由, 写在这里, 后台列表不予显示
+    |--------------------------------------------------------------------------
+    |
+    */
+    'route_hide' => [
+    ],
 
-		/*
-		|--------------------------------------------------------------------------
-		| 接口文档的定义
-		|--------------------------------------------------------------------------
-		| 需要运行 `php artisan core:doc apidoc` 来生成技术文档
-		*/
-		'apidoc'     => [
-			'web' => [
-				'title'       => '前台接口',
-				'method'      => 'post',
-				'default_url' => 'api_v1/system/auth/login',
-			],
-		],
+    /*
+    |--------------------------------------------------------------------------
+    | 接口文档的定义
+    |--------------------------------------------------------------------------
+    | 需要运行 `php artisan core:doc apidoc` 来生成技术文档
+    */
+    'apidoc'     => [
+        'web' => [
+            'title'       => '前台接口',
+            'method'      => 'post',
+            'default_url' => 'api_v1/system/auth/login',
+        ],
+    ],
 
-		/* 维护邮箱地址
-		 * ---------------------------------------- */
-		'op_mail'    => env('CORE_OP_MAIL', ''),
+    /* 维护邮箱地址
+     * ---------------------------------------- */
+    'op_mail'    => env('CORE_OP_MAIL', ''),
 
-		/* Rbac 模型和外键设定
-		 * ---------------------------------------- */
-		'rbac'       => [
-			'role'            => PamRole::class,
-			'account'         => PamAccount::class,
-			'role_account'    => PamRoleAccount::class,
-			'permission'      => PamPermission::class,
-			'role_permission' => PamPermissionRole::class,
-			'role_fk'         => 'role_id',
-			'account_fk'      => 'account_id',
-			'permission_fk'   => 'permission_id',
-		],
-	],
+    /* Rbac 模型和外键设定
+     * ---------------------------------------- */
+    'rbac'       => [
+        'role'            => PamRole::class,
+        'account'         => PamAccount::class,
+        'role_account'    => PamRoleAccount::class,
+        'permission'      => PamPermission::class,
+        'role_permission' => PamPermissionRole::class,
+        'role_fk'         => 'role_id',
+        'account_fk'      => 'account_id',
+        'permission_fk'   => 'permission_id',
+    ],
 
 ];

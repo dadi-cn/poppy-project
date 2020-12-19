@@ -41,7 +41,6 @@ class ServiceProvider extends PoppyServiceProvider
         // 注册 api 文档配置
         $this->publishes([
             __DIR__ . '/../resources/config/sami-config.php' => storage_path('sami/config.php'),
-            __DIR__ . '/../resources/config/core.php'        => config_path('poppy.php'),
         ], 'poppy');
 
         $this->publishes([
@@ -49,10 +48,7 @@ class ServiceProvider extends PoppyServiceProvider
             __DIR__ . '/../docs/'     => resource_path('docs/core'),
         ], 'poppy-docs');
 
-        // 合并配置
-        $this->mergeConfigFrom(
-            __DIR__ . '/../resources/config/core.php', 'poppy'
-        );
+
     }
 
     /**
@@ -61,6 +57,9 @@ class ServiceProvider extends PoppyServiceProvider
      */
     public function register()
     {
+        // 合并配置
+        $this->mergeConfigFrom(__DIR__ . '/../resources/config/core.php', 'poppy.core');
+
         $this->app->register(Module\ModuleServiceProvider::class);
 
         $this->app->register(Rbac\RbacServiceProvider::class);

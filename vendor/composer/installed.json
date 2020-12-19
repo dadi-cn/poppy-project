@@ -3044,19 +3044,19 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/core.git",
-            "reference": "a9635fc85fd9f34425eaf915981beb6a8f277172"
+            "reference": "90584fa4f0a8fc428637c265b20a344db4de48fb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-e8d917.zip",
-            "reference": "a9635fc85fd9f34425eaf915981beb6a8f277172",
-            "shasum": "fafbec7e43132b5f7fcc9e40d65b519d0c9a7838"
+            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-082485.zip",
+            "reference": "90584fa4f0a8fc428637c265b20a344db4de48fb",
+            "shasum": "9a4c6664ae1124ac41872f549f6c3c0a017a502d"
         },
         "require": {
             "ext-bcmath": "*",
             "php": ">=7.0.0"
         },
-        "time": "2020-12-19T15:28:21+00:00",
+        "time": "2020-12-19T17:29:47+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -3147,13 +3147,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/framework.git",
-            "reference": "84c3283dd3adedda68049efefadae882d95e14f7"
+            "reference": "5798816afb0fe313424445b12ba4a8d8537fc8cd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-2791ee.zip",
-            "reference": "84c3283dd3adedda68049efefadae882d95e14f7",
-            "shasum": "34bc0402eac0c95dd6564e7467afd2370009f2ac"
+            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-a3f012.zip",
+            "reference": "5798816afb0fe313424445b12ba4a8d8537fc8cd",
+            "shasum": "3f690cff911b30b513000894d4f821ff604b46d0"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3162,7 +3162,7 @@
             "php": ">=7.0.0",
             "symfony/yaml": "^5.1"
         },
-        "time": "2020-12-19T15:28:21+00:00",
+        "time": "2020-12-19T17:29:47+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -3199,20 +3199,20 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/mgr-page.git",
-            "reference": "77b33b8370ab44972595ffab3ac629ac4dd0a2f7"
+            "reference": "4b37d8c01044b0768a829ba12f77fb2599e5ca58"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-50db79.zip",
-            "reference": "77b33b8370ab44972595ffab3ac629ac4dd0a2f7",
-            "shasum": "899c1cf4e880de580831b4016c1e07ef671c66f0"
+            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-8fa770.zip",
+            "reference": "4b37d8c01044b0768a829ba12f77fb2599e5ca58",
+            "shasum": "40d955497e7ddb3c74694dadd34a2cead161905d"
         },
         "require": {
             "mews/captcha": "3.*",
             "php": ">=7.2.0",
             "poppy/system": "3.0.x-dev"
         },
-        "time": "2020-12-19T15:28:21+00:00",
+        "time": "2020-12-19T17:29:47+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -3249,13 +3249,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/system.git",
-            "reference": "4c4b5995dfd94664a2f8aef082f79e81fad3e640"
+            "reference": "ca7f33dbd0d50063212281bf78e489b5fb25d0ed"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-a34bfd.zip",
-            "reference": "4c4b5995dfd94664a2f8aef082f79e81fad3e640",
-            "shasum": "7ba09db61478d01f1f2e2433b23e5fb75c7913aa"
+            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-33fd5f.zip",
+            "reference": "ca7f33dbd0d50063212281bf78e489b5fb25d0ed",
+            "shasum": "05a39d8da4c137432d8d9970cf1ce9fbefd2b763"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3267,7 +3267,7 @@
             "tucker-eric/eloquentfilter": "^2",
             "tymon/jwt-auth": "1.0.*"
         },
-        "time": "2020-12-19T15:28:21+00:00",
+        "time": "2020-12-19T17:29:47+00:00",
         "type": "library",
         "extra": {
             "laravel": {

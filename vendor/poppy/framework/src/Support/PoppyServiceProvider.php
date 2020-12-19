@@ -123,38 +123,15 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
     protected function mergeConfigFrom($path, $key)
     {
         if (!$this->app->configurationIsCached()) {
-            $pathConf = require $path;
-            $confConf = $this->app['config']->get($key, []);
-            $this->app['config']->set($key, $this->mergeDeep(
-                $pathConf, $confConf
+
+
+            $this->app['config']->set($key, array_merge(
+                require $path, $this->app['config']->get($key, [])
             ));
-        }
-    }
-
-    private function mergeDeep(array &$array1, array &$array2)
-    {
-        static $level = 0;
-        $merged = [];
-        if (!empty($array2["mergeWithParent"]) || $level == 0) {
-            $merged = $array1;
-        }
-
-        foreach ($array2 as $key => &$value) {
-            if (is_numeric($key)) {
-                $merged [] = $value;
-            }
-            else {
-                $merged[$key] = $value;
-            }
-
-            if (is_array($value) && isset ($array1 [$key]) && is_array($array1 [$key])
-            ) {
-                $level++;
-                $merged [$key] = array_merge_recursive_distinct($array1 [$key], $value);
-                $level--;
+            if ($key === 'poppy') {
+                dump(require $path);
+                dump($this->app['config']->get($key, []));
             }
         }
-        unset($merged["mergeWithParent"]);
-        return $merged;
     }
 }

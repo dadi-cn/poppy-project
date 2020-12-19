@@ -35,7 +35,6 @@ class ServiceProvider extends PoppyServiceProvider
 
         // 注册 api 文档配置
         $this->publishes([
-            __DIR__ . '/../resources/config/mgr-page.php'                     => base_path('config/poppy.php'),
             __DIR__ . '/../resources/images/system/spacer.gif'                => public_path('assets/images/system/spacer.gif'),
             __DIR__ . '/../resources/views/vendor/pagination-layui.blade.php' => resource_path('views/vendor/pagination/layui.blade.php'),
         ], 'poppy');
@@ -60,9 +59,6 @@ class ServiceProvider extends PoppyServiceProvider
             __DIR__ . '/../resources/images/'                       => public_path('assets/images/'),
             __DIR__ . '/../resources/font/'                         => public_path('assets/font/'),
         ], 'poppy-mix');
-
-        // 配置文件
-        $this->mergeConfigFrom(dirname(__DIR__) . '/resources/config/mgr-page.php', 'poppy');
     }
 
     /**

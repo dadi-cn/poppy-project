@@ -56,6 +56,9 @@
 			"php artisan clear-compiled",
 			"php artisan ide-helper:generate"
 		],
+		"github": [
+			"git push github 3.0 --force"
+		],
 		"pre-update-cmd": [
 		],
 		"post-update-cmd": [
