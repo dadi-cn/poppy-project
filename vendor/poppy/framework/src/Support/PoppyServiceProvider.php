@@ -123,8 +123,10 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
     protected function mergeConfigFrom($path, $key)
     {
         if (!$this->app->configurationIsCached()) {
+            $pathConf = require $path;
+            $confConf = $this->app['config']->get($key, []);
             $this->app['config']->set($key, $this->mergeDeep(
-                require $path, $this->app['config']->get($key, [])
+                $pathConf, $confConf
             ));
         }
     }
