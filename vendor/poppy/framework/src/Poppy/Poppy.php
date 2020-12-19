@@ -55,7 +55,7 @@ class Poppy
      */
     public function register(): void
     {
-        $modules = $this->repository->enabled();
+        $modules = $this->repository->sortBy('order')->enabled();
 
         $modules->each(function ($module) {
             if (Str::contains($module['slug'], 'module.')) {
