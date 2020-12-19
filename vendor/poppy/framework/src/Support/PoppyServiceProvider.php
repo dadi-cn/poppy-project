@@ -119,4 +119,40 @@ abstract class PoppyServiceProvider extends ServiceProviderBase
 
         return storage_path('logs/console-' . $day . '.log');
     }
+
+    protected function mergeConfigFrom($path, $key)
+    {
+        if (!$this->app->configurationIsCached()) {
+            $this->app['config']->set($key, $this->mergeDeep(
+                require $path, $this->app['config']->get($key, [])
+            ));
+        }
+    }
+
+    private function mergeDeep(array &$array1, array &$array2)
+    {
+        static $level = 0;
+        $merged = [];
+        if (!empty($array2["mergeWithParent"]) || $level == 0) {
+            $merged = $array1;
+        }
+
+        foreach ($array2 as $key => &$value) {
+            if (is_numeric($key)) {
+                $merged [] = $value;
+            }
+            else {
+                $merged[$key] = $value;
+            }
+
+            if (is_array($value) && isset ($array1 [$key]) && is_array($array1 [$key])
+            ) {
+                $level++;
+                $merged [$key] = array_merge_recursive_distinct($array1 [$key], $value);
+                $level--;
+            }
+        }
+        unset($merged["mergeWithParent"]);
+        return $merged;
+    }
 }
