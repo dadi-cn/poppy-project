@@ -45,7 +45,7 @@ class RouteServiceProvider extends ServiceProvider
 	{
 		Route::group([
 			// todo auth
-			'prefix' => 'demo',
+			'prefix' => '',
 		], function (Router $route) {
 			require_once poppy_path('demo', 'src/http/routes/web.php');
 		});
