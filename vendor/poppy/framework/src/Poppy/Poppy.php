@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Poppy\Framework\Poppy\Contracts\Repository;
 
 /**
@@ -55,13 +54,11 @@ class Poppy
      */
     public function register(): void
     {
-        $modules = $this->repository->sortBy('order')->enabled();
+        $modules = $this->repository->enabled();
 
         $modules->each(function ($module) {
-            if (Str::contains($module['slug'], 'module.')) {
-                $this->registerServiceProvider($module);
-                $this->autoloadFiles($module);
-            }
+            $this->registerServiceProvider($module);
+            $this->autoloadFiles($module);
         });
     }
 

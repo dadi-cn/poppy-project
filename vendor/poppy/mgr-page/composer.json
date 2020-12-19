@@ -21,9 +21,6 @@
 	},
 	"extra": {
 		"laravel": {
-			"providers": [
-				"Poppy\\MgrPage\\ServiceProvider"
-			],
 			"aliases": {
 				"PyForm": "Poppy\\MgrPage\\Facade\\FormFacade"
 			}

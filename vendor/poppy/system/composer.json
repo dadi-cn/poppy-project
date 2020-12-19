@@ -30,12 +30,5 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"extra": {
-		"laravel": {
-			"providers": [
-				"\\Poppy\\System\\ServiceProvider"
-			]
-		}
-	},
 	"minimum-stability": "dev"
 }
