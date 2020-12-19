@@ -10,41 +10,41 @@ use Poppy\System\Models\PamAccount;
  */
 class PamController extends DevelopController
 {
-	/**
-	 * 登录
-	 */
-	public function login()
-	{
-		if (is_post()) {
-			$username = input('username');
-			$password = input('password');
+    /**
+     * 登录
+     */
+    public function login()
+    {
+        if (is_post()) {
+            $username = input('username');
+            $password = input('password');
 
-			$pam = new Pam();
-			if ($pam->loginCheck($username, $password, PamAccount::GUARD_DEVELOP, true)) {
-				return Resp::success('登录成功！', '_location|' . route('py-mgr-page:develop.cp.cp'));
-			}
+            $pam = new Pam();
+            if ($pam->loginCheck($username, $password, PamAccount::GUARD_DEVELOP, true)) {
+                return Resp::success('登录成功！', '_location|' . route('py-mgr-page:develop.cp.cp'));
+            }
 
-			return Resp::error($pam->getError());
-		}
-		$guard = Auth::guard(PamAccount::GUARD_DEVELOP)->user();
-		// todo check guard permission
-		if ($guard) {
-			return Resp::success('您已登录', [
-				'_location' => route('py-mgr-page:develop.cp.cp'),
-			]);
-		}
+            return Resp::error($pam->getError());
+        }
+        $guard = Auth::guard(PamAccount::GUARD_DEVELOP)->user();
+        // todo check guard permission
+        if ($guard) {
+            return Resp::success('您已登录', [
+                '_location' => route('py-mgr-page:develop.cp.cp'),
+            ]);
+        }
 
-		return view('py-mgr-page::develop.pam.login');
-	}
+        return view('py-mgr-page::develop.pam.login');
+    }
 
-	public function logout()
-	{
-		$guard = Auth::guard(PamAccount::GUARD_DEVELOP);
-		if ($guard->user()) {
-			$guard->logout();
-		}
-		return Resp::success('退出登录成功', [
-			'location' => route('py-mgr-page:develop.pam.login'),
-		]);
-	}
+    public function logout()
+    {
+        $guard = Auth::guard(PamAccount::GUARD_DEVELOP);
+        if ($guard->user()) {
+            $guard->logout();
+        }
+        return Resp::success('退出登录成功', [
+            'location' => route('py-mgr-page:develop.pam.login'),
+        ]);
+    }
 }

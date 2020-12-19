@@ -2,7 +2,7 @@
 
 class Year extends Date
 {
-	protected $options = [
-		'type' => 'year',
-	];
+    protected $options = [
+        'type' => 'year',
+    ];
 }

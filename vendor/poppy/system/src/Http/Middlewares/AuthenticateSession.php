@@ -16,102 +16,102 @@ use Tymon\JWTAuth\JWTGuard;
 class AuthenticateSession extends BaseAuthenticateSession
 {
 
-	/**
-	 * Handle an incoming request.
-	 * @param Request $request
-	 * @param Closure $next
-	 * @return mixed
-	 * @throws AuthenticationException
-	 */
-	public function handle($request, Closure $next)
-	{
-		/* Jwt 不进行 Session 权限校验
-		 * ---------------------------------------- */
-		if ($this->auth->guard() instanceof JWTGuard) {
-			return $next($request);
-		}
+    /**
+     * Handle an incoming request.
+     * @param Request $request
+     * @param Closure $next
+     * @return mixed
+     * @throws AuthenticationException
+     */
+    public function handle($request, Closure $next)
+    {
+        /* Jwt 不进行 Session 权限校验
+         * ---------------------------------------- */
+        if ($this->auth->guard() instanceof JWTGuard) {
+            return $next($request);
+        }
 
-		if (!$request->user() || !$request->session()) {
-			return $next($request);
-		}
+        if (!$request->user() || !$request->session()) {
+            return $next($request);
+        }
 
-		if ($this->auth->viaRemember()) {
-			$passwordHash = explode('|', $request->cookies->get($this->auth->getRecallerName()))[2];
-			if ($passwordHash != $request->user()->getAuthPassword()) {
-				$this->logout($request);
-			}
-		}
-		$loginSessionKey = $this->auth->guard()->getName();
-		$hashKey         = self::hashKey($loginSessionKey);
+        if ($this->auth->viaRemember()) {
+            $passwordHash = explode('|', $request->cookies->get($this->auth->getRecallerName()))[2];
+            if ($passwordHash != $request->user()->getAuthPassword()) {
+                $this->logout($request);
+            }
+        }
+        $loginSessionKey = $this->auth->guard()->getName();
+        $hashKey         = self::hashKey($loginSessionKey);
 
-		if (!$request->session()->has($hashKey)) {
-			$this->storePasswordHashInSession($request);
-		}
+        if (!$request->session()->has($hashKey)) {
+            $this->storePasswordHashInSession($request);
+        }
 
-		if ($request->session()->get($hashKey) !== $request->user()->getAuthPassword()) {
-			$this->logout($request);
-		}
+        if ($request->session()->get($hashKey) !== $request->user()->getAuthPassword()) {
+            $this->logout($request);
+        }
 
-		return tap($next($request), function () use ($request) {
-			$this->storePasswordHashInSession($request);
-		});
-	}
+        return tap($next($request), function () use ($request) {
+            $this->storePasswordHashInSession($request);
+        });
+    }
 
-	/**
-	 * Store the user's current password hash in the session.
-	 * @param Request $request
-	 * @return void
-	 */
-	protected function storePasswordHashInSession($request)
-	{
-		if (!$request->user()) {
-			return;
-		}
+    /**
+     * Store the user's current password hash in the session.
+     * @param Request $request
+     * @return void
+     */
+    protected function storePasswordHashInSession($request)
+    {
+        if (!$request->user()) {
+            return;
+        }
 
-		$loginSessionKey = $this->auth->guard()->getName();
+        $loginSessionKey = $this->auth->guard()->getName();
 
-		$request->session()->put([
-			self::hashKey($loginSessionKey) => $request->user()->getAuthPassword(),
-		]);
-	}
+        $request->session()->put([
+            self::hashKey($loginSessionKey) => $request->user()->getAuthPassword(),
+        ]);
+    }
 
 
-	/**
-	 * Log the user out of the application.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @return void
-	 *
-	 * @throws \Illuminate\Auth\AuthenticationException
-	 */
-	protected function logout($request)
-	{
-		$this->auth->logoutCurrentDevice();
+    /**
+     * Log the user out of the application.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     *
+     * @throws \Illuminate\Auth\AuthenticationException
+     */
+    protected function logout($request)
+    {
+        $this->auth->logoutCurrentDevice();
 
-		$request->session()->flush();
+        $request->session()->flush();
 
-		$loginSessionKey = $this->auth->guard()->getName();
-		$guards          = [self::guardName($loginSessionKey)];
-		throw new AuthenticationException('无权访问', $guards, Authenticate::detectLocation($guards));
-	}
+        $loginSessionKey = $this->auth->guard()->getName();
+        $guards          = [self::guardName($loginSessionKey)];
+        throw new AuthenticationException('无权访问', $guards, Authenticate::detectLocation($guards));
+    }
 
-	/**
-	 * Password hash key
-	 * @param string $login_key login key
-	 * @return string
-	 */
-	public static function hashKey($login_key)
-	{
-		$guard = self::guardName($login_key);
-		return 'password_hash' . ($guard ? '_' . $guard : '');
-	}
+    /**
+     * Password hash key
+     * @param string $login_key login key
+     * @return string
+     */
+    public static function hashKey($login_key)
+    {
+        $guard = self::guardName($login_key);
+        return 'password_hash' . ($guard ? '_' . $guard : '');
+    }
 
-	private static function guardName($login_key)
-	{
-		$guard = '';
-		if (preg_match('/login_(?<guard>.*?)_/', $login_key, $match)) {
-			$guard = $match['guard'];
-		}
-		return $guard;
-	}
+    private static function guardName($login_key)
+    {
+        $guard = '';
+        if (preg_match('/login_(?<guard>.*?)_/', $login_key, $match)) {
+            $guard = $match['guard'];
+        }
+        return $guard;
+    }
 }

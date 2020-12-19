@@ -6,14 +6,14 @@ class Slider extends Field
 {
 
 
-	protected $options = [
-		'type'     => 'single',
-		'prettify' => false,
-		'hasGrid'  => true,
-	];
+    protected $options = [
+        'type'     => 'single',
+        'prettify' => false,
+        'hasGrid'  => true,
+    ];
 
-	public function render()
-	{
-		return parent::render();
-	}
+    public function render()
+    {
+        return parent::render();
+    }
 }

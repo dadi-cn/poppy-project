@@ -32,226 +32,226 @@ use Psr\Log\LoggerInterface;
 trait PoppyTrait
 {
 
-	/**
-	 * get auth
-	 * @return AuthManager
-	 */
-	protected function pyAuth(): AuthManager
-	{
-		return py_container()->make('auth');
-	}
+    /**
+     * get auth
+     * @return AuthManager
+     */
+    protected function pyAuth(): AuthManager
+    {
+        return py_container()->make('auth');
+    }
 
-	/**
-	 * get translator
-	 * @return Translator
-	 */
-	protected function pyTranslator(): Translator
-	{
-		return py_container()->make('translator');
-	}
-
-
-	/**
-	 * Get configuration instance.
-	 * @return Repository
-	 */
-	protected function pyConfig()
-	{
-		return py_container()->make('config');
-	}
+    /**
+     * get translator
+     * @return Translator
+     */
+    protected function pyTranslator(): Translator
+    {
+        return py_container()->make('translator');
+    }
 
 
-	/**
-	 * get db
-	 * @return DatabaseManager
-	 */
-	protected function pyDb(): DatabaseManager
-	{
-		return py_container()->make('db');
-	}
-
-	/**
-	 * Get console instance.
-	 * @return Kernel
-	 */
-	protected function pyConsole()
-	{
-		return py_container()->make(Kernel::class);
-	}
-
-	/**
-	 * Get IoC Container.
-	 * @return Container | Application
-	 */
-	protected function pyContainer(): Container
-	{
-		return Container::getInstance();
-	}
-
-	/**
-	 * Get mailer instance.
-	 * @return Mailer
-	 */
-	protected function pyMailer(): Mailer
-	{
-		return py_container()->make('mailer');
-	}
-
-	/**
-	 * Get session instance.
-	 * @return SessionManager|Store
-	 */
-	protected function pySession()
-	{
-		return py_container()->make('session');
-	}
-
-	/**
-	 * get request
-	 * @return Request
-	 */
-	protected function pyRequest(): Request
-	{
-		return py_container()->make('request');
-	}
+    /**
+     * Get configuration instance.
+     * @return Repository
+     */
+    protected function pyConfig()
+    {
+        return py_container()->make('config');
+    }
 
 
-	/**
-	 * get redirector
-	 * @return Redirector
-	 */
-	protected function pyRedirector(): Redirector
-	{
-		return py_container()->make('redirect');
-	}
+    /**
+     * get db
+     * @return DatabaseManager
+     */
+    protected function pyDb(): DatabaseManager
+    {
+        return py_container()->make('db');
+    }
 
-	/**
-	 * get validation
-	 * @return \Illuminate\Validation\Factory
-	 */
-	protected function pyValidation(): \Illuminate\Validation\Factory
-	{
-		return py_container()->make('validator');
-	}
+    /**
+     * Get console instance.
+     * @return Kernel
+     */
+    protected function pyConsole()
+    {
+        return py_container()->make(Kernel::class);
+    }
 
+    /**
+     * Get IoC Container.
+     * @return Container | Application
+     */
+    protected function pyContainer(): Container
+    {
+        return Container::getInstance();
+    }
 
-	/**
-	 * get event
-	 * @return Dispatcher
-	 */
-	protected function pyEvent(): Dispatcher
-	{
-		return py_container()->make('events');
-	}
+    /**
+     * Get mailer instance.
+     * @return Mailer
+     */
+    protected function pyMailer(): Mailer
+    {
+        return py_container()->make('mailer');
+    }
 
+    /**
+     * Get session instance.
+     * @return SessionManager|Store
+     */
+    protected function pySession()
+    {
+        return py_container()->make('session');
+    }
 
-	/**
-	 * get logger
-	 * @return LoggerInterface
-	 */
-	protected function pyLogger(): LoggerInterface
-	{
-		return py_container()->make('log');
-	}
-
-
-	/**
-	 * get response
-	 * @return ResponseFactory
-	 */
-	protected function pyResponse()
-	{
-		return py_container()->make(ResponseFactory::class);
-	}
-
-
-	/**
-	 * get file
-	 * @return Filesystem
-	 */
-	protected function pyFile()
-	{
-		return py_container()->make('files');
-	}
+    /**
+     * get request
+     * @return Request
+     */
+    protected function pyRequest(): Request
+    {
+        return py_container()->make('request');
+    }
 
 
-	/**
-	 * get url
-	 * @return UrlGenerator
-	 */
-	protected function pyUrl()
-	{
-		return py_container()->make('url');
-	}
+    /**
+     * get redirector
+     * @return Redirector
+     */
+    protected function pyRedirector(): Redirector
+    {
+        return py_container()->make('redirect');
+    }
+
+    /**
+     * get validation
+     * @return \Illuminate\Validation\Factory
+     */
+    protected function pyValidation(): \Illuminate\Validation\Factory
+    {
+        return py_container()->make('validator');
+    }
 
 
-	/**
-	 * get cache
-	 * @param string $tag tag
-	 * @return mixed
-	 */
-	protected function pyCache($tag = '')
-	{
-		$cache = py_container()->make('cache');
-		if ($tag && $cache->getStore() instanceof TaggableStore) {
-			return $cache->tags($tag);
-		}
+    /**
+     * get event
+     * @return Dispatcher
+     */
+    protected function pyEvent(): Dispatcher
+    {
+        return py_container()->make('events');
+    }
 
-		return $cache;
-	}
 
-	/**
-	 * get redis
-	 * @return RedisManager
-	 */
-	protected function pyRedis(): RedisManager
-	{
-		return py_container()->make('redis');
-	}
+    /**
+     * get logger
+     * @return LoggerInterface
+     */
+    protected function pyLogger(): LoggerInterface
+    {
+        return py_container()->make('log');
+    }
 
-	/**
-	 * get view
-	 * @return Factory
-	 */
-	protected function pyView(): Factory
-	{
-		return py_container()->make('view');
-	}
 
-	/**
-	 * get poppy
-	 * @return Poppy
-	 */
-	protected function pyPoppy(): Poppy
-	{
-		return py_container()->make('poppy');
-	}
+    /**
+     * get response
+     * @return ResponseFactory
+     */
+    protected function pyResponse()
+    {
+        return py_container()->make(ResponseFactory::class);
+    }
 
-	/**
-	 * Ini Parser
-	 * @return Ini
-	 */
-	protected function pyIni(): Ini
-	{
-		return py_container()->make('poppy.ini');
-	}
 
-	/**
-	 * Ini Parser
-	 * @return Xml
-	 */
-	protected function pyXml(): Xml
-	{
-		return py_container()->make('poppy.xml');
-	}
+    /**
+     * get file
+     * @return Filesystem
+     */
+    protected function pyFile()
+    {
+        return py_container()->make('files');
+    }
 
-	/**
-	 * Yaml Parser
-	 * @return Yaml
-	 */
-	protected function pyYaml(): Yaml
-	{
-		return py_container()->make('poppy.yaml');
-	}
+
+    /**
+     * get url
+     * @return UrlGenerator
+     */
+    protected function pyUrl()
+    {
+        return py_container()->make('url');
+    }
+
+
+    /**
+     * get cache
+     * @param string $tag tag
+     * @return mixed
+     */
+    protected function pyCache($tag = '')
+    {
+        $cache = py_container()->make('cache');
+        if ($tag && $cache->getStore() instanceof TaggableStore) {
+            return $cache->tags($tag);
+        }
+
+        return $cache;
+    }
+
+    /**
+     * get redis
+     * @return RedisManager
+     */
+    protected function pyRedis(): RedisManager
+    {
+        return py_container()->make('redis');
+    }
+
+    /**
+     * get view
+     * @return Factory
+     */
+    protected function pyView(): Factory
+    {
+        return py_container()->make('view');
+    }
+
+    /**
+     * get poppy
+     * @return Poppy
+     */
+    protected function pyPoppy(): Poppy
+    {
+        return py_container()->make('poppy');
+    }
+
+    /**
+     * Ini Parser
+     * @return Ini
+     */
+    protected function pyIni(): Ini
+    {
+        return py_container()->make('poppy.ini');
+    }
+
+    /**
+     * Ini Parser
+     * @return Xml
+     */
+    protected function pyXml(): Xml
+    {
+        return py_container()->make('poppy.xml');
+    }
+
+    /**
+     * Yaml Parser
+     * @return Yaml
+     */
+    protected function pyYaml(): Yaml
+    {
+        return py_container()->make('poppy.yaml');
+    }
 }
 

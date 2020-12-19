@@ -9,16 +9,16 @@ use Poppy\Framework\Application\Event;
 class PoppyDisabled extends Event
 {
 
-	/**
-	 * @var Collection 模块
-	 */
-	public $module;
+    /**
+     * @var Collection 模块
+     */
+    public $module;
 
-	/**
-	 * @param $module
-	 */
-	public function __construct($module)
-	{
-		$this->module = $module;
-	}
+    /**
+     * @param $module
+     */
+    public function __construct($module)
+    {
+        $this->module = $module;
+    }
 }

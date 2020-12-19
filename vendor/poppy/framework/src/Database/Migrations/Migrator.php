@@ -13,101 +13,101 @@ use Illuminate\Support\Collection;
 class Migrator extends BaseMigrator
 {
 
-	/**
-	 * @var string Table name
-	 */
-	protected $table;
+    /**
+     * @var string Table name
+     */
+    protected $table;
 
-	/**
-	 * Create a new migrator instance.
-	 *
-	 * @param string                       $table
-	 * @param MigrationRepositoryInterface $repository
-	 * @param Resolver                     $resolver
-	 * @param Filesystem                   $files
-	 */
-	public function __construct(
-		$table,
-		MigrationRepositoryInterface $repository,
-		Resolver $resolver,
-		Filesystem $files
-	)
-	{
-		$this->table = $table;
+    /**
+     * Create a new migrator instance.
+     *
+     * @param string                       $table
+     * @param MigrationRepositoryInterface $repository
+     * @param Resolver                     $resolver
+     * @param Filesystem                   $files
+     */
+    public function __construct(
+        $table,
+        MigrationRepositoryInterface $repository,
+        Resolver $resolver,
+        Filesystem $files
+    )
+    {
+        $this->table = $table;
 
-		parent::__construct($repository, $resolver, $files);
-	}
+        parent::__construct($repository, $resolver, $files);
+    }
 
-	/**
-	 * Rollback the last migration operation.
-	 *
-	 * @param array|string $paths   路径
-	 * @param array        $options 选项
-	 *
-	 * @return array
-	 */
-	public function rollback($paths = [], array $options = [])
-	{
-		$this->notes = [];
-		$rolledBack  = [];
+    /**
+     * Rollback the last migration operation.
+     *
+     * @param array|string $paths   路径
+     * @param array        $options 选项
+     *
+     * @return array
+     */
+    public function rollback($paths = [], array $options = [])
+    {
+        $this->notes = [];
+        $rolledBack  = [];
 
-		$migrations = $this->getRanMigrations();
-		$files      = $this->getMigrationFiles($paths);
-		$count      = count($migrations);
+        $migrations = $this->getRanMigrations();
+        $files      = $this->getMigrationFiles($paths);
+        $count      = count($migrations);
 
-		if ($count === 0) {
-			$this->note('<info>Nothing to rollback.</info>');
-		}
-		else {
-			$this->requireFiles($files);
+        if ($count === 0) {
+            $this->note('<info>Nothing to rollback.</info>');
+        }
+        else {
+            $this->requireFiles($files);
 
-			$steps = Arr::get($options, 'step', 0);
-			if ($steps == 0) {
-				$steps = 1;
-			}
+            $steps = Arr::get($options, 'step', 0);
+            if ($steps == 0) {
+                $steps = 1;
+            }
 
-			$lastBatch = $this->repository->getLastBatchNumber();
-			$stepDown  = false;
+            $lastBatch = $this->repository->getLastBatchNumber();
+            $stepDown  = false;
 
-			foreach ($migrations as $migration) {
-				$migration = (object) $migration;
+            foreach ($migrations as $migration) {
+                $migration = (object) $migration;
 
-				if ($lastBatch > $migration->batch && $stepDown) {
-					$steps--;
-					$stepDown  = false;
-					$lastBatch = $migration->batch;
-				}
+                if ($lastBatch > $migration->batch && $stepDown) {
+                    $steps--;
+                    $stepDown  = false;
+                    $lastBatch = $migration->batch;
+                }
 
-				if ($steps <= 0) {
-					break;
-				}
+                if ($steps <= 0) {
+                    break;
+                }
 
-				if (Arr::exists($files, $migration->migration)) {
-					$rolledBack[] = $files[$migration->migration];
+                if (Arr::exists($files, $migration->migration)) {
+                    $rolledBack[] = $files[$migration->migration];
 
-					$stepDown = true;
+                    $stepDown = true;
 
-					$this->runDown(
-						$files[$migration->migration],
-						$migration,
-						Arr::get($options, 'pretend', false)
-					);
-				}
-			}
-		}
+                    $this->runDown(
+                        $files[$migration->migration],
+                        $migration,
+                        Arr::get($options, 'pretend', false)
+                    );
+                }
+            }
+        }
 
-		return $rolledBack;
-	}
+        return $rolledBack;
+    }
 
-	/**
-	 * Get all the ran migrations.
-	 *
-	 * @return Collection
-	 */
-	public function getRanMigrations()
-	{
-		$query = $this->resolveConnection($this->connection)->table($this->table);
+    /**
+     * Get all the ran migrations.
+     *
+     * @return Collection
+     */
+    public function getRanMigrations()
+    {
+        $query = $this->resolveConnection($this->connection)->table($this->table);
 
-		return $query->orderBy('batch', 'desc')->orderBy('migration', 'desc')->get();
-	}
+        return $query->orderBy('batch', 'desc')->orderBy('migration', 'desc')->get();
+    }
 }

@@ -9,23 +9,23 @@ use Poppy\Framework\Poppy\Poppy;
 class PoppyMigrateReset extends Event
 {
 
-	/**
-	 * @var Poppy 模块
-	 */
-	public $poppy;
+    /**
+     * @var Poppy 模块
+     */
+    public $poppy;
 
-	/**
-	 * @var array|mixed
-	 */
-	private $option;
+    /**
+     * @var array|mixed
+     */
+    private $option;
 
-	/**
-	 * @param Poppy $poppy
-	 * @param array $option
-	 */
-	public function __construct(Poppy $poppy, $option = [])
-	{
-		$this->poppy  = $poppy;
-		$this->option = $option;
-	}
+    /**
+     * @param Poppy $poppy
+     * @param array $option
+     */
+    public function __construct(Poppy $poppy, $option = [])
+    {
+        $this->poppy  = $poppy;
+        $this->option = $option;
+    }
 }

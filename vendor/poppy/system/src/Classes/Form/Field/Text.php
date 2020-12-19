@@ -7,73 +7,73 @@ use Poppy\System\Classes\Form\Traits\PlainInput;
 
 class Text extends Field
 {
-	use PlainInput;
+    use PlainInput;
 
-	/**
-	 * @var string
-	 */
-	protected $icon = 'fa-pencil';
+    /**
+     * @var string
+     */
+    protected $icon = 'fa-pencil';
 
 
-	/**
-	 * @var string 默认类型(Number 可覆盖)
-	 */
-	protected $type = 'text';
+    /**
+     * @var string 默认类型(Number 可覆盖)
+     */
+    protected $type = 'text';
 
-	/**
-	 * Set custom fa-icon.
-	 *
-	 * @param string $icon
-	 *
-	 * @return $this
-	 */
-	public function icon(string $icon)
-	{
-		$this->icon = $icon;
+    /**
+     * Set custom fa-icon.
+     *
+     * @param string $icon
+     *
+     * @return $this
+     */
+    public function icon(string $icon)
+    {
+        $this->icon = $icon;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Render this filed.
-	 *
-	 * @return Factory|View
-	 */
-	public function render()
-	{
-		$this->initPlainInput();
+    /**
+     * Render this filed.
+     *
+     * @return Factory|View
+     */
+    public function render()
+    {
+        $this->initPlainInput();
 
-		$this->prepend('<i class="fa ' . $this->icon . ' fa-fw"></i>')
-			->defaultAttribute('id', $this->id)
-			->defaultAttribute('class', 'layui-input ' . $this->getElementClassString())
-			->defaultAttribute('placeholder', $this->getPlaceholder());
+        $this->prepend('<i class="fa ' . $this->icon . ' fa-fw"></i>')
+            ->defaultAttribute('id', $this->id)
+            ->defaultAttribute('class', 'layui-input ' . $this->getElementClassString())
+            ->defaultAttribute('placeholder', $this->getPlaceholder());
 
-		$this->addVariables([
-			'prepend' => $this->prepend,
-			'append'  => $this->append,
-			'type'    => $this->type,
-		]);
+        $this->addVariables([
+            'prepend' => $this->prepend,
+            'append'  => $this->append,
+            'type'    => $this->type,
+        ]);
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 
-	/**
-	 * Add datalist element to Text input.
-	 *
-	 * @param array $entries
-	 *
-	 * @return $this
-	 */
-	public function datalist($entries = [])
-	{
-		$this->defaultAttribute('list', "list-{$this->id}");
+    /**
+     * Add datalist element to Text input.
+     *
+     * @param array $entries
+     *
+     * @return $this
+     */
+    public function datalist($entries = [])
+    {
+        $this->defaultAttribute('list', "list-{$this->id}");
 
-		$datalist = "<datalist id=\"list-{$this->id}\">";
-		foreach ($entries as $k => $v) {
-			$datalist .= "<option value=\"{$k}\">{$v}</option>";
-		}
-		$datalist .= '</datalist>';
+        $datalist = "<datalist id=\"list-{$this->id}\">";
+        foreach ($entries as $k => $v) {
+            $datalist .= "<option value=\"{$k}\">{$v}</option>";
+        }
+        $datalist .= '</datalist>';
 
-		return $this->append($datalist);
-	}
+        return $this->append($datalist);
+    }
 }

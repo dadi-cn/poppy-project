@@ -13,20 +13,20 @@ use View;
  */
 class DevelopController extends Controller
 {
-	use ViewTrait, CoreTrait;
+    use ViewTrait, CoreTrait;
 
-	public function __construct()
-	{
-		parent::__construct();
-		View::share('_menus', $this->coreModule()->menus()->where('type', 'develop')->toArray());
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        View::share('_menus', $this->coreModule()->menus()->where('type', 'develop')->toArray());
+    }
 
-	/**
-	 * 返回用户信息
-	 * @return Authenticatable|null|PamAccount
-	 */
-	protected function pam()
-	{
-		return Auth::guard(PamAccount::GUARD_DEVELOP)->user();
-	}
+    /**
+     * 返回用户信息
+     * @return Authenticatable|null|PamAccount
+     */
+    protected function pam()
+    {
+        return Auth::guard(PamAccount::GUARD_DEVELOP)->user();
+    }
 }

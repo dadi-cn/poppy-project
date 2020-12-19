@@ -3,13 +3,13 @@
 class Time extends Date
 {
 
-	protected $options = [
-		'type' => 'time',
-	];
+    protected $options = [
+        'type' => 'time',
+    ];
 
-	public function render()
-	{
-		$this->prepend('<i class="fa fa-clock-o fa-fw"></i>');
-		return parent::render();
-	}
+    public function render()
+    {
+        $this->prepend('<i class="fa fa-clock-o fa-fw"></i>');
+        return parent::render();
+    }
 }

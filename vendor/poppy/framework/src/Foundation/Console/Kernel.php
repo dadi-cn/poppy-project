@@ -16,26 +16,26 @@ use Poppy\Framework\Foundation\Bootstrap\RegisterClassLoader;
  */
 class Kernel extends ConsoleKernel
 {
-	/**
-	 * @var array bootstrappers
-	 */
-	protected $bootstrappers = [
-		RegisterClassLoader::class,   // poppy module loader
-		LoadEnvironmentVariables::class,
-		LoadConfiguration::class,
-		HandleExceptions::class,
-		RegisterFacades::class,
-		SetRequestForConsole::class,
-		RegisterProviders::class,
-		BootProviders::class,
-	];
+    /**
+     * @var array bootstrappers
+     */
+    protected $bootstrappers = [
+        RegisterClassLoader::class,   // poppy module loader
+        LoadEnvironmentVariables::class,
+        LoadConfiguration::class,
+        HandleExceptions::class,
+        RegisterFacades::class,
+        SetRequestForConsole::class,
+        RegisterProviders::class,
+        BootProviders::class,
+    ];
 
-	/**
-	 * 定义计划命令
-	 * @param Schedule $schedule schedule
-	 */
-	protected function schedule(Schedule $schedule)
-	{
-		$this->app['events']->dispatch('console.schedule', [$schedule]);
-	}
+    /**
+     * 定义计划命令
+     * @param Schedule $schedule schedule
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $this->app['events']->dispatch('console.schedule', [$schedule]);
+    }
 }

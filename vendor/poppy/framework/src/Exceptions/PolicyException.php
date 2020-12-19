@@ -7,8 +7,8 @@ use Exception;
  */
 class PolicyException extends Exception
 {
-	/**
-	 * @var int $code
-	 */
-	protected $code = 101;
+    /**
+     * @var int $code
+     */
+    protected $code = 101;
 }

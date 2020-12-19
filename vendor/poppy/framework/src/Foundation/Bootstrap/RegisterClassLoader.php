@@ -9,28 +9,28 @@ use Poppy\Framework\Foundation\Application;
  */
 class RegisterClassLoader
 {
-	/**
-	 * 注册 Loader
-	 * @param Application $app app
-	 */
-	public function bootstrap(Application $app): void
-	{
-		$loader = new ClassLoader(
-			new Filesystem(),
-			$app->basePath(),
-			$app->getCachedClassesPath()
-		);
+    /**
+     * 注册 Loader
+     * @param Application $app app
+     */
+    public function bootstrap(Application $app): void
+    {
+        $loader = new ClassLoader(
+            new Filesystem(),
+            $app->basePath(),
+            $app->getCachedClassesPath()
+        );
 
-		$app->instance(ClassLoader::class, $loader);
+        $app->instance(ClassLoader::class, $loader);
 
-		$loader->register();
+        $loader->register();
 
-		$loader->addDirectories([
-			'modules',
-		]);
+        $loader->addDirectories([
+            'modules',
+        ]);
 
-		$app->routeMatched(function () use ($loader) {
-			$loader->build();
-		});
-	}
+        $app->routeMatched(function () use ($loader) {
+            $loader->build();
+        });
+    }
 }

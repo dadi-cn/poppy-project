@@ -7,51 +7,51 @@
  */
 class Listbox extends MultipleSelect
 {
-	protected $settings = [];
+    protected $settings = [];
 
 
-	public function settings(array $settings)
-	{
-		$this->settings = $settings;
+    public function settings(array $settings)
+    {
+        $this->settings = $settings;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set listbox height.
-	 *
-	 * @param int $height
-	 *
-	 * @return Listbox
-	 */
-	public function height($height = 200)
-	{
-		return $this->settings(['selectorMinimalHeight' => $height]);
-	}
+    /**
+     * Set listbox height.
+     *
+     * @param int $height
+     *
+     * @return Listbox
+     */
+    public function height($height = 200)
+    {
+        return $this->settings(['selectorMinimalHeight' => $height]);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function loadRemoteOptions($url, $parameters = [], $options = [])
-	{
-		return $this;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    protected function loadRemoteOptions($url, $parameters = [], $options = [])
+    {
+        return $this;
+    }
 
-	public function render()
-	{
-		$settings = array_merge([
-			'infoText'              => trans('admin.listbox.text_total'),
-			'infoTextEmpty'         => trans('admin.listbox.text_empty'),
-			'infoTextFiltered'      => trans('admin.listbox.filtered'),
-			'filterTextClear'       => trans('admin.listbox.filter_clear'),
-			'filterPlaceHolder'     => trans('admin.listbox.filter_placeholder'),
-			'selectorMinimalHeight' => 200,
-		], $this->settings);
+    public function render()
+    {
+        $settings = array_merge([
+            'infoText'              => trans('admin.listbox.text_total'),
+            'infoTextEmpty'         => trans('admin.listbox.text_empty'),
+            'infoTextFiltered'      => trans('admin.listbox.filtered'),
+            'filterTextClear'       => trans('admin.listbox.filter_clear'),
+            'filterPlaceHolder'     => trans('admin.listbox.filter_placeholder'),
+            'selectorMinimalHeight' => 200,
+        ], $this->settings);
 
-		$settings = json_encode($settings);
+        $settings = json_encode($settings);
 
-		$this->attribute('data-value', implode(',', (array) $this->value()));
+        $this->attribute('data-value', implode(',', (array) $this->value()));
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 }

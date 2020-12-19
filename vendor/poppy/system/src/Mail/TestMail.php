@@ -9,30 +9,30 @@ use Illuminate\Queue\SerializesModels;
  */
 class TestMail extends Mailable
 {
-	use Queueable, SerializesModels;
+    use Queueable, SerializesModels;
 
-	/**
-	 * @var string 发送内容
-	 */
-	public $content;
+    /**
+     * @var string 发送内容
+     */
+    public $content;
 
-	/**
-	 * Create a new message instance.
-	 *
-	 * @param $content
-	 */
-	public function __construct($content = '')
-	{
-		$this->content = $content;
-	}
+    /**
+     * Create a new message instance.
+     *
+     * @param $content
+     */
+    public function __construct($content = '')
+    {
+        $this->content = $content;
+    }
 
-	/**
-	 * Build the message.
-	 *
-	 * @return $this
-	 */
-	public function build()
-	{
-		return $this->view('py-system::mail.test');
-	}
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('py-system::mail.test');
+    }
 }

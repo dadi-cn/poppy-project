@@ -8,25 +8,25 @@ use Poppy\System\Models\PamAccount;
  */
 class LoginSuccessEvent
 {
-	/**
-	 * @var PamAccount 用户账户
-	 */
-	public $pam;
+    /**
+     * @var PamAccount 用户账户
+     */
+    public $pam;
 
-	/**
-	 * @var string 平台
-	 */
-	public $platform;
+    /**
+     * @var string 平台
+     */
+    public $platform;
 
-	/**
-	 * @var SessionGuard|null
-	 */
-	public $guard;
+    /**
+     * @var SessionGuard|null
+     */
+    public $guard;
 
-	public function __construct(PamAccount $pam, $platform, $guard = null)
-	{
-		$this->pam      = $pam;
-		$this->platform = $platform;
-		$this->guard    = $guard;
-	}
+    public function __construct(PamAccount $pam, $platform, $guard = null)
+    {
+        $this->pam      = $pam;
+        $this->platform = $platform;
+        $this->guard    = $guard;
+    }
 }

@@ -9,50 +9,50 @@ use Poppy\System\Models\PamRole;
 class PamRolePolicy
 {
 
-	/**
-	 * 编辑
-	 * @param PamAccount $pam 账号
-	 * @return bool
-	 */
-	public function create(PamAccount $pam): bool
-	{
-		return true;
-	}
+    /**
+     * 编辑
+     * @param PamAccount $pam 账号
+     * @return bool
+     */
+    public function create(PamAccount $pam): bool
+    {
+        return true;
+    }
 
-	/**
-	 * 编辑
-	 * @param PamAccount $pam  账号
-	 * @param PamRole    $role 角色
-	 * @return bool
-	 */
-	public function edit(PamAccount $pam, PamRole $role): bool
-	{
-		return true;
-	}
+    /**
+     * 编辑
+     * @param PamAccount $pam  账号
+     * @param PamRole    $role 角色
+     * @return bool
+     */
+    public function edit(PamAccount $pam, PamRole $role): bool
+    {
+        return true;
+    }
 
-	/**
-	 * 保存权限
-	 * @param PamAccount $pam  账号
-	 * @param PamRole    $role 角色
-	 * @return bool
-	 */
-	public function permission(PamAccount $pam, PamRole $role): bool
-	{
-		return !($role->name === PamRole::BE_ROOT);
-	}
+    /**
+     * 保存权限
+     * @param PamAccount $pam  账号
+     * @param PamRole    $role 角色
+     * @return bool
+     */
+    public function permission(PamAccount $pam, PamRole $role): bool
+    {
+        return !($role->name === PamRole::BE_ROOT);
+    }
 
-	/**
-	 * 删除
-	 * @param PamAccount $pam  账号
-	 * @param PamRole    $role 角色
-	 * @return bool
-	 */
-	public function delete(PamAccount $pam, PamRole $role): bool
-	{
-		if ($role->is_system) {
-			return false;
-		}
+    /**
+     * 删除
+     * @param PamAccount $pam  账号
+     * @param PamRole    $role 角色
+     * @return bool
+     */
+    public function delete(PamAccount $pam, PamRole $role): bool
+    {
+        if ($role->is_system) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

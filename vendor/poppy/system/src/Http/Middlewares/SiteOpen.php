@@ -10,20 +10,20 @@ use Poppy\Framework\Classes\Resp;
 class SiteOpen
 {
 
-	/**
-	 * Handle an incoming request.
-	 * @param Request $request 请求
-	 * @param Closure $next    后续处理
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		if (!sys_setting('py-system::site.is_open')) {
-			$reason = sys_setting('py-system::site.close_reason');
+    /**
+     * Handle an incoming request.
+     * @param Request $request 请求
+     * @param Closure $next    后续处理
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if (!sys_setting('py-system::site.is_open')) {
+            $reason = sys_setting('py-system::site.close_reason');
 
-			return Resp::error('网站临时关闭, 原因:' . $reason);
-		}
+            return Resp::error('网站临时关闭, 原因:' . $reason);
+        }
 
-		return $next($request);
-	}
+        return $next($request);
+    }
 }

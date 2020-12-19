@@ -35,26 +35,26 @@ use Poppy\System\Classes\Traits\FilterTrait;
  */
 class PamLog extends Eloquent
 {
-	use FilterTrait;
+    use FilterTrait;
 
-	protected $table = 'pam_log';
+    protected $table = 'pam_log';
 
-	protected $fillable = [
-		'account_id',
-		'parent_id',
-		'account_type',
-		'type',
-		'ip',
-		'area_text',   // 山东济南联通
-		'area_name',   // 济南
-	];
+    protected $fillable = [
+        'account_id',
+        'parent_id',
+        'account_type',
+        'type',
+        'ip',
+        'area_text',   // 山东济南联通
+        'area_name',   // 济南
+    ];
 
-	/**
-	 * 链接用户表
-	 * @return BelongsTo
-	 */
-	public function pam()
-	{
-		return $this->belongsTo(PamAccount::class, 'account_id', 'id');
-	}
+    /**
+     * 链接用户表
+     * @return BelongsTo
+     */
+    public function pam()
+    {
+        return $this->belongsTo(PamAccount::class, 'account_id', 'id');
+    }
 }

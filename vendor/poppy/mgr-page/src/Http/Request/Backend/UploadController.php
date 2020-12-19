@@ -14,23 +14,23 @@ use Poppy\System\Http\Forms\Settings\FormSettingUpload;
  */
 class UploadController extends BackendController
 {
-	use SystemTrait;
+    use SystemTrait;
 
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-		self::$permission = [
-			'global' => 'backend:py-system.global.manage',
-		];
-	}
+        self::$permission = [
+            'global' => 'backend:py-system.global.manage',
+        ];
+    }
 
-	/**
-	 * 保存邮件配置
-	 * @return array|JsonResponse|RedirectResponse|Response|Redirector|Resp|Content|\Response
-	 */
-	public function store()
-	{
-		return (new Content())->body(new FormSettingUpload());
-	}
+    /**
+     * 保存邮件配置
+     * @return array|JsonResponse|RedirectResponse|Response|Redirector|Resp|Content|\Response
+     */
+    public function store()
+    {
+        return (new Content())->body(new FormSettingUpload());
+    }
 }

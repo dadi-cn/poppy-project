@@ -2,14 +2,14 @@
 
 class Icon extends Text
 {
-	protected $default = 'fa-pencil';
+    protected $default = 'fa-pencil';
 
-	public function render()
-	{
+    public function render()
+    {
 
-		$this->prepend('<i class="fa fa-pencil fa-fw"></i>')
-			->defaultAttribute('style', 'width: 140px');
+        $this->prepend('<i class="fa fa-pencil fa-fw"></i>')
+            ->defaultAttribute('style', 'width: 140px');
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 }

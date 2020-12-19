@@ -2,23 +2,23 @@
 
 class Fieldset
 {
-	protected $name = '';
+    protected $name = '';
 
-	public function __construct()
-	{
-		$this->name = uniqid('fieldset-');
-	}
+    public function __construct()
+    {
+        $this->name = uniqid('fieldset-');
+    }
 
-	public function start($title)
-	{
-		$script = <<<SCRIPT
+    public function start($title)
+    {
+        $script = <<<SCRIPT
 $('.{$this->name}-title').click(function () {
     $("i", this).toggleClass("fa-angle-double-down fa-angle-double-up");
 });
 SCRIPT;
 
 
-		return <<<HTML
+        return <<<HTML
 <div>
     <div style="height: 20px; border-bottom: 1px solid #eee; text-align: center;margin-top: 20px;margin-bottom: 20px;">
       <span style="font-size: 16px; background-color: #ffffff; padding: 0 10px;">
@@ -29,21 +29,21 @@ SCRIPT;
     </div>
     <div class="collapse in" id="{$this->name}">
 HTML;
-	}
+    }
 
-	public function end()
-	{
-		return '</div></div>';
-	}
+    public function end()
+    {
+        return '</div></div>';
+    }
 
-	public function collapsed()
-	{
-		$script = <<<SCRIPT
+    public function collapsed()
+    {
+        $script = <<<SCRIPT
 $("#{$this->name}").removeClass("in");
 $(".{$this->name}-title i").toggleClass("fa-angle-double-down fa-angle-double-up");
 SCRIPT;
 
 
-		return $this;
-	}
+        return $this;
+    }
 }

@@ -7,17 +7,17 @@ use Poppy\Framework\Application\Event;
  */
 class PoppyMake extends Event
 {
-	/**
-	 * @var string
-	 */
-	public $slug;
+    /**
+     * @var string
+     */
+    public $slug;
 
-	/**
-	 * PoppyMake constructor.
-	 * @param string $slug slug
-	 */
-	public function __construct(string $slug)
-	{
-		$this->slug = $slug;
-	}
+    /**
+     * PoppyMake constructor.
+     * @param string $slug slug
+     */
+    public function __construct(string $slug)
+    {
+        $this->slug = $slug;
+    }
 }

@@ -15,32 +15,32 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class LogController extends DevelopController
 {
-	/**
-	 * 入口
-	 * @return Factory|RedirectResponse|View|BinaryFileResponse
-	 */
-	public function index()
-	{
-		if (input('l')) {
-			LogViewer::setFile(base64_decode(input('l')));
-		}
+    /**
+     * 入口
+     * @return Factory|RedirectResponse|View|BinaryFileResponse
+     */
+    public function index()
+    {
+        if (input('l')) {
+            LogViewer::setFile(base64_decode(input('l')));
+        }
 
-		if (input('dl')) {
-			return Response::download(storage_path() . '/logs/' . base64_decode(input('dl')));
-		}
+        if (input('dl')) {
+            return Response::download(storage_path() . '/logs/' . base64_decode(input('dl')));
+        }
 
-		if (Request::has('del')) {
-			File::delete(storage_path() . '/logs/' . base64_decode(input('del')));
+        if (Request::has('del')) {
+            File::delete(storage_path() . '/logs/' . base64_decode(input('del')));
 
-			return Redirect::to(Request::url());
-		}
+            return Redirect::to(Request::url());
+        }
 
-		$logs = LogViewer::all();
+        $logs = LogViewer::all();
 
-		return view('py-mgr-page::develop.log.index', [
-			'logs'         => $logs,
-			'files'        => LogViewer::getFiles(true),
-			'current_file' => LogViewer::getFileName(),
-		]);
-	}
+        return view('py-mgr-page::develop.log.index', [
+            'logs'         => $logs,
+            'files'        => LogViewer::getFiles(true),
+            'current_file' => LogViewer::getFileName(),
+        ]);
+    }
 }

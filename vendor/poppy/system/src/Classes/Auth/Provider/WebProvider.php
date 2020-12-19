@@ -9,16 +9,16 @@ use Poppy\System\Models\PamAccount;
  */
 class WebProvider extends PamProvider
 {
-	/**
-	 * Retrieve a user by the given credentials.
-	 * DO NOT TEST PASSWORD HERE!
-	 * @param array $credentials 凭证
-	 * @return Builder|Model
-	 */
-	public function retrieveByCredentials(array $credentials)
-	{
-		$credentials['type'] = PamAccount::TYPE_USER;
+    /**
+     * Retrieve a user by the given credentials.
+     * DO NOT TEST PASSWORD HERE!
+     * @param array $credentials 凭证
+     * @return Builder|Model
+     */
+    public function retrieveByCredentials(array $credentials)
+    {
+        $credentials['type'] = PamAccount::TYPE_USER;
 
-		return parent::retrieveByCredentials($credentials);
-	}
+        return parent::retrieveByCredentials($credentials);
+    }
 }

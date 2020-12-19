@@ -7,9 +7,9 @@ use Illuminate\Support\Collection;
  */
 abstract class Repository extends Collection
 {
-	/**
-	 * Initialize.
-	 * @param Collection $collection collection
-	 */
-	abstract public function initialize(Collection $collection);
+    /**
+     * Initialize.
+     * @param Collection $collection collection
+     */
+    abstract public function initialize(Collection $collection);
 }

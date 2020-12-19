@@ -11,58 +11,58 @@ use Poppy\System\Models\PamAccount;
 class FormPassword extends FormWidget
 {
 
-	public $title = '修改密码';
+    public $title = '修改密码';
 
-	public $ajax = true;
+    public $ajax = true;
 
-	/**
-	 * @var PamAccount
-	 */
-	private $pam;
+    /**
+     * @var PamAccount
+     */
+    private $pam;
 
-	/**
-	 * @param PamAccount $pam
-	 * @return $this
-	 */
-	public function setPam(PamAccount $pam)
-	{
-		$this->pam = $pam;
-		return $this;
-	}
+    /**
+     * @param PamAccount $pam
+     * @return $this
+     */
+    public function setPam(PamAccount $pam)
+    {
+        $this->pam = $pam;
+        return $this;
+    }
 
-	public function handle()
-	{
+    public function handle()
+    {
 
-		$old_password = input('old_password');
-		$password     = input('password');
+        $old_password = input('old_password');
+        $password     = input('password');
 
-		$Pam = new Pam();
-		if (!app(PasswordContract::class)->check($this->pam, $old_password)) {
-			return Resp::error('原密码错误!');
-		}
+        $Pam = new Pam();
+        if (!app(PasswordContract::class)->check($this->pam, $old_password)) {
+            return Resp::error('原密码错误!');
+        }
 
-		$Pam->setPassword($this->pam, $password);
-		app('auth')->guard(PamAccount::GUARD_BACKEND)->logout();
+        $Pam->setPassword($this->pam, $password);
+        app('auth')->guard(PamAccount::GUARD_BACKEND)->logout();
 
-		return Resp::success('密码修改成功, 请重新登录', '_location|' . route('py-mgr-page:backend.home.login'));
+        return Resp::success('密码修改成功, 请重新登录', '_location|' . route('py-mgr-page:backend.home.login'));
 
-	}
+    }
 
-	/**
-	 * Build a form here.
-	 * @throws FormException
-	 */
-	public function form()
-	{
-		$this->password('old_password', '原密码')->rules([
-			Rule::required(),
-		]);
-		$this->password('password', '密码')->rules([
-			Rule::required(),
-			Rule::confirmed(),
-		]);
-		$this->password('password_confirmation', '重复密码')->rules([
-			Rule::required(),
-		]);;
-	}
+    /**
+     * Build a form here.
+     * @throws FormException
+     */
+    public function form()
+    {
+        $this->password('old_password', '原密码')->rules([
+            Rule::required(),
+        ]);
+        $this->password('password', '密码')->rules([
+            Rule::required(),
+            Rule::confirmed(),
+        ]);
+        $this->password('password_confirmation', '重复密码')->rules([
+            Rule::required(),
+        ]);;
+    }
 }

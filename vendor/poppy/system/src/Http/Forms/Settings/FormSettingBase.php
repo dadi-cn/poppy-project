@@ -14,53 +14,53 @@ use Response;
 
 abstract class FormSettingBase extends FormWidget
 {
-	use KeyParserTrait;
+    use KeyParserTrait;
 
-	public $ajax = true;
+    public $ajax = true;
 
-	public $inbox = false;
+    public $inbox = false;
 
-	public $title = '';
+    public $title = '';
 
-	protected $group = '';
+    protected $group = '';
 
-	/**
-	 * @param Request $request
-	 * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector|mixed|Resp|Response
-	 * @throws FormException
-	 */
-	public function handle(Request $request)
-	{
-		$Setting = app(SettingContract::class);
-		$all     = $request->all();
-		foreach ($all as $key => $value) {
-			if (is_null($value)) {
-				continue;
-			}
-			$fullKey = $this->group . '.' . $key;
-			$class   = __CLASS__;
-			if (!$this->keyParserMatch($fullKey)) {
-				throw new FormException("Key {$fullKey} Not Match At Group `{$this->group}` In Class `{$class}`");
-			}
-			$Setting->set($fullKey, $value);
-		}
+    /**
+     * @param Request $request
+     * @return array|JsonResponse|RedirectResponse|\Illuminate\Http\Response|Redirector|mixed|Resp|Response
+     * @throws FormException
+     */
+    public function handle(Request $request)
+    {
+        $Setting = app(SettingContract::class);
+        $all     = $request->all();
+        foreach ($all as $key => $value) {
+            if (is_null($value)) {
+                continue;
+            }
+            $fullKey = $this->group . '.' . $key;
+            $class   = __CLASS__;
+            if (!$this->keyParserMatch($fullKey)) {
+                throw new FormException("Key {$fullKey} Not Match At Group `{$this->group}` In Class `{$class}`");
+            }
+            $Setting->set($fullKey, $value);
+        }
 
-		return Resp::success('更新配置成功', '_reload|1');
-	}
+        return Resp::success('更新配置成功', '_reload|1');
+    }
 
-	/**
-	 * @return array
-	 */
-	public function data()
-	{
-		$Setting = app(SettingContract::class);
-		$data    = [];
-		foreach ($this->fields() as $field) {
-			if (Str::startsWith($field->column(), '_')) {
-				continue;
-			}
-			$data[$field->column()] = $Setting->get($this->group . '.' . $field->column());
-		}
-		return $data;
-	}
+    /**
+     * @return array
+     */
+    public function data()
+    {
+        $Setting = app(SettingContract::class);
+        $data    = [];
+        foreach ($this->fields() as $field) {
+            if (Str::startsWith($field->column(), '_')) {
+                continue;
+            }
+            $data[$field->column()] = $Setting->get($this->group . '.' . $field->column());
+        }
+        return $data;
+    }
 }

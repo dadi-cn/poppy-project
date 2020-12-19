@@ -1,2 +1,5 @@
 * [README](README.md)
-* [项目搭建](project.md)
+* [项目安装](project/install.md)
+* [项目说明](project/project.md)
+* [项目文档](project/gen-doc.md)
+* [Todo](project/todo.md)

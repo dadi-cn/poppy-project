@@ -8,26 +8,26 @@ use Poppy\Framework\Application\Event;
  */
 class PoppyOptimized extends Event
 {
-	/**
-	 * Optimized module collection
-	 * @var Collection $modules
-	 */
-	private $modules;
+    /**
+     * Optimized module collection
+     * @var Collection $modules
+     */
+    private $modules;
 
-	/**
-	 * PoppyOptimized constructor.
-	 * @param Collection $modules
-	 */
-	public function __construct(Collection $modules)
-	{
-		$this->modules = $modules;
-	}
+    /**
+     * PoppyOptimized constructor.
+     * @param Collection $modules
+     */
+    public function __construct(Collection $modules)
+    {
+        $this->modules = $modules;
+    }
 
-	/**
-	 * @return Collection
-	 */
-	public function modules()
-	{
-		return $this->modules;
-	}
+    /**
+     * @return Collection
+     */
+    public function modules()
+    {
+        return $this->modules;
+    }
 }

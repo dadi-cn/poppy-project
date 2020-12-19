@@ -6,8 +6,8 @@ abstract class FormDialogWidget extends FormWidget
 {
 
 
-	protected $width = [
-		'label' => 3,
-		'field' => 9,
-	];
+    protected $width = [
+        'label' => 3,
+        'field' => 9,
+    ];
 }

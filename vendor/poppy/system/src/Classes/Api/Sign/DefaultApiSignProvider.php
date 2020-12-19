@@ -12,77 +12,77 @@ use Poppy\System\Classes\Contracts\ApiSignContract;
  */
 class DefaultApiSignProvider implements ApiSignContract
 {
-	use AppTrait;
+    use AppTrait;
 
-	/**
-	 * @var Request 请求内容
-	 */
-	private $request;
+    /**
+     * @var Request 请求内容
+     */
+    private $request;
 
-	public function __construct()
-	{
-		$this->request = app('request');
-	}
+    public function __construct()
+    {
+        $this->request = app('request');
+    }
 
-	/**
-	 * 获取Sign
-	 * @param array $params 请求参数
-	 * @return string
-	 */
-	public function sign(array $params): string
-	{
-		$token = function () {
-			$token = $this->request->header('Authorization');
-			if ($token && Str::startsWith($token, 'Bearer ')) {
-				$token = substr($token, 7);
-			}
-			if (!$token) {
-				$token = $this->request->input('token');
-			}
+    /**
+     * 获取Sign
+     * @param array $params 请求参数
+     * @return string
+     */
+    public function sign(array $params): string
+    {
+        $token = function () {
+            $token = $this->request->header('Authorization');
+            if ($token && Str::startsWith($token, 'Bearer ')) {
+                $token = substr($token, 7);
+            }
+            if (!$token) {
+                $token = $this->request->input('token');
+            }
 
-			return $token;
-		};
-		ksort($params);
-		$kvStr    = ArrayHelper::toKvStr($params);
-		$signLong = md5(md5($kvStr) . $token());
-		return $signLong[1] . $signLong[3] . $signLong[15] . $signLong[31];
-	}
+            return $token;
+        };
+        ksort($params);
+        $kvStr    = ArrayHelper::toKvStr($params);
+        $signLong = md5(md5($kvStr) . $token());
+        return $signLong[1] . $signLong[3] . $signLong[15] . $signLong[31];
+    }
 
 
-	public function check(Request $request): bool
-	{
-		if (!config('poppy.system.api_enable_sign')) {
-			return true;
-		}
+    public function check(Request $request): bool
+    {
+        if (!config('poppy.system.api_enable_sign')) {
+            return true;
+        }
 
-		// check token
-		$sign = $request->input('sign');
-		if (!$sign) {
-			return $this->setError(new Resp(Resp::PARAM_ERROR, '未进行签名'));
-		}
+        // check token
+        $sign = $request->input('sign');
+        if (!$sign) {
+            return $this->setError(new Resp(Resp::PARAM_ERROR, '未进行签名'));
+        }
 
-		// check token
-		$timestamp = $request->input('timestamp');
-		if (!$timestamp) {
-			return $this->setError(new Resp(Resp::PARAM_ERROR, '未传递时间戳'));
-		}
+        // check token
+        $timestamp = $request->input('timestamp');
+        if (!$timestamp) {
+            return $this->setError(new Resp(Resp::PARAM_ERROR, '未传递时间戳'));
+        }
 
-		// check sign
-		$params = $request->except(['sign', 'image', 'token', '_token', 'file']);
+        // check sign
+        $params = $request->except(['sign', 'image', 'token', '_token', 'file']);
 
-		if ($sign !== $this->sign($params)) {
-			return $this->setError(new Resp(Resp::SIGN_ERROR, '签名错误'));
-		}
-		return true;
-	}
+        if ($sign !== $this->sign($params)) {
+            return $this->setError(new Resp(Resp::SIGN_ERROR, '签名错误'));
+        }
+        return true;
+    }
 
-	/**
-	 * js 计算
-	 * @return string
-	 */
-	public static function js(): string
-	{
-		return <<<JS
+    /**
+     * js 计算
+     * @return string
+     */
+    public static function js(): string
+    {
+        return <<<JS
         var params = [];
         var str = "";
 
@@ -116,5 +116,5 @@ class DefaultApiSignProvider implements ApiSignContract
         _sign(md5Short);
 JS;
 
-	}
+    }
 }

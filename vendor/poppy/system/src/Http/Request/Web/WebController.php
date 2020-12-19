@@ -11,21 +11,21 @@ use Poppy\System\Models\PamAccount;
 abstract class WebController extends Controller
 {
 
-	/**
-	 * 当前用户
-	 * @return Authenticatable|PamAccount
-	 */
-	public function pam()
-	{
-		return Auth::guard(PamAccount::GUARD_WEB)->user();
-	}
+    /**
+     * 当前用户
+     * @return Authenticatable|PamAccount
+     */
+    public function pam()
+    {
+        return Auth::guard(PamAccount::GUARD_WEB)->user();
+    }
 
-	/**
-	 * 当前用户
-	 * @return Authenticatable|PamAccount
-	 */
-	public function jwtPam()
-	{
-		return Auth::guard(PamAccount::GUARD_JWT_WEB)->user();
-	}
+    /**
+     * 当前用户
+     * @return Authenticatable|PamAccount
+     */
+    public function jwtPam()
+    {
+        return Auth::guard(PamAccount::GUARD_JWT_WEB)->user();
+    }
 }

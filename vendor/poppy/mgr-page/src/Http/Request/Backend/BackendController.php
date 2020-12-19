@@ -11,18 +11,18 @@ use Poppy\System\Models\PamAccount;
 abstract class BackendController extends Controller
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		py_container()->setExecutionContext('backend');
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        py_container()->setExecutionContext('backend');
+    }
 
-	/**
-	 * 当前用户
-	 * @return Authenticatable|PamAccount
-	 */
-	public function pam()
-	{
-		return Auth::guard(PamAccount::GUARD_BACKEND)->user();
-	}
+    /**
+     * 当前用户
+     * @return Authenticatable|PamAccount
+     */
+    public function pam()
+    {
+        return Auth::guard(PamAccount::GUARD_BACKEND)->user();
+    }
 }

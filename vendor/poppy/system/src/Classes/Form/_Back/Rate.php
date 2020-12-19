@@ -2,13 +2,13 @@
 
 class Rate extends Text
 {
-	public function render()
-	{
-		$this->prepend('')
-			->append('%')
-			->defaultAttribute('style', 'text-align:right;')
-			->defaultAttribute('placeholder', 0);
+    public function render()
+    {
+        $this->prepend('')
+            ->append('%')
+            ->defaultAttribute('style', 'text-align:right;')
+            ->defaultAttribute('placeholder', 0);
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 }

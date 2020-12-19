@@ -5,19 +5,19 @@
  */
 class LoginFailedEvent
 {
-	/** @var string */
-	public $type;
+    /** @var string */
+    public $type;
 
-	/** @var string */
-	public $passport;
+    /** @var string */
+    public $passport;
 
-	/** @var string */
-	public $password;
+    /** @var string */
+    public $password;
 
-	public function __construct(array $credentials)
-	{
-		$this->type     = $credentials['type'] ?? '';
-		$this->passport = $credentials['passport'] ?? '';
-		$this->password = $credentials['password'] ?? '';
-	}
+    public function __construct(array $credentials)
+    {
+        $this->type     = $credentials['type'] ?? '';
+        $this->passport = $credentials['passport'] ?? '';
+        $this->password = $credentials['password'] ?? '';
+    }
 }

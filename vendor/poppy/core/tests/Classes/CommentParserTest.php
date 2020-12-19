@@ -9,9 +9,9 @@ use Poppy\Framework\Application\TestCase;
 
 class CommentParserTest extends TestCase
 {
-	public function testParser()
-	{
-		$data = '<?php
+    public function testParser()
+    {
+        $data = '<?php
 	class FooBar
 	{
 		
@@ -32,14 +32,14 @@ class CommentParserTest extends TestCase
 		}		
 	}';
 
-		$p = new CommentParser();
-		$x = $p->parseContent($data);
+        $p = new CommentParser();
+        $x = $p->parseContent($data);
 
-		$this->assertArrayHasKey('foo', $x);
-		$this->assertEquals('PamAccount', $x['foo']['params'][0]['var_type']);
-		$this->assertEquals('描述', $x['foo']['params'][0]['var_desc']);
-		$this->assertEquals('$value', $x['foo']['params'][0]['var_name']);
-		$this->assertEquals('param', $x['foo']['params'][0]['type']);
-		$this->assertEquals('ApplicationException', $x['foo']['throws']);
-	}
+        $this->assertArrayHasKey('foo', $x);
+        $this->assertEquals('PamAccount', $x['foo']['params'][0]['var_type']);
+        $this->assertEquals('描述', $x['foo']['params'][0]['var_desc']);
+        $this->assertEquals('$value', $x['foo']['params'][0]['var_name']);
+        $this->assertEquals('param', $x['foo']['params'][0]['type']);
+        $this->assertEquals('ApplicationException', $x['foo']['throws']);
+    }
 }

@@ -5,35 +5,35 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultipleImage extends MultipleFile
 {
-	use ImageField;
+    use ImageField;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected $view = 'py-system::tpl.form.multiplefile';
+    /**
+     * {@inheritdoc}
+     */
+    protected $view = 'py-system::tpl.form.multiplefile';
 
-	/**
-	 *  Validation rules.
-	 *
-	 * @var string
-	 */
-	protected $rules = 'image';
+    /**
+     *  Validation rules.
+     *
+     * @var string
+     */
+    protected $rules = 'image';
 
-	/**
-	 * Prepare for each file.
-	 *
-	 * @param UploadedFile $image
-	 *
-	 * @return mixed|string
-	 */
-	protected function prepareForeach(UploadedFile $image = null)
-	{
-		$this->name = $this->getStoreName($image);
+    /**
+     * Prepare for each file.
+     *
+     * @param UploadedFile $image
+     *
+     * @return mixed|string
+     */
+    protected function prepareForeach(UploadedFile $image = null)
+    {
+        $this->name = $this->getStoreName($image);
 
-		$this->callInterventionMethods($image->getRealPath());
+        $this->callInterventionMethods($image->getRealPath());
 
-		return tap($this->upload($image), function () {
-			$this->name = null;
-		});
-	}
+        return tap($this->upload($image), function () {
+            $this->name = null;
+        });
+    }
 }

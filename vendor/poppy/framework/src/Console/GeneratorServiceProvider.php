@@ -18,25 +18,25 @@ use Poppy\Framework\Console\Generators\MakeTestCommand;
 class GeneratorServiceProvider extends ServiceProvider
 {
 
-	/**
-	 * Register the application services.
-	 */
-	public function register()
-	{
-		$this->commands([
-			MakePoppyCommand::class,
-			MakeControllerCommand::class,
-			MakeMiddlewareCommand::class,
-			MakeMigrationCommand::class,
-			MakeModelCommand::class,
-			MakePolicyCommand::class,
-			MakeProviderCommand::class,
-			MakeRequestCommand::class,
-			MakeSeederCommand::class,
-			MakeTestCommand::class,
-			MakeCommandCommand::class,
-			MakeEventCommand::class,
-			MakeListenerCommand::class,
-		]);
-	}
+    /**
+     * Register the application services.
+     */
+    public function register()
+    {
+        $this->commands([
+            MakePoppyCommand::class,
+            MakeControllerCommand::class,
+            MakeMiddlewareCommand::class,
+            MakeMigrationCommand::class,
+            MakeModelCommand::class,
+            MakePolicyCommand::class,
+            MakeProviderCommand::class,
+            MakeRequestCommand::class,
+            MakeSeederCommand::class,
+            MakeTestCommand::class,
+            MakeCommandCommand::class,
+            MakeEventCommand::class,
+            MakeListenerCommand::class,
+        ]);
+    }
 }

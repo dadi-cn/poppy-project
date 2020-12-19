@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Facade as IlluminateFacade;
  */
 class FormFacade extends IlluminateFacade
 {
-	/**
-	 * @return string
-	 */
-	protected static function getFacadeAccessor()
-	{
-		return 'poppy.mgr-page.form';
-	}
+    /**
+     * @return string
+     */
+    protected static function getFacadeAccessor()
+    {
+        return 'poppy.mgr-page.form';
+    }
 }

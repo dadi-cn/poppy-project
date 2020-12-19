@@ -8,35 +8,35 @@ use Poppy\Framework\Classes\Resp;
  */
 class CoreController extends WebApiController
 {
-	use ThrottlesLogins;
+    use ThrottlesLogins;
 
-	/**
-	 * @api                    {post} api_v1/system/core/info [Core]系统信息
-	 * @apiVersion             1.0.0
-	 * @apiName                SystemInfo
-	 * @apiGroup               System
-	 */
-	public function info()
-	{
+    /**
+     * @api                    {post} api_v1/system/core/info [Core]系统信息
+     * @apiVersion             1.0.0
+     * @apiName                SystemInfo
+     * @apiGroup               System
+     */
+    public function info()
+    {
 
-		$hook   = sys_hook('poppy.system.api_info');
-		$system = array_merge([], $hook);
+        $hook   = sys_hook('poppy.system.api_info');
+        $system = array_merge([], $hook);
 
-		return Resp::web(Resp::SUCCESS, '获取系统配置信息', $system);
-	}
+        return Resp::web(Resp::SUCCESS, '获取系统配置信息', $system);
+    }
 
 
-	/**
-	 * @api                    {post} api_v1/system/core/translate [Core]多语言
-	 * @apiVersion             1.0.0
-	 * @apiName                SystemTranslate
-	 * @apiGroup               System
-	 */
-	public function translate()
-	{
-		return Resp::success('翻译信息', [
-			'json'         => true,
-			'translations' => app('translator')->fetch('zh'),
-		]);
-	}
+    /**
+     * @api                    {post} api_v1/system/core/translate [Core]多语言
+     * @apiVersion             1.0.0
+     * @apiName                SystemTranslate
+     * @apiGroup               System
+     */
+    public function translate()
+    {
+        return Resp::success('翻译信息', [
+            'json'         => true,
+            'translations' => app('translator')->fetch('zh'),
+        ]);
+    }
 }

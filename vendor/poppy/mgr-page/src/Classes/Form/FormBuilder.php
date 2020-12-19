@@ -11,108 +11,108 @@ use Poppy\Framework\Helper\TreeHelper;
  */
 class FormBuilder extends CollectiveFormBuilder
 {
-	use CoreTrait;
+    use CoreTrait;
 
-	/**
-	 * 生成树选择
-	 * @param string $name     名称
-	 * @param array  $tree     需要生成的树
-	 * @param string $selected 选择
-	 * @param array  $options  选项
-	 * @param string $id       ID KEY
-	 * @param string $title    Title KEY
-	 * @param string $pid      PID KEY
-	 * @return string
-	 */
-	public function tree($name, $tree, $selected = '', $options = [], $id = 'id', $title = 'title', $pid = 'pid'): string
-	{
-		$formatTree = [];
-		foreach ($tree as $tr) {
-			$formatTree[$tr[$id]] = $tr;
-		}
-		$Tree = new TreeHelper();
-		$Tree->init($formatTree, $id, $pid, $title);
-		$treeArray = $Tree->getTreeArray(0);
+    /**
+     * 生成树选择
+     * @param string $name     名称
+     * @param array  $tree     需要生成的树
+     * @param string $selected 选择
+     * @param array  $options  选项
+     * @param string $id       ID KEY
+     * @param string $title    Title KEY
+     * @param string $pid      PID KEY
+     * @return string
+     */
+    public function tree($name, $tree, $selected = '', $options = [], $id = 'id', $title = 'title', $pid = 'pid'): string
+    {
+        $formatTree = [];
+        foreach ($tree as $tr) {
+            $formatTree[$tr[$id]] = $tr;
+        }
+        $Tree = new TreeHelper();
+        $Tree->init($formatTree, $id, $pid, $title);
+        $treeArray = $Tree->getTreeArray(0);
 
-		return $this->select($name, $treeArray, $selected, $options);
-	}
+        return $this->select($name, $treeArray, $selected, $options);
+    }
 
-	/**
-	 * radio 选择器(支持后台)
-	 * @param string      $name    名字
-	 * @param array       $lists   列表
-	 * @param string|null $value   值
-	 * @param array       $options 选项
-	 * @return string
-	 */
-	public function radios($name, $lists = [], $value = null, $options = []): string
-	{
-		$str   = '';
-		$value = (string) $this->getValueAttribute($name, $value);
-		$id    = $options['id'] ?? 'radio_' . Str::random(4);
+    /**
+     * radio 选择器(支持后台)
+     * @param string      $name    名字
+     * @param array       $lists   列表
+     * @param string|null $value   值
+     * @param array       $options 选项
+     * @return string
+     */
+    public function radios($name, $lists = [], $value = null, $options = []): string
+    {
+        $str   = '';
+        $value = (string) $this->getValueAttribute($name, $value);
+        $id    = $options['id'] ?? 'radio_' . Str::random(4);
 
-		foreach ($lists as $key => $val) {
-			$options['id']    = $id . '_' . $key;
-			$options['title'] = $val;
-			$str              .= $this->radio($name, $key, (string) $value === (string) $key, $options);
-		}
+        foreach ($lists as $key => $val) {
+            $options['id']    = $id . '_' . $key;
+            $options['title'] = $val;
+            $str              .= $this->radio($name, $key, (string) $value === (string) $key, $options);
+        }
 
-		return $str;
-	}
+        return $str;
+    }
 
-	/**
-	 * 选择器
-	 * @param string $name    名字
-	 * @param array  $lists   数组
-	 * @param null   $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function checkboxes($name, $lists = [], $value = null, $options = []): string
-	{
-		$str       = '';
-		$arrValues = [];
-		if (!$value) {
-			$value = (string) $this->getValueAttribute($name, $value);
-		}
-		if (is_array($value)) {
-			$arrValues = array_values($value);
-		}
-		elseif (is_string($value)) {
-			if (strpos($value, ',') !== false) {
-				$arrValues = explode(',', $value);
-			}
-			else {
-				$arrValues = [$value];
-			}
-		}
+    /**
+     * 选择器
+     * @param string $name    名字
+     * @param array  $lists   数组
+     * @param null   $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function checkboxes($name, $lists = [], $value = null, $options = []): string
+    {
+        $str       = '';
+        $arrValues = [];
+        if (!$value) {
+            $value = (string) $this->getValueAttribute($name, $value);
+        }
+        if (is_array($value)) {
+            $arrValues = array_values($value);
+        }
+        elseif (is_string($value)) {
+            if (strpos($value, ',') !== false) {
+                $arrValues = explode(',', $value);
+            }
+            else {
+                $arrValues = [$value];
+            }
+        }
 
-		foreach ($lists as $key => $val) {
-			$options['title']    = $val;
-			$options['lay-skin'] = 'primary';
-			$str                 .= $this->checkbox($name, $key, in_array($key, $arrValues, false), $options);
-		}
+        foreach ($lists as $key => $val) {
+            $options['title']    = $val;
+            $options['lay-skin'] = 'primary';
+            $str                 .= $this->checkbox($name, $key, in_array($key, $arrValues, false), $options);
+        }
 
-		return $str;
-	}
+        return $str;
+    }
 
-	/**
-	 * 代码编辑器
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function code($name, $value = '', $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'code_' . Str::random(5);
-		$hiddenId      = $options['id'] . '_hidden';
-		$hidden        = $this->hidden($name, $value, [
-			'id' => $hiddenId,
-		]);
-		$value         = htmlentities($value);
-		$html          = /** @lang text */
-			<<<HTML
+    /**
+     * 代码编辑器
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function code($name, $value = '', $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'code_' . Str::random(5);
+        $hiddenId      = $options['id'] . '_hidden';
+        $hidden        = $this->hidden($name, $value, [
+            'id' => $hiddenId,
+        ]);
+        $value         = htmlentities($value);
+        $html          = /** @lang text */
+            <<<HTML
 {$hidden}
 <pre id="{$options['id']}" style="min-height: 100px;border:1px solid #ccc;">{$value}</pre>
 <script>
@@ -125,32 +125,32 @@ class FormBuilder extends CollectiveFormBuilder
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * 编辑器
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function editor($name, $value = null, $options = []): string
-	{
-		$pam = $options['pam'] ?? '';
+    /**
+     * 编辑器
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function editor($name, $value = null, $options = []): string
+    {
+        $pam = $options['pam'] ?? '';
 
-		$token = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
+        $token = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
 
-		$uploadUrl = route_url('py-system:api_v1.upload.image');
+        $uploadUrl = route_url('py-system:api_v1.upload.image');
 
-		$contentId = 'editor_content_' . Str::random('5');
+        $contentId = 'editor_content_' . Str::random('5');
 
-		$defaultImage = url('assets/images/default/nopic.gif');
+        $defaultImage = url('assets/images/default/nopic.gif');
 
-		$value = (string) $this->getValueAttribute($name, $value);
+        $value = (string) $this->getValueAttribute($name, $value);
 
-		$data = /** @lang text */
-			<<<Editor
+        $data = /** @lang text */
+            <<<Editor
 	<textarea class="hidden" name="{$name}" id="{$contentId}">{$value}</textarea>
 		<script>
 		$(function () {
@@ -191,92 +191,92 @@ HTML;
 		})
 		</script>
 Editor;
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * 生成排序链接
-	 * @param string $name       名字
-	 * @param string $value      值
-	 * @param string $route_name 路由名字
-	 * @param bool   $pjax       是否是 Pjax 请求
-	 * @return string
-	 */
-	public function order($name, $value = '', $route_name = '', $pjax = false): string
-	{
-		$input = input();
-		$value = $value ?: ($input['_order'] ?? '');
-		switch ($value) {
-			case $name . '_desc':
-				$con  = $name . '_asc';
-				$icon = '<i class="fa fa-sort-down"></i>';
-				break;
-			case $name . '_asc':
-				$con  = $name . '_desc';
-				$icon = '<i class="fa fa-sort-up"></i>';
-				break;
-			default:
-				$icon = '<i class="fa fa-sort"></i>';
-				$con  = $name . '_asc';
-		}
-		$input['_order'] = $con;
-		if ($route_name) {
-			$link = route($route_name, $input);
-		}
-		else {
-			$link = '?' . http_build_query($input);
-		}
-		$dp = $pjax ? 'data-pjax' : '';
+    /**
+     * 生成排序链接
+     * @param string $name       名字
+     * @param string $value      值
+     * @param string $route_name 路由名字
+     * @param bool   $pjax       是否是 Pjax 请求
+     * @return string
+     */
+    public function order($name, $value = '', $route_name = '', $pjax = false): string
+    {
+        $input = input();
+        $value = $value ?: ($input['_order'] ?? '');
+        switch ($value) {
+            case $name . '_desc':
+                $con  = $name . '_asc';
+                $icon = '<i class="fa fa-sort-down"></i>';
+                break;
+            case $name . '_asc':
+                $con  = $name . '_desc';
+                $icon = '<i class="fa fa-sort-up"></i>';
+                break;
+            default:
+                $icon = '<i class="fa fa-sort"></i>';
+                $con  = $name . '_asc';
+        }
+        $input['_order'] = $con;
+        if ($route_name) {
+            $link = route($route_name, $input);
+        }
+        else {
+            $link = '?' . http_build_query($input);
+        }
+        $dp = $pjax ? 'data-pjax' : '';
 
-		return '
+        return '
 			<a href="' . $link . '" ' . $dp . '>' . $icon . '</a>
 		';
-	}
+    }
 
-	/**
-	 * 提示组件
-	 * @param string      $description 描述
-	 * @param string|null $name        名字
-	 * @return string
-	 */
-	public function tip(string $description, $name = null): string
-	{
-		if ($name === null) {
-			$icon = '<i class="fa fa-question-circle">&nbsp;</i>';
-		}
-		else {
-			$icon = '<i class="fa ' . $name . '">&nbsp;</i>';
-		}
-		$trim_description = strip_tags($description);
+    /**
+     * 提示组件
+     * @param string      $description 描述
+     * @param string|null $name        名字
+     * @return string
+     */
+    public function tip(string $description, $name = null): string
+    {
+        if ($name === null) {
+            $icon = '<i class="fa fa-question-circle">&nbsp;</i>';
+        }
+        else {
+            $icon = '<i class="fa ' . $name . '">&nbsp;</i>';
+        }
+        $trim_description = strip_tags($description);
 
-		return <<<TIP
+        return <<<TIP
 <a title="{$trim_description}" class="J_dialog J_tooltip text-info" data-title="信息提示" data-tip="{$trim_description}">
 	{$icon}
 </a>
 TIP;
-	}
+    }
 
-	/**
-	 * 上传缩略图
-	 * @param string $name    名字
-	 * @param null   $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function thumb($name, $value = null, $options = []): string
-	{
-		$id    = $this->getIdAttribute($name, $options) ?? 'thumb_' . Str::random(6);
-		$value = (string) $this->getValueAttribute($name, $value);
-		$pam   = $options['pam'] ?? [];
-		$token = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
-		if (!$token) {
-			$token = $options['token'] ?? '';
-		}
-		$display_str = $value ? 'form_thumb-success' : '';
-		$sizeClass   = $options['sizeClass'] ?? 'form_thumb-normal';
-		$uploadUrl   = route('py-system:api_v1.upload.image');
-		$parseStr    = /** @lang text */
-			<<<CONTENT
+    /**
+     * 上传缩略图
+     * @param string $name    名字
+     * @param null   $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function thumb($name, $value = null, $options = []): string
+    {
+        $id    = $this->getIdAttribute($name, $options) ?? 'thumb_' . Str::random(6);
+        $value = (string) $this->getValueAttribute($name, $value);
+        $pam   = $options['pam'] ?? [];
+        $token = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
+        if (!$token) {
+            $token = $options['token'] ?? '';
+        }
+        $display_str = $value ? 'form_thumb-success' : '';
+        $sizeClass   = $options['sizeClass'] ?? 'form_thumb-normal';
+        $uploadUrl   = route('py-system:api_v1.upload.image');
+        $parseStr    = /** @lang text */
+            <<<CONTENT
 <div class="layui-form-thumb {$display_str} {$sizeClass}" id="{$id}_wrap">
 	<button id="{$id}" class="layui-btn form_thumb-upload" type="button">
 		<i class="fa fa-upload"></i>
@@ -319,68 +319,68 @@ layui.upload.render({
 </script>
 CONTENT;
 
-		return $parseStr;
-	}
+        return $parseStr;
+    }
 
-	/**
-	 * 上传缩略图
-	 * @param string $name    名字
-	 * @param null   $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function upload($name, $value = null, $options = []): string
-	{
-		$id    = $this->getIdAttribute($name, $options) ?? 'upload_' . Str::random(6);
-		$value = (string) $this->getValueAttribute($name, $value);
-		$pam   = $options['pam'] ?? [];
-		$type  = $options['type'] ?? 'images';
-		if (!in_array($type, ['images', 'audio', 'video', 'file'])) {
-			$type = 'images';
-		}
-		$token = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
+    /**
+     * 上传缩略图
+     * @param string $name    名字
+     * @param null   $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function upload($name, $value = null, $options = []): string
+    {
+        $id    = $this->getIdAttribute($name, $options) ?? 'upload_' . Str::random(6);
+        $value = (string) $this->getValueAttribute($name, $value);
+        $pam   = $options['pam'] ?? [];
+        $type  = $options['type'] ?? 'images';
+        if (!in_array($type, ['images', 'audio', 'video', 'file'])) {
+            $type = 'images';
+        }
+        $token = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
 
-		/* 进行赋值
-		 * ---------------------------------------- */
-		if ($value) {
-			switch ($type) {
-				case 'images':
-				default:
-					$template = '<!--图片-->
+        /* 进行赋值
+         * ---------------------------------------- */
+        if ($value) {
+            switch ($type) {
+                case 'images':
+                default:
+                    $template = '<!--图片-->
 					<a data-fancybox="system.upload" href="___VALUE___">
 						<img style="position: relative;top: 2px;" alt="" height="30" src="___VALUE___">
 					</a>';
-					break;
-				case 'audio':
-					$template = '<!--音频-->
+                    break;
+                case 'audio':
+                    $template = '<!--音频-->
 						<audio style="height: 30px;position: relative;top: 11px;" controls>
 							<source src="___VALUE___" type="audio/mp3">
 						</audio>';
-					break;
-				case 'video':
-					$template = '<!--视频-->
+                    break;
+                case 'video':
+                    $template = '<!--视频-->
 					<a data-fancybox="system.upload" href="___VALUE___">
 						<i class="fa fa-video"></i>
 					</a>';
-					break;
-				case 'file':
-					$template = '<!--视频-->
+                    break;
+                case 'file':
+                    $template = '<!--视频-->
 					<a target="_blank" href="___VALUE___">
 						<i class="fa fa-file"></i>
 					</a>';
-					break;
-			}
-		}
-		else {
-			$template = '';
-		}
-		$content  = str_replace(['___VALUE___', PHP_EOL], [$value, ''], $template);
-		$template = str_replace(["\n", "\t", PHP_EOL], '', $template);
+                    break;
+            }
+        }
+        else {
+            $template = '';
+        }
+        $content  = str_replace(['___VALUE___', PHP_EOL], [$value, ''], $template);
+        $template = str_replace(["\n", "\t", PHP_EOL], '', $template);
 
-		$display_str = !$value ? 'class="hidden"' : '';
-		$uploadUrl   = route('py-mgr-page:api_v1.upload.file');
-		$parseStr    = /** @lang text */
-			<<<CONTENT
+        $display_str = !$value ? 'class="hidden"' : '';
+        $uploadUrl   = route('py-mgr-page:api_v1.upload.file');
+        $parseStr    = /** @lang text */
+            <<<CONTENT
 <div class="layui-form-upload">
 	<button id="{$id}" class="layui-btn layui-btn-sm" type="button">上传</button>
 	<div class="form_thumb-ctr" id="{$id}_ctr">
@@ -430,40 +430,40 @@ layui.upload.render({
 </script>
 CONTENT;
 
-		return $parseStr;
-	}
+        return $parseStr;
+    }
 
-	/**
-	 * 多图上传组件
-	 * @param string $name    form 名称
-	 * @param null   $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function multiThumb($name, $value = null, $options = []): string
-	{
-		$id       = $this->getIdAttribute($name, $options) ?? 'multi_thumb_' . Str::random(6);
-		$number   = $options['number'] ?? 3;
-		$pop_size = $options['pop_size'] ?? '300';
-		$type     = $options['type'] ?? 'image';
-		$sequence = $options['sequence'] ?? false;
-		$ext      = 'jpg|png|gif|jpeg|webp';
-		if ($type === 'video') {
-			$ext = 'mp4';
-		}
-		if ($type === 'picture') {
-			$ext = 'mp4|jpg|png|gif|jpeg|webp';
-		}
-		$value = (array) $this->getValueAttribute($name, $value);
-		if (strpos($name, '[]') === false) {
-			$name .= '[]';
-		}
-		$auto       = (bool) ($options['auto'] ?? false);
-		$autoEnable = $auto ? 'true' : 'false';
-		$renderStr  = '';
-		if (count($value)) {
-			$data      = json_encode($value);
-			$renderStr = <<<HAHA
+    /**
+     * 多图上传组件
+     * @param string $name    form 名称
+     * @param null   $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function multiThumb($name, $value = null, $options = []): string
+    {
+        $id       = $this->getIdAttribute($name, $options) ?? 'multi_thumb_' . Str::random(6);
+        $number   = $options['number'] ?? 3;
+        $pop_size = $options['pop_size'] ?? '300';
+        $type     = $options['type'] ?? 'image';
+        $sequence = $options['sequence'] ?? false;
+        $ext      = 'jpg|png|gif|jpeg|webp';
+        if ($type === 'video') {
+            $ext = 'mp4';
+        }
+        if ($type === 'picture') {
+            $ext = 'mp4|jpg|png|gif|jpeg|webp';
+        }
+        $value = (array) $this->getValueAttribute($name, $value);
+        if (strpos($name, '[]') === false) {
+            $name .= '[]';
+        }
+        $auto       = (bool) ($options['auto'] ?? false);
+        $autoEnable = $auto ? 'true' : 'false';
+        $renderStr  = '';
+        if (count($value)) {
+            $data      = json_encode($value);
+            $renderStr = <<<HAHA
 			//将预览html 追加
 			var values = {$data};
 			for(var item in values) {
@@ -479,17 +479,17 @@ CONTENT;
 				});
 			}
 HAHA;
-		}
-		$sequenceStr = '';
-		if ($sequence) {
-			$sequenceStr = '<input type="text" name="_multi_sequence[]" class="layui-input w36">';
-		}
-		$pam        = $options['pam'] ?? [];
-		$token      = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
-		$uploadUrl  = route('py-system:api_v1.upload.image');
-		$autoUpload = $auto ? '' : '<button type="button" class="layui-btn layui-btn-sm" id="' . $id . '_upload" disabled>开始上传</button>';
-		$data       = /** @lang text */
-			<<<MULTI
+        }
+        $sequenceStr = '';
+        if ($sequence) {
+            $sequenceStr = '<input type="text" name="_multi_sequence[]" class="layui-input w36">';
+        }
+        $pam        = $options['pam'] ?? [];
+        $token      = $pam ? app('tymon.jwt.auth')->fromUser($pam) : '';
+        $uploadUrl  = route('py-system:api_v1.upload.image');
+        $autoUpload = $auto ? '' : '<button type="button" class="layui-btn layui-btn-sm" id="' . $id . '_upload" disabled>开始上传</button>';
+        $data       = /** @lang text */
+            <<<MULTI
 <div class="layui-upload upload--multi">
     <div class="layui-btn-group">
         <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="{$id}_select">选择文件</button>
@@ -611,82 +611,82 @@ $(function(){
 </script>
 MULTI;
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * 显示上传的单图
-	 * @param string|array $url     需要显示的地址
-	 * @param array        $options 选项
-	 * @return string
-	 */
-	public function showThumb($url, array $options = []): string
-	{
-		$size       = $options['size'] ?? 'sm';
-		$pop_size   = $options['pop_size'] ?? '300';
-		$strOptions = $this->html->attributes($options);
-		$style      = '';
-		if ($size === 'xs') {
-			$style = 'max-width:32px;max-height:32px;';
-		}
-		if ($size === 'sm') {
-			$style = 'max-width:50px;max-height:50px;';
-		}
-		if ($size === 'l') {
-			$style = 'max-width:80px;max-height:80px;';
-		}
-		if ($size === 'xl') {
-			$style = 'max-width:120px;max-height:120px;';
-		}
-		if ($size === 'ori') {
-			$style = '';
-		}
-		if (is_string($url) || is_null($url)) {
-			$url = $url ?: '/assets/images/default/nopic.gif';
+    /**
+     * 显示上传的单图
+     * @param string|array $url     需要显示的地址
+     * @param array        $options 选项
+     * @return string
+     */
+    public function showThumb($url, array $options = []): string
+    {
+        $size       = $options['size'] ?? 'sm';
+        $pop_size   = $options['pop_size'] ?? '300';
+        $strOptions = $this->html->attributes($options);
+        $style      = '';
+        if ($size === 'xs') {
+            $style = 'max-width:32px;max-height:32px;';
+        }
+        if ($size === 'sm') {
+            $style = 'max-width:50px;max-height:50px;';
+        }
+        if ($size === 'l') {
+            $style = 'max-width:80px;max-height:80px;';
+        }
+        if ($size === 'xl') {
+            $style = 'max-width:120px;max-height:120px;';
+        }
+        if ($size === 'ori') {
+            $style = '';
+        }
+        if (is_string($url) || is_null($url)) {
+            $url = $url ?: '/assets/images/default/nopic.gif';
 
 
-			$parse_str = '<img class="J_image_preview" data-width="' . $pop_size . 'px" data-height="' . $pop_size . 'px" src="' . $url . '" ' . $strOptions . '
+            $parse_str = '<img class="J_image_preview" data-width="' . $pop_size . 'px" data-height="' . $pop_size . 'px" src="' . $url . '" ' . $strOptions . '
 		 style="' . $style . '">';
-			return $parse_str;
-		}
+            return $parse_str;
+        }
 
-		$parse_str = '<div class="clearfix layui-upload upload--multi">';
-		foreach ($url as $_url) {
-			$ext       = FileHelper::ext($_url);
-			$parse_str .= '<div class="multi-img" style="' . $style . '">';
-			if ($ext === 'mp4') {
-				$parse_str .= '<video controls class="layui-upload-img" style="' . $style . '">
+        $parse_str = '<div class="clearfix layui-upload upload--multi">';
+        foreach ($url as $_url) {
+            $ext       = FileHelper::ext($_url);
+            $parse_str .= '<div class="multi-img" style="' . $style . '">';
+            if ($ext === 'mp4') {
+                $parse_str .= '<video controls class="layui-upload-img" style="' . $style . '">
 		            <source src="' . $_url . '" type="video/mp4">
 		        </video>';
 
-			}
-			else {
-				$parse_str .= '<img src="' . $_url . '" class="layui-upload-img J_image_preview" data-width="' . $pop_size . 'px" data-height="' . $pop_size . 'px" style="' . $style . '">';
-			}
-			$parse_str .= '</div>';
-		}
+            }
+            else {
+                $parse_str .= '<img src="' . $_url . '" class="layui-upload-img J_image_preview" data-width="' . $pop_size . 'px" data-height="' . $pop_size . 'px" style="' . $style . '">';
+            }
+            $parse_str .= '</div>';
+        }
 
-		$parse_str .= '</div>';
-		return $parse_str;
-	}
+        $parse_str .= '</div>';
+        return $parse_str;
+    }
 
-	/**
-	 * 日期选择器
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 * @deprecated
-	 */
-	public function timePicker($name, $value = '', $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'time_picker_' . Str::random(4);
-		$value         = (string) $this->getValueAttribute($name, $value);
+    /**
+     * 日期选择器
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     * @deprecated
+     */
+    public function timePicker($name, $value = '', $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'time_picker_' . Str::random(4);
+        $value         = (string) $this->getValueAttribute($name, $value);
 
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
 
-		$html = <<<HTML
+        $html = <<<HTML
 <input type="text" name="{$name}" value="{$value}" {$attr}>
 <script>
 	$(function(){
@@ -698,26 +698,26 @@ MULTI;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * 生成日期时间选择器
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 * @deprecated
-	 */
-	public function datetimePicker($name, $value = '', $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'datetime_picker_' . Str::random(4);
-		$value         = (string) $this->getValueAttribute($name, $value);
+    /**
+     * 生成日期时间选择器
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     * @deprecated
+     */
+    public function datetimePicker($name, $value = '', $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'datetime_picker_' . Str::random(4);
+        $value         = (string) $this->getValueAttribute($name, $value);
 
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
 
-		$html = <<<HTML
+        $html = <<<HTML
 <input type="text" name="{$name}" value="{$value}" {$attr}>
 <script>
 	$(function(){
@@ -729,26 +729,26 @@ HTML;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * 生成日期选择器
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 * @deprecated 使用组件化的内容
-	 */
-	public function datePicker($name, $value = '', array $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'date_picker_' . Str::random(4);
-		$value         = (string) $this->getValueAttribute($name, $value);
+    /**
+     * 生成日期选择器
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     * @deprecated 使用组件化的内容
+     */
+    public function datePicker($name, $value = '', array $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'date_picker_' . Str::random(4);
+        $value         = (string) $this->getValueAttribute($name, $value);
 
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
 
-		$html = <<<HTML
+        $html = <<<HTML
 <input type="text" name="{$name}" value="{$value}" {$attr}>
 <script>
 	$(function(){
@@ -759,27 +759,27 @@ HTML;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
 
-	/**
-	 * 生成日期选择器
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 * @deprecated
-	 */
-	public function yearPicker($name, $value = '', array $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'year_picker_' . Str::random(4);
-		$value         = (string) $this->getValueAttribute($name, $value);
+    /**
+     * 生成日期选择器
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     * @deprecated
+     */
+    public function yearPicker($name, $value = '', array $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'year_picker_' . Str::random(4);
+        $value         = (string) $this->getValueAttribute($name, $value);
 
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
 
-		$html = <<<HTML
+        $html = <<<HTML
 <input type="text" name="{$name}" value="{$value}" {$attr}>
 <script>
 	$(function(){
@@ -791,26 +791,26 @@ HTML;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
 
-	/**
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 * @deprecated
-	 */
-	public function dateRangePicker($name, $value = '', $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'daterange_picker_' . Str::random(4);
-		$value         = (string) $this->getValueAttribute($name, $value);
+    /**
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     * @deprecated
+     */
+    public function dateRangePicker($name, $value = '', $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'daterange_picker_' . Str::random(4);
+        $value         = (string) $this->getValueAttribute($name, $value);
 
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
 
-		$html = <<<HTML
+        $html = <<<HTML
 <input type="text" name="{$name}" value="{$value}" {$attr}>
 <script>
 	$(function(){
@@ -822,25 +822,25 @@ HTML;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 * @deprecated
-	 */
-	public function monthPicker($name, $value = '', $options = []): string
-	{
-		$options['id'] = $this->getIdAttribute($name, $options) ?: 'month_picker_' . Str::random(4);
-		$value         = (string) $this->getValueAttribute($name, $value);
+    /**
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     * @deprecated
+     */
+    public function monthPicker($name, $value = '', $options = []): string
+    {
+        $options['id'] = $this->getIdAttribute($name, $options) ?: 'month_picker_' . Str::random(4);
+        $value         = (string) $this->getValueAttribute($name, $value);
 
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
 
-		$html = <<<HTML
+        $html = <<<HTML
 <input type="text" name="{$name}" value="{$value}" {$attr}>
 <script>
 	$(function(){
@@ -852,22 +852,22 @@ HTML;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * @param string $name    名字
-	 * @param string $value   值
-	 * @param array  $options 选项
-	 * @return string
-	 */
-	public function colorPicker($name, $value = '', $options = []): string
-	{
-		$options['id']    = $this->getIdAttribute($name, $options) ?: 'colorpicker_' . Str::random(5);
-		$value            = (string) $this->getValueAttribute($name, $value);
-		$options['class'] = 'layui-input ' . ($options['class'] ?? '');
-		$attr             = $this->html->attributes($options);
-		$html             = <<<HTML
+    /**
+     * @param string $name    名字
+     * @param string $value   值
+     * @param array  $options 选项
+     * @return string
+     */
+    public function colorPicker($name, $value = '', $options = []): string
+    {
+        $options['id']    = $this->getIdAttribute($name, $options) ?: 'colorpicker_' . Str::random(5);
+        $value            = (string) $this->getValueAttribute($name, $value);
+        $options['class'] = 'layui-input ' . ($options['class'] ?? '');
+        $attr             = $this->html->attributes($options);
+        $html             = <<<HTML
 	<input type="text" id="input_{$options['id']}" name="{$name}" readonly value="{$value}" placeholder="请选择颜色" {$attr}>
 	<div id="{$options['id']}"></div>
 <script>
@@ -883,6 +883,6 @@ HTML;
 </script>
 HTML;
 
-		return $html;
-	}
+        return $html;
+    }
 }

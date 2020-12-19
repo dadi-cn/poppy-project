@@ -13,28 +13,28 @@ use Tymon\JWTAuth\JWTGuard;
 class DisabledPam
 {
 
-	/**
-	 * Handle an incoming request.
-	 * @param Request $request 请求
-	 * @param Closure $next    后续处理
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		/** @var JWTGuard $guard */
-		$guard = app('auth')->guard();
-		if ($guard->check()) {
-			/** @var PamAccount $user */
-			$user = $guard->user();
-			if ($user->is_enable === SysConfig::NO) {
-				$defaultReason = '用户被禁用, 原因 : ' . $user->disable_reason . ', 解禁时间 : ' . $user->disable_end_at;
-				if ($disableReason = sys_setting('py-system::pam.disable_reason')) {
-					$defaultReason = $disableReason;
-				}
-				return Response::make($defaultReason, 401);
-			}
-		}
+    /**
+     * Handle an incoming request.
+     * @param Request $request 请求
+     * @param Closure $next    后续处理
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        /** @var JWTGuard $guard */
+        $guard = app('auth')->guard();
+        if ($guard->check()) {
+            /** @var PamAccount $user */
+            $user = $guard->user();
+            if ($user->is_enable === SysConfig::NO) {
+                $defaultReason = '用户被禁用, 原因 : ' . $user->disable_reason . ', 解禁时间 : ' . $user->disable_end_at;
+                if ($disableReason = sys_setting('py-system::pam.disable_reason')) {
+                    $defaultReason = $disableReason;
+                }
+                return Response::make($defaultReason, 401);
+            }
+        }
 
-		return $next($request);
-	}
+        return $next($request);
+    }
 }

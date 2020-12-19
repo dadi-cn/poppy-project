@@ -5,33 +5,33 @@ use Illuminate\Support\ServiceProvider;
 
 class MiddlewareServiceProvider extends ServiceProvider
 {
-	public function boot(Router $router)
-	{
-		/* Single
-		 * ---------------------------------------- */
-		$router->aliasMiddleware('mgr-append_data', Middlewares\AppendData::class);
-		$router->aliasMiddleware('mgr-permission', Middlewares\RbacPermission::class);
+    public function boot(Router $router)
+    {
+        /* Single
+         * ---------------------------------------- */
+        $router->aliasMiddleware('mgr-append_data', Middlewares\AppendData::class);
+        $router->aliasMiddleware('mgr-permission', Middlewares\RbacPermission::class);
 
-		$router->middlewareGroup('develop-auth', [
-			'web',
-			'sys-csrf_token',
-			'sys-site_open',
-			'sys-auth_session',
-			'sys-auth:develop',
-			'sys-disabled_pam',
-			'mgr-permission',
-			'sys-encrypt_cookies',
-		]);
+        $router->middlewareGroup('develop-auth', [
+            'web',
+            'sys-csrf_token',
+            'sys-site_open',
+            'sys-auth_session',
+            'sys-auth:develop',
+            'sys-disabled_pam',
+            'mgr-permission',
+            'sys-encrypt_cookies',
+        ]);
 
-		$router->middlewareGroup('backend-auth', [
-			'web',
-			'sys-csrf_token',
-			'sys-auth_session',
-			'sys-auth:backend',
-			'sys-disabled_pam',
-			'sys-encrypt_cookies',
-			'mgr-append_data',
-			'mgr-permission',
-		]);
-	}
+        $router->middlewareGroup('backend-auth', [
+            'web',
+            'sys-csrf_token',
+            'sys-auth_session',
+            'sys-auth:backend',
+            'sys-disabled_pam',
+            'sys-encrypt_cookies',
+            'mgr-append_data',
+            'mgr-permission',
+        ]);
+    }
 }

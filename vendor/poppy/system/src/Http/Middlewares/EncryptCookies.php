@@ -7,24 +7,24 @@ use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
  */
 class EncryptCookies extends \Illuminate\Cookie\Middleware\EncryptCookies
 {
-	/**
-	 * The URIs that should be excluded from CSRF verification.
-	 * @var array
-	 */
-	protected $except;
+    /**
+     * The URIs that should be excluded from CSRF verification.
+     * @var array
+     */
+    protected $except;
 
-	public function __construct(EncrypterContract $encrypter)
-	{
-		parent::__construct($encrypter);
-		$this->append();
-	}
+    public function __construct(EncrypterContract $encrypter)
+    {
+        parent::__construct($encrypter);
+        $this->append();
+    }
 
-	/**
-	 * Handle an incoming request.
-	 * @return mixed
-	 */
-	private function append()
-	{
-		$this->except = (array) config('poppy.system.uncrypt_cookies');
-	}
+    /**
+     * Handle an incoming request.
+     * @return mixed
+     */
+    private function append()
+    {
+        $this->except = (array) config('poppy.system.uncrypt_cookies');
+    }
 }

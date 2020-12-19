@@ -15,10 +15,10 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class PamPermissionRole extends Eloquent
 {
-	protected $table = 'pam_permission_role';
+    protected $table = 'pam_permission_role';
 
-	protected $fillable = [
-		'permission_id',
-		'role_id',
-	];
+    protected $fillable = [
+        'permission_id',
+        'role_id',
+    ];
 }

@@ -8,42 +8,42 @@ class ModuleTest extends TestCase
 {
 
 
-	use CoreTrait;
+    use CoreTrait;
 
 
-	public function setUp(): void
-	{
-		parent::setUp();
-		py_console()->call('cache:clear');
-	}
+    public function setUp(): void
+    {
+        parent::setUp();
+        py_console()->call('cache:clear');
+    }
 
-	public function testHasAttributes()
-	{
-		$module = (new Module('module.site'));
+    public function testHasAttributes()
+    {
+        $module = (new Module('module.site'));
 
-		$this->assertEquals(base_path('modules/site'), $module->directory());
+        $this->assertEquals(base_path('modules/site'), $module->directory());
 
-		$this->assertEquals('module.site', $module->slug());
+        $this->assertEquals('module.site', $module->slug());
 
-		$this->assertEquals('Site', $module->namespace());
-	}
+        $this->assertEquals('Site', $module->namespace());
+    }
 
-	public function testMenus()
-	{
-		$menus = $this->coreModule()->menus();
-		dd($menus);
-		dump($menus['system/backend']);
-	}
+    public function testMenus()
+    {
+        $menus = $this->coreModule()->menus();
+        dd($menus);
+        dump($menus['system/backend']);
+    }
 
-	public function testRepos()
-	{
-		$repo = $this->coreModule()->repository();
-		dd($repo);
-	}
+    public function testRepos()
+    {
+        $repo = $this->coreModule()->repository();
+        dd($repo);
+    }
 
-	public function testServices()
-	{
-		$repo = $this->coreModule()->services();
-		dd($repo);
-	}
+    public function testServices()
+    {
+        $repo = $this->coreModule()->services();
+        dd($repo);
+    }
 }

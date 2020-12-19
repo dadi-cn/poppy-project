@@ -18,98 +18,98 @@ use Poppy\System\Models\PamRole;
  */
 class PamController extends BackendController
 {
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-		self::$permission = [
-			'global' => 'backend:py-system.pam.manage',
-			'log'    => 'backend:py-system.pam.log',
-		];
-	}
+        self::$permission = [
+            'global' => 'backend:py-system.pam.manage',
+            'log'    => 'backend:py-system.pam.log',
+        ];
+    }
 
-	/**
-	 * Display a listing of the resource.
-	 * @return \Response
-	 */
-	public function index()
-	{
-		$input         = input();
-		$type          = sys_get($input, 'type', PamAccount::TYPE_BACKEND);
-		$input['type'] = $type;
-		$types         = PamAccount::kvType();
-		$items         = PamAccount::filter($input, PamAccountFilter::class)->paginateFilter($this->pagesize);
+    /**
+     * Display a listing of the resource.
+     * @return \Response
+     */
+    public function index()
+    {
+        $input         = input();
+        $type          = sys_get($input, 'type', PamAccount::TYPE_BACKEND);
+        $input['type'] = $type;
+        $types         = PamAccount::kvType();
+        $items         = PamAccount::filter($input, PamAccountFilter::class)->paginateFilter($this->pagesize);
 
-		return view('py-mgr-page::backend.pam.index', [
-			'items' => $items,
-			'type'  => $type,
-			'types' => $types,
-			'roles' => PamRole::getLinear($type),
-		]);
-	}
+        return view('py-mgr-page::backend.pam.index', [
+            'items' => $items,
+            'type'  => $type,
+            'types' => $types,
+            'roles' => PamRole::getLinear($type),
+        ]);
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 * @param null|int $id ID
-	 * @return Content
-	 */
-	public function establish($id = null)
-	{
-		$form = new FormPamEstablish();
-		$form->setType(input('type'))->setId($id);
-		return (new Content())->body($form);
-	}
+    /**
+     * Show the form for creating a new resource.
+     * @param null|int $id ID
+     * @return Content
+     */
+    public function establish($id = null)
+    {
+        $form = new FormPamEstablish();
+        $form->setType(input('type'))->setId($id);
+        return (new Content())->body($form);
+    }
 
-	/**
-	 * 设置密码
-	 * @param int $id 用户ID
-	 * @return Content
-	 * @throws ApplicationException
-	 */
-	public function password($id)
-	{
-		$form = new FormPamPassword();
-		$form->setId($id);
-		return (new Content())->body($form);
-	}
+    /**
+     * 设置密码
+     * @param int $id 用户ID
+     * @return Content
+     * @throws ApplicationException
+     */
+    public function password($id)
+    {
+        $form = new FormPamPassword();
+        $form->setId($id);
+        return (new Content())->body($form);
+    }
 
-	/**
-	 * 禁用用户
-	 * @param int $id 用户ID
-	 * @return Content
-	 */
-	public function disable($id)
-	{
-		$form = new FormPamDisable();
-		$form->setId($id);
-		return (new Content())->body($form);
-	}
+    /**
+     * 禁用用户
+     * @param int $id 用户ID
+     * @return Content
+     */
+    public function disable($id)
+    {
+        $form = new FormPamDisable();
+        $form->setId($id);
+        return (new Content())->body($form);
+    }
 
-	/**
-	 * 启用用户
-	 * @param int $id 用户ID
-	 * @return Content
-	 */
-	public function enable($id)
-	{
-		$form = new FormPamEnable();
-		$form->setId($id);
-		return (new Content())->body($form);
-	}
+    /**
+     * 启用用户
+     * @param int $id 用户ID
+     * @return Content
+     */
+    public function enable($id)
+    {
+        $form = new FormPamEnable();
+        $form->setId($id);
+        return (new Content())->body($form);
+    }
 
-	/**
-	 * @return View
-	 */
-	public function log(): View
-	{
-		$input = input();
-		$items = PamLog::filter($input, PamLogFilter::class)
-			->orderBy('id', 'desc')
-			->paginate($this->pagesize)
-			->appends($input);
+    /**
+     * @return View
+     */
+    public function log(): View
+    {
+        $input = input();
+        $items = PamLog::filter($input, PamLogFilter::class)
+            ->orderBy('id', 'desc')
+            ->paginate($this->pagesize)
+            ->appends($input);
 
-		return view('py-mgr-page::backend.pam.log', [
-			'items' => $items,
-		]);
-	}
+        return view('py-mgr-page::backend.pam.log', [
+            'items' => $items,
+        ]);
+    }
 }

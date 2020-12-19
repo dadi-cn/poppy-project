@@ -14,332 +14,332 @@ use Throwable;
 class FileRepository extends Repository
 {
 
-	/**
-	 * Get all modules.
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function all(): Collection
-	{
-		return $this->getCache()->sortBy('order');
-	}
+    /**
+     * Get all modules.
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function all(): Collection
+    {
+        return $this->getCache()->sortBy('order');
+    }
 
-	/**
-	 * Get all module slugs.
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function slugs(): Collection
-	{
-		$slugs = collect();
+    /**
+     * Get all module slugs.
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function slugs(): Collection
+    {
+        $slugs = collect();
 
-		$this->all()->each(function ($item) use ($slugs) {
-			$slugs->push(strtolower($item['slug']));
-		});
+        $this->all()->each(function ($item) use ($slugs) {
+            $slugs->push(strtolower($item['slug']));
+        });
 
-		return $slugs;
-	}
+        return $slugs;
+    }
 
-	/**
-	 * Get modules based on where clause.
-	 * @param string $key   the filter key
-	 * @param mixed  $value value
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function where(string $key, $value): Collection
-	{
-		return collect($this->all()->where($key, $value)->first());
-	}
+    /**
+     * Get modules based on where clause.
+     * @param string $key   the filter key
+     * @param mixed  $value value
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function where(string $key, $value): Collection
+    {
+        return collect($this->all()->where($key, $value)->first());
+    }
 
-	/**
-	 * Sort modules by given key in ascending order.
-	 * @param string $key sort by key
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function sortBy(string $key): Collection
-	{
-		$collection = $this->all();
+    /**
+     * Sort modules by given key in ascending order.
+     * @param string $key sort by key
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function sortBy(string $key): Collection
+    {
+        $collection = $this->all();
 
-		return $collection->sortBy($key);
-	}
+        return $collection->sortBy($key);
+    }
 
-	/**
-	 * Sort modules by given key in ascending order.
-	 * @param string $key sort by key
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function sortByDesc(string $key): Collection
-	{
-		$collection = $this->all();
+    /**
+     * Sort modules by given key in ascending order.
+     * @param string $key sort by key
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function sortByDesc(string $key): Collection
+    {
+        $collection = $this->all();
 
-		return $collection->sortByDesc($key);
-	}
+        return $collection->sortByDesc($key);
+    }
 
-	/**
-	 * Determines if the given module exists.
-	 * @param string $slug module name
-	 * @return bool
-	 * @throws ApplicationException
-	 */
-	public function exists(string $slug): bool
-	{
-		return $this->slugs()->contains($slug);
-	}
+    /**
+     * Determines if the given module exists.
+     * @param string $slug module name
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function exists(string $slug): bool
+    {
+        return $this->slugs()->contains($slug);
+    }
 
-	/**
-	 * Returns count of all modules.
-	 * @return int
-	 * @throws ApplicationException
-	 */
-	public function count(): int
-	{
-		return $this->all()->count();
-	}
+    /**
+     * Returns count of all modules.
+     * @return int
+     * @throws ApplicationException
+     */
+    public function count(): int
+    {
+        return $this->all()->count();
+    }
 
-	/**
-	 * Get a module property value.
-	 * @param string $property module property
-	 * @param mixed  $default  default value
-	 * @return mixed
-	 * @throws ApplicationException
-	 */
-	public function get(string $property, $default = null)
-	{
-		[$slug, $key] = explode('::', $property);
+    /**
+     * Get a module property value.
+     * @param string $property module property
+     * @param mixed  $default  default value
+     * @return mixed
+     * @throws ApplicationException
+     */
+    public function get(string $property, $default = null)
+    {
+        [$slug, $key] = explode('::', $property);
 
-		$module = $this->where('slug', $slug);
+        $module = $this->where('slug', $slug);
 
-		return $module->get($key, $default);
-	}
+        return $module->get($key, $default);
+    }
 
-	/**
-	 * Set the given module property value.
-	 * @param string $property module property
-	 * @param mixed  $value    set module
-	 * @return bool
-	 * @throws ApplicationException
-	 */
-	public function set(string $property, $value): bool
-	{
-		try {
-			[$slug, $key] = explode('::', $property);
+    /**
+     * Set the given module property value.
+     * @param string $property module property
+     * @param mixed  $value    set module
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function set(string $property, $value): bool
+    {
+        try {
+            [$slug, $key] = explode('::', $property);
 
-			$cachePath = $this->getCachePath();
-			$cache     = $this->getCache();
-			$module    = $this->where('slug', $slug);
+            $cachePath = $this->getCachePath();
+            $cache     = $this->getCache();
+            $module    = $this->where('slug', $slug);
 
-			if (isset($module[$key])) {
-				unset($module[$key]);
-			}
+            if (isset($module[$key])) {
+                unset($module[$key]);
+            }
 
-			$module[$key] = $value;
+            $module[$key] = $value;
 
-			$module = collect([$module['slug'] => $module]);
+            $module = collect([$module['slug'] => $module]);
 
-			$merged  = $cache->merge($module);
-			$content = json_encode($merged->all(), JSON_PRETTY_PRINT);
-			$this->files->put($cachePath, $content);
-			return true;
-		} catch (Throwable $e) {
-			throw new ApplicationException($e->getMessage());
-		}
-	}
+            $merged  = $cache->merge($module);
+            $content = json_encode($merged->all(), JSON_PRETTY_PRINT);
+            $this->files->put($cachePath, $content);
+            return true;
+        } catch (Throwable $e) {
+            throw new ApplicationException($e->getMessage());
+        }
+    }
 
-	/**
-	 * Get all enabled modules.
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function enabled(): Collection
-	{
-		return $this->all()->where('enabled', true);
-	}
+    /**
+     * Get all enabled modules.
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function enabled(): Collection
+    {
+        return $this->all()->where('enabled', true);
+    }
 
-	/**
-	 * Get all disabled modules.
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	public function disabled(): Collection
-	{
-		return $this->all()->where('enabled', false);
-	}
+    /**
+     * Get all disabled modules.
+     * @return Collection
+     * @throws ApplicationException
+     */
+    public function disabled(): Collection
+    {
+        return $this->all()->where('enabled', false);
+    }
 
-	/**
-	 * Check if specified module is enabled.
-	 * @param string $slug module name
-	 * @return bool
-	 * @throws ApplicationException
-	 */
-	public function isEnabled(string $slug): bool
-	{
-		$module = $this->where('slug', $slug);
+    /**
+     * Check if specified module is enabled.
+     * @param string $slug module name
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function isEnabled(string $slug): bool
+    {
+        $module = $this->where('slug', $slug);
 
-		return $module['enabled'] === true;
-	}
+        return $module['enabled'] === true;
+    }
 
-	/**
-	 * Check if specified module is disabled.
-	 * @param string $slug module name
-	 * @return bool
-	 * @throws ApplicationException
-	 */
-	public function isDisabled(string $slug): bool
-	{
-		$module = $this->where('slug', $slug);
+    /**
+     * Check if specified module is disabled.
+     * @param string $slug module name
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function isDisabled(string $slug): bool
+    {
+        $module = $this->where('slug', $slug);
 
-		return $module['enabled'] === false;
-	}
+        return $module['enabled'] === false;
+    }
 
-	/**
-	 * Enables the specified module.
-	 * @param string $slug module name
-	 * @return bool
-	 * @throws ApplicationException
-	 */
-	public function enable(string $slug): bool
-	{
-		return $this->set($slug . '::enabled', true);
-	}
+    /**
+     * Enables the specified module.
+     * @param string $slug module name
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function enable(string $slug): bool
+    {
+        return $this->set($slug . '::enabled', true);
+    }
 
-	/**
-	 * Disables the specified module.
-	 * @param string $slug module name
-	 * @return bool
-	 * @throws ApplicationException
-	 */
-	public function disable(string $slug): bool
-	{
-		return $this->set($slug . '::enabled', false);
-	}
-
-
-	/**
-	 * 是否是 Poppy 模块
-	 * @param string $slug
-	 * @return bool|mixed
-	 */
-	public function isPoppy(string $slug)
-	{
-		return Str::startsWith($slug, 'poppy');
-	}
+    /**
+     * Disables the specified module.
+     * @param string $slug module name
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function disable(string $slug): bool
+    {
+        return $this->set($slug . '::enabled', false);
+    }
 
 
-	/*
-	|--------------------------------------------------------------------------
-	| Optimization Methods
-	|--------------------------------------------------------------------------
-	|
-	*/
+    /**
+     * 是否是 Poppy 模块
+     * @param string $slug
+     * @return bool|mixed
+     */
+    public function isPoppy(string $slug)
+    {
+        return Str::startsWith($slug, 'poppy');
+    }
 
-	/**
-	 * Update cached repository of module information.
-	 * @return bool
-	 * @throws ApplicationException
-	 * @throws Exception
-	 */
-	public function optimize(): bool
-	{
-		$cachePath = $this->getCachePath();
-		$cache     = $this->getCache();
-		$baseNames = $this->getAllBasenames();
-		$modules   = collect();
 
-		$baseNames->each(function ($module) use ($modules, $cache) {
-			$basename = collect([]);
-			$temp     = $basename->merge(collect($cache->get($module)));
-			$manifest = $temp->merge(collect($this->getManifest($module)));
-			// rewrite slug
-			$manifest['slug'] = $module;
-			$modules->put($module, $manifest);
-		});
+    /*
+    |--------------------------------------------------------------------------
+    | Optimization Methods
+    |--------------------------------------------------------------------------
+    |
+    */
 
-		$depends = '';
-		$modules->each(function (Collection $module) use (&$depends) {
-			$module->put('id', crc32($module->get('slug')));
+    /**
+     * Update cached repository of module information.
+     * @return bool
+     * @throws ApplicationException
+     * @throws Exception
+     */
+    public function optimize(): bool
+    {
+        $cachePath = $this->getCachePath();
+        $cache     = $this->getCache();
+        $baseNames = $this->getAllBasenames();
+        $modules   = collect();
 
-			if (!$module->has('enabled')) {
-				$module->put('enabled', true);
-			}
+        $baseNames->each(function ($module) use ($modules, $cache) {
+            $basename = collect([]);
+            $temp     = $basename->merge(collect($cache->get($module)));
+            $manifest = $temp->merge(collect($this->getManifest($module)));
+            // rewrite slug
+            $manifest['slug'] = $module;
+            $modules->put($module, $manifest);
+        });
 
-			if (!$module->has('order')) {
-				$module->put('order', 9001);
-			}
+        $depends = '';
+        $modules->each(function (Collection $module) use (&$depends) {
+            $module->put('id', crc32($module->get('slug')));
 
-			$dependencies = (array) $module->get('dependencies');
+            if (!$module->has('enabled')) {
+                $module->put('enabled', true);
+            }
 
-			if (count($dependencies)) {
-				foreach ($dependencies as $dependency) {
-					$class = $dependency['class'];
-					if (!class_exists($class)) {
-						$depends .=
-							'You need to install `' . $dependency['package'] . '` (' . $dependency['description'] . ')';
-					}
-				}
-			}
+            if (!$module->has('order')) {
+                $module->put('order', 9001);
+            }
 
-			return $module;
-		});
+            $dependencies = (array) $module->get('dependencies');
 
-		if ($depends) {
-			throw new ApplicationException($depends);
-		}
+            if (count($dependencies)) {
+                foreach ($dependencies as $dependency) {
+                    $class = $dependency['class'];
+                    if (!class_exists($class)) {
+                        $depends .=
+                            'You need to install `' . $dependency['package'] . '` (' . $dependency['description'] . ')';
+                    }
+                }
+            }
 
-		$content = json_encode($modules->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return $module;
+        });
 
-		$this->files->put($cachePath, $content);
+        if ($depends) {
+            throw new ApplicationException($depends);
+        }
 
-		event(new PoppyOptimized(collect($modules->all())));
+        $content = json_encode($modules->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-		return true;
-	}
+        $this->files->put($cachePath, $content);
 
-	/**
-	 * Get the contents of the cache file.
-	 * @return Collection
-	 * @throws ApplicationException
-	 */
-	private function getCache(): Collection
-	{
-		try {
-			$cachePath = $this->getCachePath();
+        event(new PoppyOptimized(collect($modules->all())));
 
-			if (!$this->files->exists($cachePath)) {
-				$this->createCache();
+        return true;
+    }
 
-				$this->optimize();
-			}
+    /**
+     * Get the contents of the cache file.
+     * @return Collection
+     * @throws ApplicationException
+     */
+    private function getCache(): Collection
+    {
+        try {
+            $cachePath = $this->getCachePath();
 
-			return collect(json_decode($this->files->get($cachePath), true));
-		} catch (Throwable $e) {
-			throw new ApplicationException($e->getMessage());
-		}
-	}
+            if (!$this->files->exists($cachePath)) {
+                $this->createCache();
 
-	/**
-	 * Create an empty instance of the cache file.
-	 * @return Collection
-	 */
-	private function createCache(): Collection
-	{
-		$cachePath = $this->getCachePath();
-		$content   = json_encode([], JSON_PRETTY_PRINT);
+                $this->optimize();
+            }
 
-		$this->files->put($cachePath, $content);
+            return collect(json_decode($this->files->get($cachePath), true));
+        } catch (Throwable $e) {
+            throw new ApplicationException($e->getMessage());
+        }
+    }
 
-		return collect(json_decode($content, true));
-	}
+    /**
+     * Create an empty instance of the cache file.
+     * @return Collection
+     */
+    private function createCache(): Collection
+    {
+        $cachePath = $this->getCachePath();
+        $content   = json_encode([], JSON_PRETTY_PRINT);
 
-	/**
-	 * Get the path to the cache file.
-	 * @return string
-	 */
-	private function getCachePath(): string
-	{
-		return storage_path('app/poppy.json');
-	}
+        $this->files->put($cachePath, $content);
+
+        return collect(json_decode($content, true));
+    }
+
+    /**
+     * Get the path to the cache file.
+     * @return string
+     */
+    private function getCachePath(): string
+    {
+        return storage_path('app/poppy.json');
+    }
 }
 

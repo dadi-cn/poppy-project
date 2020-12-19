@@ -10,67 +10,67 @@ use Route;
 
 class RouteServiceProvider extends SysRouteServiceProvider
 {
-	/**
-	 * Define the routes for the module.
-	 * @return void
-	 */
-	public function map(): void
-	{
-		$this->mapBackendRoutes();
+    /**
+     * Define the routes for the module.
+     * @return void
+     */
+    public function map(): void
+    {
+        $this->mapBackendRoutes();
 
-		$this->mapDevRoutes();
-	}
+        $this->mapDevRoutes();
+    }
 
-	/**
-	 * Define the "web" routes for the module.
-	 * These routes all receive session state, CSRF protection, etc.
-	 * @return void
-	 */
-	protected function mapBackendRoutes(): void
-	{
-		// backend
-		Route::group([
-			'prefix' => $this->backendPrefix,
-		], function (Router $router) {
-			$router->any('/', 'Poppy\MgrPage\Http\Request\Backend\HomeController@index')
-				->middleware('backend-auth')
-				->name('py-mgr-page:backend.home.index');
-			$router->any('login', 'Poppy\MgrPage\Http\Request\Backend\HomeController@login')
-				->middleware('web')
-				->name('py-mgr-page:backend.home.login');
-		});
+    /**
+     * Define the "web" routes for the module.
+     * These routes all receive session state, CSRF protection, etc.
+     * @return void
+     */
+    protected function mapBackendRoutes(): void
+    {
+        // backend
+        Route::group([
+            'prefix' => $this->backendPrefix,
+        ], function (Router $router) {
+            $router->any('/', 'Poppy\MgrPage\Http\Request\Backend\HomeController@index')
+                ->middleware('backend-auth')
+                ->name('py-mgr-page:backend.home.index');
+            $router->any('login', 'Poppy\MgrPage\Http\Request\Backend\HomeController@login')
+                ->middleware('web')
+                ->name('py-mgr-page:backend.home.login');
+        });
 
-		Route::group([
-			'prefix'     => $this->backendPrefix . '/system',
-			'middleware' => 'backend-auth',
-		], function () {
-			require_once __DIR__ . '/Routes/backend.php';
-		});
-	}
+        Route::group([
+            'prefix'     => $this->backendPrefix . '/system',
+            'middleware' => 'backend-auth',
+        ], function () {
+            require_once __DIR__ . '/Routes/backend.php';
+        });
+    }
 
-	/**
-	 * Define the "web" routes for the module.
-	 * These routes all receive session state, CSRF protection, etc.
-	 * @return void
-	 */
-	protected function mapDevRoutes(): void
-	{
-		// develop
-		Route::group([
-			'middleware' => 'web',
-			'prefix'     => $this->developPrefix,
-		], function (Router $router) {
-			$router->any('login', 'Poppy\MgrPage\Http\Request\Develop\PamController@login')
-				->name('py-mgr-page:develop.pam.login');
-			$router->get('/', 'Poppy\MgrPage\Http\Request\Develop\CpController@index')
-				->middleware('develop-auth')
-				->name('py-mgr-page:develop.cp.cp');
-		});
-		Route::group([
-			'middleware' => 'develop-auth',
-			'prefix'     => $this->developPrefix . '/system',
-		], function () {
-			require_once __DIR__ . '/Routes/develop.php';
-		});
-	}
+    /**
+     * Define the "web" routes for the module.
+     * These routes all receive session state, CSRF protection, etc.
+     * @return void
+     */
+    protected function mapDevRoutes(): void
+    {
+        // develop
+        Route::group([
+            'middleware' => 'web',
+            'prefix'     => $this->developPrefix,
+        ], function (Router $router) {
+            $router->any('login', 'Poppy\MgrPage\Http\Request\Develop\PamController@login')
+                ->name('py-mgr-page:develop.pam.login');
+            $router->get('/', 'Poppy\MgrPage\Http\Request\Develop\CpController@index')
+                ->middleware('develop-auth')
+                ->name('py-mgr-page:develop.cp.cp');
+        });
+        Route::group([
+            'middleware' => 'develop-auth',
+            'prefix'     => $this->developPrefix . '/system',
+        ], function () {
+            require_once __DIR__ . '/Routes/develop.php';
+        });
+    }
 }

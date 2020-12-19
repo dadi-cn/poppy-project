@@ -53,208 +53,208 @@ use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubjectAuthenticatable;
  */
 class PamAccount extends Eloquent implements Authenticatable, JWTSubjectAuthenticatable
 {
-	use TraitAuthenticatable, RbacUserTrait, Authorizable, FilterTrait, Notifiable;
+    use TraitAuthenticatable, RbacUserTrait, Authorizable, FilterTrait, Notifiable;
 
-	/* Register Type
-	 -------------------------------------------- */
-	const TYPE_BACKEND = 'backend';
-	const TYPE_USER    = 'user';
-	const TYPE_DEVELOP = 'develop';
+    /* Register Type
+     -------------------------------------------- */
+    const TYPE_BACKEND = 'backend';
+    const TYPE_USER    = 'user';
+    const TYPE_DEVELOP = 'develop';
 
-	/* Register By
-	 -------------------------------------------- */
-	const REG_TYPE_USERNAME = 'username';
-	const REG_TYPE_MOBILE   = 'mobile';
-	const REG_TYPE_EMAIL    = 'email';
+    /* Register By
+     -------------------------------------------- */
+    const REG_TYPE_USERNAME = 'username';
+    const REG_TYPE_MOBILE   = 'mobile';
+    const REG_TYPE_EMAIL    = 'email';
 
-	/* Guard Type
-	 -------------------------------------------- */
-	const GUARD_WEB         = 'web';
-	const GUARD_BACKEND     = 'backend';
-	const GUARD_DEVELOP     = 'develop';
-	const GUARD_USER        = 'user';
-	const GUARD_JWT_BACKEND = 'jwt_backend';
-	const GUARD_JWT_WEB     = 'jwt_web';
+    /* Guard Type
+     -------------------------------------------- */
+    const GUARD_WEB         = 'web';
+    const GUARD_BACKEND     = 'backend';
+    const GUARD_DEVELOP     = 'develop';
+    const GUARD_USER        = 'user';
+    const GUARD_JWT_BACKEND = 'jwt_backend';
+    const GUARD_JWT_WEB     = 'jwt_web';
 
-	/* Register Platform
-	 -------------------------------------------- */
-	const REG_PLATFORM_IOS     = 'ios';
-	const REG_PLATFORM_ANDROID = 'android';
-	const REG_PLATFORM_WEB     = 'web';
-	const REG_PLATFORM_PC      = 'pc';
-	const REG_PLATFORM_H5      = 'h5';
-	const REG_PLATFORM_WEAPP   = 'weapp';
+    /* Register Platform
+     -------------------------------------------- */
+    const REG_PLATFORM_IOS     = 'ios';
+    const REG_PLATFORM_ANDROID = 'android';
+    const REG_PLATFORM_WEB     = 'web';
+    const REG_PLATFORM_PC      = 'pc';
+    const REG_PLATFORM_H5      = 'h5';
+    const REG_PLATFORM_WEAPP   = 'weapp';
 
-	const BIND_MOBILE = 10001;
+    const BIND_MOBILE = 10001;
 
-	protected $table = 'pam_account';
+    protected $table = 'pam_account';
 
-	protected $dates = [
-		'logined_at',
-		'disable_start_at',
-		'disable_end_at',
-	];
+    protected $dates = [
+        'logined_at',
+        'disable_start_at',
+        'disable_end_at',
+    ];
 
-	protected $fillable = [
-		'mobile',
-		'email',
-		'username',
-		'parent_id',
-		'password',
-		'type',
-		'logined_at',
-		'is_enable',
-		'password_key',
-		'reg_ip',
-		'reg_platform',
-		'disable_reason',
-		'disable_start_at',
-		'disable_end_at',
-		'login_ip',
-		'message_num',
-		'allow_ip',
-	];
+    protected $fillable = [
+        'mobile',
+        'email',
+        'username',
+        'parent_id',
+        'password',
+        'type',
+        'logined_at',
+        'is_enable',
+        'password_key',
+        'reg_ip',
+        'reg_platform',
+        'disable_reason',
+        'disable_start_at',
+        'disable_end_at',
+        'login_ip',
+        'message_num',
+        'allow_ip',
+    ];
 
-	/**
-	 * Get the identifier that will be stored in the subject claim of the JWT.
-	 * @return mixed
-	 */
-	public function getJWTIdentifier()
-	{
-		return $this->getKey();
-	}
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
-	/**
-	 * Return a key value array, containing any custom claims to be added to the JWT.
-	 * @return array
-	 */
-	public function getJWTCustomClaims()
-	{
-		return [
-			'user' => [
-				'id' => $this->id,
-			],
-		];
-	}
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            'user' => [
+                'id' => $this->id,
+            ],
+        ];
+    }
 
-	/**
-	 * 根据passport返回Pam
-	 * @param string $passport 通行证
-	 * @return Model|null|object|PamAccount
-	 */
-	public static function passport($passport)
-	{
-		$type = (new Pam())->passportType($passport);
+    /**
+     * 根据passport返回Pam
+     * @param string $passport 通行证
+     * @return Model|null|object|PamAccount
+     */
+    public static function passport($passport)
+    {
+        $type = (new Pam())->passportType($passport);
 
-		return self::where($type, $passport)->first();
-	}
+        return self::where($type, $passport)->first();
+    }
 
-	/**
-	 * 根据 Username 获取账户ID
-	 * @param string $username 用户名
-	 * @return mixed
-	 */
-	public static function getIdByUsername($username)
-	{
-		return self::where('username', $username)->value('id');
-	}
+    /**
+     * 根据 Username 获取账户ID
+     * @param string $username 用户名
+     * @return mixed
+     */
+    public static function getIdByUsername($username)
+    {
+        return self::where('username', $username)->value('id');
+    }
 
-	/**
-	 * 允许缓存, 获取账户类型, 因为账户类型不会变化
-	 * @param int $id 账户类型
-	 * @return mixed
-	 */
-	public static function getTypeById($id)
-	{
-		static $accountType;
-		if (!isset($accountType[$id])) {
-			$accountType[$id] = self::where('id', $id)->value('type');
-		}
+    /**
+     * 允许缓存, 获取账户类型, 因为账户类型不会变化
+     * @param int $id 账户类型
+     * @return mixed
+     */
+    public static function getTypeById($id)
+    {
+        static $accountType;
+        if (!isset($accountType[$id])) {
+            $accountType[$id] = self::where('id', $id)->value('type');
+        }
 
-		return $accountType[$id];
-	}
+        return $accountType[$id];
+    }
 
-	/**
-	 * 获取用户所有的 permission
-	 * @param self $pam pam
-	 * @return Collection
-	 */
-	public static function permissions(self $pam): Collection
-	{
-		return $pam->cachedRoles()->reduce(function (Collection $carry, PamRole $item) {
-			$item->cachedPermissions()->each(function ($item) use ($carry) {
-				$carry->push($item);
-			});
+    /**
+     * 获取用户所有的 permission
+     * @param self $pam pam
+     * @return Collection
+     */
+    public static function permissions(self $pam): Collection
+    {
+        return $pam->cachedRoles()->reduce(function (Collection $carry, PamRole $item) {
+            $item->cachedPermissions()->each(function ($item) use ($carry) {
+                $carry->push($item);
+            });
 
-			return $carry;
-		}, collect());
-	}
+            return $carry;
+        }, collect());
+    }
 
-	/**
-	 * 获取定义的 kv 值
-	 * @param null|string $key       需要获取的key, 默认返回整个定义
-	 * @param bool        $check_key 检测当前key 是否存在
-	 * @return array|string
-	 */
-	public static function kvType($key = null, $check_key = false)
-	{
-		$desc = [
-			self::TYPE_USER    => '用户',
-			self::TYPE_BACKEND => '后台管理员',
-			self::TYPE_DEVELOP => '开发者',
-		];
+    /**
+     * 获取定义的 kv 值
+     * @param null|string $key       需要获取的key, 默认返回整个定义
+     * @param bool        $check_key 检测当前key 是否存在
+     * @return array|string
+     */
+    public static function kvType($key = null, $check_key = false)
+    {
+        $desc = [
+            self::TYPE_USER    => '用户',
+            self::TYPE_BACKEND => '后台管理员',
+            self::TYPE_DEVELOP => '开发者',
+        ];
 
-		return kv($desc, $key, $check_key);
-	}
+        return kv($desc, $key, $check_key);
+    }
 
-	/**
-	 * 获取定义的 kv 值
-	 * @param null|string $key       需要获取的key, 默认返回整个定义
-	 * @param bool        $check_key 检测当前key 是否存在
-	 * @return array|string
-	 */
-	public static function kvRegType($key = null, $check_key = false)
-	{
-		$desc = [
-			self::REG_TYPE_USERNAME => '用户名',
-			self::REG_TYPE_MOBILE   => '手机号',
-			self::REG_TYPE_EMAIL    => '邮箱',
-		];
+    /**
+     * 获取定义的 kv 值
+     * @param null|string $key       需要获取的key, 默认返回整个定义
+     * @param bool        $check_key 检测当前key 是否存在
+     * @return array|string
+     */
+    public static function kvRegType($key = null, $check_key = false)
+    {
+        $desc = [
+            self::REG_TYPE_USERNAME => '用户名',
+            self::REG_TYPE_MOBILE   => '手机号',
+            self::REG_TYPE_EMAIL    => '邮箱',
+        ];
 
-		return kv($desc, $key, $check_key);
-	}
+        return kv($desc, $key, $check_key);
+    }
 
-	/**
-	 * 注册平台
-	 * @param null $key          key
-	 * @param bool $check_exists 检测当前key 是否存在
-	 * @return array|string
-	 */
-	public static function kvPlatform($key = null, $check_exists = false)
-	{
-		$desc = [
-			self::REG_PLATFORM_ANDROID => 'android',
-			self::REG_PLATFORM_IOS     => 'ios',
-			self::REG_PLATFORM_PC      => 'pc',
-			self::REG_PLATFORM_WEB     => 'web',
-			self::REG_PLATFORM_H5      => 'h5',
-			self::REG_PLATFORM_WEAPP   => 'weapp',
-		];
+    /**
+     * 注册平台
+     * @param null $key          key
+     * @param bool $check_exists 检测当前key 是否存在
+     * @return array|string
+     */
+    public static function kvPlatform($key = null, $check_exists = false)
+    {
+        $desc = [
+            self::REG_PLATFORM_ANDROID => 'android',
+            self::REG_PLATFORM_IOS     => 'ios',
+            self::REG_PLATFORM_PC      => 'pc',
+            self::REG_PLATFORM_WEB     => 'web',
+            self::REG_PLATFORM_H5      => 'h5',
+            self::REG_PLATFORM_WEAPP   => 'weapp',
+        ];
 
-		return kv($desc, $key, $check_exists);
-	}
+        return kv($desc, $key, $check_exists);
+    }
 
-	/**
-	 * @param int    $id    id
-	 * @param string $field 获取字段
-	 * @return \Illuminate\Database\Eloquent\Collection|Model|mixed|null|PamAccount|PamAccount[]
-	 */
-	public static function fetch($id, $field = '')
-	{
-		if ($field) {
-			return self::find($id)->$field;
-		}
+    /**
+     * @param int    $id    id
+     * @param string $field 获取字段
+     * @return \Illuminate\Database\Eloquent\Collection|Model|mixed|null|PamAccount|PamAccount[]
+     */
+    public static function fetch($id, $field = '')
+    {
+        if ($field) {
+            return self::find($id)->$field;
+        }
 
-		return self::find($id);
-	}
+        return self::find($id);
+    }
 }

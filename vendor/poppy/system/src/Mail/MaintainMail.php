@@ -9,50 +9,50 @@ use Illuminate\Queue\SerializesModels;
  */
 class MaintainMail extends Mailable
 {
-	use Queueable, SerializesModels;
+    use Queueable, SerializesModels;
 
-	/**
-	 * @var string 标题
-	 */
-	public $title;
+    /**
+     * @var string 标题
+     */
+    public $title;
 
-	/**
-	 * @var string 内容
-	 */
-	public $content;
+    /**
+     * @var string 内容
+     */
+    public $content;
 
-	/**
-	 * @var string 附加的文件
-	 */
-	private $file;
+    /**
+     * @var string 附加的文件
+     */
+    private $file;
 
-	/**
-	 * Create a new message instance.
-	 *
-	 * @param string $title
-	 * @param string $content
-	 * @param string $file
-	 */
-	public function __construct($title = '', $content = '', $file = '')
-	{
-		$this->title   = $title;
-		$this->subject = $title;
-		$this->content = $content;
-		$this->file    = $file;
-	}
+    /**
+     * Create a new message instance.
+     *
+     * @param string $title
+     * @param string $content
+     * @param string $file
+     */
+    public function __construct($title = '', $content = '', $file = '')
+    {
+        $this->title   = $title;
+        $this->subject = $title;
+        $this->content = $content;
+        $this->file    = $file;
+    }
 
-	/**
-	 * Build the message.
-	 *
-	 * @return $this
-	 */
-	public function build(): self
-	{
-		$view = $this->view('py-system::mail.maintain');
-		if ($this->file) {
-			$view->attach($this->file);
-		}
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build(): self
+    {
+        $view = $this->view('py-system::mail.maintain');
+        if ($this->file) {
+            $view->attach($this->file);
+        }
 
-		return $view;
-	}
+        return $view;
+    }
 }

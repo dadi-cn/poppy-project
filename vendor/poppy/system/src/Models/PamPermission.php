@@ -25,19 +25,19 @@ use Poppy\Core\Rbac\Traits\RbacPermissionTrait;
  */
 class PamPermission extends Eloquent implements RbacPermissionContract
 {
-	use RbacPermissionTrait;
+    use RbacPermissionTrait;
 
-	protected $table = 'pam_permission';
+    protected $table = 'pam_permission';
 
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'name',
-		'title',
-		'description',
-		'group',
-		'root',
-		'module',
-		'type',
-	];
+    protected $fillable = [
+        'name',
+        'title',
+        'description',
+        'group',
+        'root',
+        'module',
+        'type',
+    ];
 }

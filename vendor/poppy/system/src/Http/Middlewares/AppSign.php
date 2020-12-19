@@ -11,22 +11,22 @@ use Poppy\System\Classes\Contracts\ApiSignContract;
  */
 class AppSign
 {
-	use AppTrait;
+    use AppTrait;
 
-	/**
-	 * Handle an incoming request.
-	 * @param Request $request 请求
-	 * @param Closure $next    后续处理
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		$Sign = app(ApiSignContract::class);
+    /**
+     * Handle an incoming request.
+     * @param Request $request 请求
+     * @param Closure $next    后续处理
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        $Sign = app(ApiSignContract::class);
 
-		if (!$Sign->check($request)) {
-			$error = $Sign->getError();
-			return Resp::web($error->getCode(), $error->getMessage());
-		}
-		return $next($request);
-	}
+        if (!$Sign->check($request)) {
+            $error = $Sign->getError();
+            return Resp::web($error->getCode(), $error->getMessage());
+        }
+        return $next($request);
+    }
 }

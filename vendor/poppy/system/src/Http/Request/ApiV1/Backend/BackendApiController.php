@@ -10,12 +10,12 @@ use Poppy\System\Models\PamAccount;
  */
 abstract class BackendApiController extends ApiController
 {
-	/**
-	 * 返回 Jwt 用户
-	 * @return Authenticatable|PamAccount
-	 */
-	protected function jwtPam()
-	{
-		return Auth::guard(PamAccount::GUARD_JWT_BACKEND)->user();
-	}
+    /**
+     * 返回 Jwt 用户
+     * @return Authenticatable|PamAccount
+     */
+    protected function jwtPam()
+    {
+        return Auth::guard(PamAccount::GUARD_JWT_BACKEND)->user();
+    }
 }

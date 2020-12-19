@@ -5,8 +5,8 @@
  */
 interface Bootstrap
 {
-	/**
-	 * Bootstrap the given application.
-	 */
-	public function bootstrap();
+    /**
+     * Bootstrap the given application.
+     */
+    public function bootstrap();
 }

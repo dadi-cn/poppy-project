@@ -11,18 +11,18 @@ use Poppy\System\Models\PamRole;
  */
 class RbacPermission extends CoreRbacPermission
 {
-	use CoreTrait;
+    use CoreTrait;
 
-	/**
-	 * Handle an incoming request.
-	 * @param PamAccount|RbacUserTrait $user
-	 * @return mixed
-	 */
-	public function passed($user)
-	{
-		if ($user->type === PamAccount::TYPE_BACKEND && $user->hasRole(PamRole::BE_ROOT)) {
-			return true;
-		}
-		return false;
-	}
+    /**
+     * Handle an incoming request.
+     * @param PamAccount|RbacUserTrait $user
+     * @return mixed
+     */
+    public function passed($user)
+    {
+        if ($user->type === PamAccount::TYPE_BACKEND && $user->hasRole(PamRole::BE_ROOT)) {
+            return true;
+        }
+        return false;
+    }
 }

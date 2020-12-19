@@ -10,85 +10,85 @@ use Poppy\System\Models\PamAccount;
 
 class FormPamPassword extends FormWidget
 {
-	public $ajax = true;
+    public $ajax = true;
 
-	private $id;
+    private $id;
 
-	/**
-	 * @var PamAccount
-	 */
-	private $pam;
+    /**
+     * @var PamAccount
+     */
+    private $pam;
 
-	/**
-	 * @param $id
-	 * @return $this
-	 * @throws ApplicationException
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-		if ($id) {
-			$this->pam = PamAccount::find($this->id);
+    /**
+     * @param $id
+     * @return $this
+     * @throws ApplicationException
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        if ($id) {
+            $this->pam = PamAccount::find($this->id);
 
-			if (!$this->pam) {
-				throw  new ApplicationException('无用户数据');
-			}
+            if (!$this->pam) {
+                throw  new ApplicationException('无用户数据');
+            }
 
-		}
-		return $this;
-	}
+        }
+        return $this;
+    }
 
-	public function handle()
-	{
-		$id = input('id');
-		if (is_post()) {
-			$this->setId($id);
-			// todo li 规则验证
-			$validator = Validator::make(input(), [
-				'password' => [
-					Rule::required(),
-					Rule::confirmed(),
-				],
-			], []);
-			if ($validator->fails()) {
-				return Resp::error($validator->errors());
-			}
+    public function handle()
+    {
+        $id = input('id');
+        if (is_post()) {
+            $this->setId($id);
+            // todo li 规则验证
+            $validator = Validator::make(input(), [
+                'password' => [
+                    Rule::required(),
+                    Rule::confirmed(),
+                ],
+            ], []);
+            if ($validator->fails()) {
+                return Resp::error($validator->errors());
+            }
 
-			$password = input('password');
+            $password = input('password');
 
-			$actPam = new Pam();
-			$actPam->setPam($this->pam);
-			if ($actPam->setPassword($this->pam, $password)) {
-				return Resp::success('设置密码成功', '_top_reload|1');
-			}
+            $actPam = new Pam();
+            $actPam->setPam($this->pam);
+            if ($actPam->setPassword($this->pam, $password)) {
+                return Resp::success('设置密码成功', '_top_reload|1');
+            }
 
-			return Resp::error($actPam->getError());
-		}
+            return Resp::error($actPam->getError());
+        }
 
-	}
+    }
 
-	public function data()
-	{
-		if ($this->id) {
-			return [
-				'id'       => $this->pam->id,
-				'username' => $this->pam->username,
-			];
-		}
-		return [];
-	}
+    public function data()
+    {
+        if ($this->id) {
+            return [
+                'id'       => $this->pam->id,
+                'username' => $this->pam->username,
+            ];
+        }
+        return [];
+    }
 
-	/**
-	 * Build a form here.
-	 */
-	public function form()
-	{
-		if ($this->id) {
-			$this->hidden('id', 'ID');
-		}
+    /**
+     * Build a form here.
+     */
+    public function form()
+    {
+        if ($this->id) {
+            $this->hidden('id', 'ID');
+        }
 
-		$this->text('username', '用户名')->disable();
-		$this->password('password', '密码');
-		$this->password('password_confirmation', '重复密码');
-	}
+        $this->text('username', '用户名')->disable();
+        $this->password('password', '密码');
+        $this->password('password_confirmation', '重复密码');
+    }
 }

@@ -11,31 +11,31 @@ use Throwable;
 
 class FormMailTest extends FormWidget
 {
-	protected $width = [
-		'label' => 3,
-		'field' => 9,
-	];
+    protected $width = [
+        'label' => 3,
+        'field' => 9,
+    ];
 
-	public function handle(Request $request)
-	{
-		$all = $request->all();
-		try {
-			Mail::to($all['to'])->send(new TestMail($all['content']));
-			return Resp::success('邮件发送成功');
-		} catch (Throwable $e) {
-			return Resp::error($e->getMessage());
-		}
-	}
+    public function handle(Request $request)
+    {
+        $all = $request->all();
+        try {
+            Mail::to($all['to'])->send(new TestMail($all['content']));
+            return Resp::success('邮件发送成功');
+        } catch (Throwable $e) {
+            return Resp::error($e->getMessage());
+        }
+    }
 
-	/**
-	 * Build a form here.
-	 * @throws FormException
-	 */
-	public function form()
-	{
-		$this->email('to', '邮箱');
-		$this->textarea('content', '内容')->rules([
-			Rule::nullable(),
-		]);
-	}
+    /**
+     * Build a form here.
+     * @throws FormException
+     */
+    public function form()
+    {
+        $this->email('to', '邮箱');
+        $this->textarea('content', '内容')->rules([
+            Rule::nullable(),
+        ]);
+    }
 }

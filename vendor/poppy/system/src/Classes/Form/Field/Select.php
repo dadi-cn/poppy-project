@@ -9,147 +9,147 @@ use Poppy\System\Classes\Form\Field;
 
 class Select extends Field
 {
-	/**
-	 * @var array
-	 */
-	protected $groups = [];
+    /**
+     * @var array
+     */
+    protected $groups = [];
 
-	/**
-	 * @var array
-	 */
-	protected $config = [];
+    /**
+     * @var array
+     */
+    protected $config = [];
 
 
-	protected $placeholder = '请选择';
+    protected $placeholder = '请选择';
 
-	/**
-	 * Set options.
-	 *
-	 * @param array|callable|string $options
-	 *
-	 * @return $this|mixed
-	 */
-	public function options($options = [])
-	{
-		if ($options instanceof Arrayable) {
-			$options = $options->toArray();
-		}
+    /**
+     * Set options.
+     *
+     * @param array|callable|string $options
+     *
+     * @return $this|mixed
+     */
+    public function options($options = [])
+    {
+        if ($options instanceof Arrayable) {
+            $options = $options->toArray();
+        }
 
-		$this->options = array_merge([$this->placeholder], (array) $options);
+        $this->options = array_merge([$this->placeholder], (array) $options);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param array $groups
-	 */
+    /**
+     * @param array $groups
+     */
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function render()
-	{
+    /**
+     * {@inheritdoc}
+     */
+    public function render()
+    {
 
-		if ($this->options instanceof Closure) {
-			if ($this->form) {
-				$this->options = $this->options->bindTo($this->form->model());
-			}
+        if ($this->options instanceof Closure) {
+            if ($this->form) {
+                $this->options = $this->options->bindTo($this->form->model());
+            }
 
-			$this->options(call_user_func($this->options, $this->value, $this));
-		}
+            $this->options(call_user_func($this->options, $this->value, $this));
+        }
 
-		$this->options = array_filter($this->options, 'strlen');
+        $this->options = array_filter($this->options, 'strlen');
 
-		$this->addVariables([
-			'options' => $this->options,
-			'groups'  => $this->groups,
-		]);
+        $this->addVariables([
+            'options' => $this->options,
+            'groups'  => $this->groups,
+        ]);
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 
-	/**
-	 * Set option groups.
-	 *
-	 * eg: $group = [
-	 *        [
-	 *        'label' => 'xxxx',
-	 *        'options' => [
-	 *            1 => 'foo',
-	 *            2 => 'bar',
-	 *            ...
-	 *        ],
-	 *        ...
-	 *     ]
-	 *
-	 * @param array $groups
-	 *
-	 * @return $this
-	 */
-	public function groups(array $groups)
-	{
-		$this->groups = $groups;
+    /**
+     * Set option groups.
+     *
+     * eg: $group = [
+     *        [
+     *        'label' => 'xxxx',
+     *        'options' => [
+     *            1 => 'foo',
+     *            2 => 'bar',
+     *            ...
+     *        ],
+     *        ...
+     *     ]
+     *
+     * @param array $groups
+     *
+     * @return $this
+     */
+    public function groups(array $groups)
+    {
+        $this->groups = $groups;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Load options from current selected resource(s).
-	 *
-	 * @param string $model
-	 * @param string $idField
-	 * @param string $textField
-	 *
-	 * @return $this
-	 */
-	public function model($model, $idField = 'id', $textField = 'name')
-	{
-		if (
-			!class_exists($model)
-			|| !in_array(Model::class, class_parents($model))
-		) {
-			throw new InvalidArgumentException("[$model] must be a valid model class");
-		}
+    /**
+     * Load options from current selected resource(s).
+     *
+     * @param string $model
+     * @param string $idField
+     * @param string $textField
+     *
+     * @return $this
+     */
+    public function model($model, $idField = 'id', $textField = 'name')
+    {
+        if (
+            !class_exists($model)
+            || !in_array(Model::class, class_parents($model))
+        ) {
+            throw new InvalidArgumentException("[$model] must be a valid model class");
+        }
 
-		$this->options = function ($value) use ($model, $idField, $textField) {
-			if (empty($value)) {
-				return [];
-			}
+        $this->options = function ($value) use ($model, $idField, $textField) {
+            if (empty($value)) {
+                return [];
+            }
 
-			$resources = [];
+            $resources = [];
 
-			if (is_array($value)) {
-				if (Arr::isAssoc($value)) {
-					$resources[] = Arr::get($value, $idField);
-				}
-				else {
-					$resources = array_column($value, $idField);
-				}
-			}
-			else {
-				$resources[] = $value;
-			}
+            if (is_array($value)) {
+                if (Arr::isAssoc($value)) {
+                    $resources[] = Arr::get($value, $idField);
+                }
+                else {
+                    $resources = array_column($value, $idField);
+                }
+            }
+            else {
+                $resources[] = $value;
+            }
 
-			return $model::find($resources)->pluck($textField, $idField)->toArray();
-		};
+            return $model::find($resources)->pluck($textField, $idField)->toArray();
+        };
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set config for select2.
-	 *
-	 * all configurations see https://select2.org/configuration/options-api
-	 *
-	 * @param string $key
-	 * @param mixed  $val
-	 *
-	 * @return $this
-	 */
-	public function config($key, $val)
-	{
-		$this->config[$key] = $val;
+    /**
+     * Set config for select2.
+     *
+     * all configurations see https://select2.org/configuration/options-api
+     *
+     * @param string $key
+     * @param mixed  $val
+     *
+     * @return $this
+     */
+    public function config($key, $val)
+    {
+        $this->config[$key] = $val;
 
-		return $this;
-	}
+        return $this;
+    }
 }

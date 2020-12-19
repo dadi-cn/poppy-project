@@ -7,283 +7,283 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultipleFile extends Field
 {
-	use UploadField;
+    use UploadField;
 
 
-	/**
-	 * Create a new File instance.
-	 *
-	 * @param string $column
-	 * @param array  $arguments
-	 */
-	public function __construct($column, $arguments = [])
-	{
-		$this->initStorage();
+    /**
+     * Create a new File instance.
+     *
+     * @param string $column
+     * @param array  $arguments
+     */
+    public function __construct($column, $arguments = [])
+    {
+        $this->initStorage();
 
-		parent::__construct($column, $arguments);
-	}
+        parent::__construct($column, $arguments);
+    }
 
-	/**
-	 * Default directory for file to upload.
-	 *
-	 * @return mixed
-	 */
-	public function defaultDirectory()
-	{
-		return config('admin.upload.directory.file');
-	}
+    /**
+     * Default directory for file to upload.
+     *
+     * @return mixed
+     */
+    public function defaultDirectory()
+    {
+        return config('admin.upload.directory.file');
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getValidator(array $input)
-	{
-		if (request()->has(static::FILE_DELETE_FLAG)) {
-			return false;
-		}
+    /**
+     * {@inheritdoc}
+     */
+    public function getValidator(array $input)
+    {
+        if (request()->has(static::FILE_DELETE_FLAG)) {
+            return false;
+        }
 
-		if (request()->has(static::FILE_SORT_FLAG)) {
-			return false;
-		}
+        if (request()->has(static::FILE_SORT_FLAG)) {
+            return false;
+        }
 
-		if ($this->validator) {
-			return $this->validator->call($this, $input);
-		}
+        if ($this->validator) {
+            return $this->validator->call($this, $input);
+        }
 
-		$attributes = [];
+        $attributes = [];
 
-		if (!$fieldRules = $this->getRules()) {
-			return false;
-		}
+        if (!$fieldRules = $this->getRules()) {
+            return false;
+        }
 
-		$attributes[$this->column] = $this->label;
+        $attributes[$this->column] = $this->label;
 
-		[$rules, $input] = $this->hydrateFiles(Arr::get($input, $this->column, []));
+        [$rules, $input] = $this->hydrateFiles(Arr::get($input, $this->column, []));
 
-		return \validator($input, $rules, $this->getValidationMessages(), $attributes);
-	}
+        return \validator($input, $rules, $this->getValidationMessages(), $attributes);
+    }
 
-	/**
-	 * Hydrate the files array.
-	 *
-	 * @param array $value
-	 *
-	 * @return array
-	 */
-	protected function hydrateFiles(array $value)
-	{
-		if (empty($value)) {
-			return [[$this->column => $this->getRules()], []];
-		}
+    /**
+     * Hydrate the files array.
+     *
+     * @param array $value
+     *
+     * @return array
+     */
+    protected function hydrateFiles(array $value)
+    {
+        if (empty($value)) {
+            return [[$this->column => $this->getRules()], []];
+        }
 
-		$rules = $input = [];
+        $rules = $input = [];
 
-		foreach ($value as $key => $file) {
-			$rules[$this->column . $key] = $this->getRules();
-			$input[$this->column . $key] = $file;
-		}
+        foreach ($value as $key => $file) {
+            $rules[$this->column . $key] = $this->getRules();
+            $input[$this->column . $key] = $file;
+        }
 
-		return [$rules, $input];
-	}
+        return [$rules, $input];
+    }
 
-	/**
-	 * Sort files.
-	 *
-	 * @param string $order
-	 *
-	 * @return array
-	 */
-	protected function sortFiles($order)
-	{
-		$order = explode(',', $order);
+    /**
+     * Sort files.
+     *
+     * @param string $order
+     *
+     * @return array
+     */
+    protected function sortFiles($order)
+    {
+        $order = explode(',', $order);
 
-		$new      = [];
-		$original = $this->original();
+        $new      = [];
+        $original = $this->original();
 
-		foreach ($order as $item) {
-			$new[] = Arr::get($original, $item);
-		}
+        foreach ($order as $item) {
+            $new[] = Arr::get($original, $item);
+        }
 
-		return $new;
-	}
+        return $new;
+    }
 
-	/**
-	 * Prepare for saving.
-	 *
-	 * @param UploadedFile|array $files
-	 *
-	 * @return mixed|string
-	 */
-	public function prepare($files)
-	{
-		if (request()->has(static::FILE_DELETE_FLAG)) {
-			return $this->destroy(request(static::FILE_DELETE_FLAG));
-		}
+    /**
+     * Prepare for saving.
+     *
+     * @param UploadedFile|array $files
+     *
+     * @return mixed|string
+     */
+    public function prepare($files)
+    {
+        if (request()->has(static::FILE_DELETE_FLAG)) {
+            return $this->destroy(request(static::FILE_DELETE_FLAG));
+        }
 
-		if (is_string($files) && request()->has(static::FILE_SORT_FLAG)) {
-			return $this->sortFiles($files);
-		}
+        if (is_string($files) && request()->has(static::FILE_SORT_FLAG)) {
+            return $this->sortFiles($files);
+        }
 
-		$targets = array_map([$this, 'prepareForeach'], $files);
+        $targets = array_map([$this, 'prepareForeach'], $files);
 
-		return array_merge($this->original(), $targets);
-	}
+        return array_merge($this->original(), $targets);
+    }
 
-	/**
-	 * @return array|mixed
-	 */
-	public function original()
-	{
-		if (empty($this->original)) {
-			return [];
-		}
+    /**
+     * @return array|mixed
+     */
+    public function original()
+    {
+        if (empty($this->original)) {
+            return [];
+        }
 
-		return $this->original;
-	}
+        return $this->original;
+    }
 
-	/**
-	 * Prepare for each file.
-	 *
-	 * @param UploadedFile $file
-	 *
-	 * @return mixed|string
-	 */
-	protected function prepareForeach(UploadedFile $file = null)
-	{
-		$this->name = $this->getStoreName($file);
+    /**
+     * Prepare for each file.
+     *
+     * @param UploadedFile $file
+     *
+     * @return mixed|string
+     */
+    protected function prepareForeach(UploadedFile $file = null)
+    {
+        $this->name = $this->getStoreName($file);
 
-		return tap($this->upload($file), function () {
-			$this->name = null;
-		});
-	}
+        return tap($this->upload($file), function () {
+            $this->name = null;
+        });
+    }
 
-	/**
-	 * Preview html for file-upload plugin.
-	 *
-	 * @return array
-	 */
-	protected function preview()
-	{
-		$files = $this->value ?: [];
+    /**
+     * Preview html for file-upload plugin.
+     *
+     * @return array
+     */
+    protected function preview()
+    {
+        $files = $this->value ?: [];
 
-		return array_values(array_map([$this, 'objectUrl'], $files));
-	}
+        return array_values(array_map([$this, 'objectUrl'], $files));
+    }
 
-	/**
-	 * Initialize the caption.
-	 *
-	 * @param array $caption
-	 *
-	 * @return string
-	 */
-	protected function initialCaption($caption)
-	{
-		if (empty($caption)) {
-			return '';
-		}
+    /**
+     * Initialize the caption.
+     *
+     * @param array $caption
+     *
+     * @return string
+     */
+    protected function initialCaption($caption)
+    {
+        if (empty($caption)) {
+            return '';
+        }
 
-		$caption = array_map('basename', $caption);
+        $caption = array_map('basename', $caption);
 
-		return implode(',', $caption);
-	}
+        return implode(',', $caption);
+    }
 
-	/**
-	 * @return array
-	 */
-	protected function initialPreviewConfig()
-	{
-		$files = $this->value ?: [];
+    /**
+     * @return array
+     */
+    protected function initialPreviewConfig()
+    {
+        $files = $this->value ?: [];
 
-		$config = [];
+        $config = [];
 
-		foreach ($files as $index => $file) {
-			$preview = array_merge([
-				'caption' => basename($file),
-				'key'     => $index,
-			], $this->guessPreviewType($file));
+        foreach ($files as $index => $file) {
+            $preview = array_merge([
+                'caption' => basename($file),
+                'key'     => $index,
+            ], $this->guessPreviewType($file));
 
-			$config[] = $preview;
-		}
+            $config[] = $preview;
+        }
 
-		return $config;
-	}
+        return $config;
+    }
 
-	/**
-	 * Allow to sort files.
-	 *
-	 * @return $this
-	 */
-	public function sortable()
-	{
-		$this->fileActionSettings['showDrag'] = true;
+    /**
+     * Allow to sort files.
+     *
+     * @return $this
+     */
+    public function sortable()
+    {
+        $this->fileActionSettings['showDrag'] = true;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $options
-	 */
-	protected function setupScripts($options)
-	{
+    /**
+     * @param string $options
+     */
+    protected function setupScripts($options)
+    {
 
-		if ($this->fileActionSettings['showRemove']) {
-			$text = [
-				'title'   => trans('admin.delete_confirm'),
-				'confirm' => trans('admin.confirm'),
-				'cancel'  => trans('admin.cancel'),
-			];
-		}
+        if ($this->fileActionSettings['showRemove']) {
+            $text = [
+                'title'   => trans('admin.delete_confirm'),
+                'confirm' => trans('admin.confirm'),
+                'cancel'  => trans('admin.cancel'),
+            ];
+        }
 
-		if ($this->fileActionSettings['showDrag']) {
-			$this->addVariables([
-				'sortable'  => true,
-				'sort_flag' => static::FILE_SORT_FLAG,
-			]);
-		}
-	}
+        if ($this->fileActionSettings['showDrag']) {
+            $this->addVariables([
+                'sortable'  => true,
+                'sort_flag' => static::FILE_SORT_FLAG,
+            ]);
+        }
+    }
 
-	/**
-	 * Render file upload field.
-	 *
-	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-	 */
-	public function render()
-	{
-		$this->attribute('multiple', true);
+    /**
+     * Render file upload field.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function render()
+    {
+        $this->attribute('multiple', true);
 
-		$this->setupDefaultOptions();
+        $this->setupDefaultOptions();
 
-		if (!empty($this->value)) {
-			$this->options(['initialPreview' => $this->preview()]);
-			$this->setupPreviewOptions();
-		}
+        if (!empty($this->value)) {
+            $this->options(['initialPreview' => $this->preview()]);
+            $this->setupPreviewOptions();
+        }
 
-		$options = json_encode($this->options);
+        $options = json_encode($this->options);
 
-		$this->setupScripts($options);
+        $this->setupScripts($options);
 
-		return parent::render();
-	}
+        return parent::render();
+    }
 
-	/**
-	 * Destroy original files.
-	 *
-	 * @param string $key
-	 *
-	 * @return array.
-	 */
-	public function destroy($key)
-	{
-		$files = $this->original ?: [];
+    /**
+     * Destroy original files.
+     *
+     * @param string $key
+     *
+     * @return array.
+     */
+    public function destroy($key)
+    {
+        $files = $this->original ?: [];
 
-		$file = Arr::get($files, $key);
+        $file = Arr::get($files, $key);
 
-		if (!$this->retainable && $this->storage->exists($file)) {
-			$this->storage->delete($file);
-		}
+        if (!$this->retainable && $this->storage->exists($file)) {
+            $this->storage->delete($file);
+        }
 
-		unset($files[$key]);
+        unset($files[$key]);
 
-		return $files;
-	}
+        return $files;
+    }
 }

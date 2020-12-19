@@ -9,14 +9,14 @@ use Poppy\System\Tests\Base\SystemTestCase;
 
 class EventTest extends SystemTestCase
 {
-	public function setUp()
-	{
-		parent::setUp();
-		$this->initPam();
-	}
+    public function setUp()
+    {
+        parent::setUp();
+        $this->initPam();
+    }
 
-	public function testPamDisable(): void
-	{
-		event(new PamDisableEvent($this->pam));
-	}
+    public function testPamDisable(): void
+    {
+        event(new PamDisableEvent($this->pam));
+    }
 }
