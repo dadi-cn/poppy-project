@@ -1,9 +1,10 @@
 {
-	"name": "laravel/laravel",
-	"description": "The Laravel Framework.",
+	"name": "poppy/demo",
+	"description": "The Poppy Demo Project",
 	"keywords": [
 		"framework",
-		"laravel"
+		"laravel",
+		"poppy"
 	],
 	"license": "MIT",
 	"type": "project",
@@ -24,6 +25,8 @@
 		"laravelcollective/html": "6.*",
 		"predis/predis": "~1.1",
 		"poppy/framework": "3.0.x-dev",
+		"poppy/system": "3.0.x-dev",
+		"poppy/core": "3.0.x-dev",
 		"poppy/mgr-page": "3.0.x-dev"
 	},
 	"require-dev": {
@@ -70,7 +73,5 @@
 	},
 	"config": {
 		"preferred-install": "dist"
-	},
-	"prefer-stable": false,
-	"minimum-stability": "dev"
+	}
 }
