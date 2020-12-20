@@ -178,7 +178,6 @@ return [
         'Event'        => Illuminate\Support\Facades\Event::class,
         'File'         => Illuminate\Support\Facades\File::class,
         'Hash'         => Illuminate\Support\Facades\Hash::class,
-        'Input'        => Illuminate\Support\Facades\Input::class,
         'Lang'         => Illuminate\Support\Facades\Lang::class,
         'Log'          => Illuminate\Support\Facades\Log::class,
         'Mail'         => Illuminate\Support\Facades\Mail::class,
@@ -195,15 +194,5 @@ return [
         'Url'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
-
-        'Html' => Collective\Html\HtmlFacade::class,
-        'Form' => System\Classes\Facade\FormFacade::class,
-
-        'Image' => Intervention\Image\Facades\Image::class,
     ],
-
-    'cookie_prefix' => env('COOKIE_PREFIX') ?: '',
-    'cookie_base64' => env('COOKIE_BASE64') ?: false,
-    'cookie_domain' => env('COOKIE_DOMAIN') ?: '',
-    'cookie_path'   => env('COOKIE_PATH') ?: '/',
 ];
