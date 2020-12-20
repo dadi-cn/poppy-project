@@ -4,8 +4,8 @@ use Poppy\Framework\Application\Controller;
 
 class DemoController extends Controller
 {
-	public function index()
-	{
-		return 'DummyNamespace Web Request Success';
-	}
+    public function index()
+    {
+        return 'DummyNamespace Web Request Success';
+    }
 }

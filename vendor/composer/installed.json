@@ -3192,20 +3192,20 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/mgr-page.git",
-            "reference": "ffd7f2ae2331acda20d1da9e62f7cebbc07c76d7"
+            "reference": "5187723bd023a009363fdba2b224ca0fefd0ed7b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-4c0c25.zip",
-            "reference": "ffd7f2ae2331acda20d1da9e62f7cebbc07c76d7",
-            "shasum": "fa1dbf266eab3813181dad94ac1c88eae04efac0"
+            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-9babda.zip",
+            "reference": "5187723bd023a009363fdba2b224ca0fefd0ed7b",
+            "shasum": "29faab1c596d16b65b9942424180621edc87ec61"
         },
         "require": {
             "mews/captcha": "3.*",
             "php": ">=7.2.0",
             "poppy/system": "3.0.x-dev"
         },
-        "time": "2020-12-19T18:11:03+00:00",
+        "time": "2020-12-20T01:55:57+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3232,13 +3232,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/system.git",
-            "reference": "96f20416ee05c8600d2e6f46969c2fbdf585b95a"
+            "reference": "dc34f1c90630413b033fbcef4cd9fc4494b003ea"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-bfefc6.zip",
-            "reference": "96f20416ee05c8600d2e6f46969c2fbdf585b95a",
-            "shasum": "c0526da10cb1b3eea2c1c2382e6bb34811dc885b"
+            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-a1081e.zip",
+            "reference": "dc34f1c90630413b033fbcef4cd9fc4494b003ea",
+            "shasum": "de1516f3684ef47e678b08d825a13284c0ea1b2a"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3250,7 +3250,7 @@
             "tucker-eric/eloquentfilter": "^2",
             "tymon/jwt-auth": "1.0.*"
         },
-        "time": "2020-12-19T18:11:03+00:00",
+        "time": "2020-12-20T01:55:57+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

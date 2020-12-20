@@ -1,8 +1,14 @@
 # 系统配置
 
-本模块的配置是注入到 `poppy.php` 文件中, 以下的所有配置均可配置, key 是 `poppy.system`
+> 本模块的配置是注入到 `poppy.php` 文件中, 以下的所有配置均可配置
+> key 是 `poppy.system`
 
-**跨域访问**
+## enable_cross
+
+- Type : `array`
+- Default : `['origin' =>'*','headers'=> '']`
+
+接口请求的时候可以对来源进行设定, 防止web端跨域访问资源
 
 ```
 'enable_cross'      => [
@@ -16,6 +22,14 @@
     'headers' => '',
 ],
 ```
+
+
+## Demo
+- Type : `bool`
+- Default : `false`
+
+演示模式, 开启则无法上传文件, 修改密码
+
 
 **CSRF 访问**
 
@@ -89,3 +103,4 @@ payment_types' => [
 ```
 'prefix'            => 'mgr-page',
 ```
+

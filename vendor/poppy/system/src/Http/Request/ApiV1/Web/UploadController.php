@@ -48,6 +48,10 @@ class UploadController extends WebApiController
             return Resp::web(Resp::ERROR, $validator->messages());
         }
 
+        if (config('poppy.system.demo')) {
+            return $this->demo();
+        }
+
         $Image = app(UploadContract::class);
         $Image->setFolder($image_type);
         if ($image_type === 'default') {
@@ -155,6 +159,10 @@ class UploadController extends WebApiController
             return Resp::web(Resp::ERROR, $validator->messages());
         }
 
+        if (config('poppy.system.demo')) {
+            return $this->demo();
+        }
+
         $Uploader = app(UploadContract::class);
         $Uploader->setFolder($type);
 
@@ -191,5 +199,15 @@ class UploadController extends WebApiController
         }
 
         return Resp::web(Resp::ERROR, $Uploader->getError());
+    }
+
+
+    private function demo()
+    {
+        return Resp::web(Resp::SUCCESS, '上传成功', [
+            'url' => [
+                'https://oss.wulicode.com/demo/480x640/0' . random_int(0, 6) . '.jpg',
+            ],
+        ]);
     }
 }

@@ -58,6 +58,9 @@ class FormPamPassword extends FormWidget
 
             $actPam = new Pam();
             $actPam->setPam($this->pam);
+            if (config('poppy.system.demo')) {
+                return Resp::error('演示模式下无法修改密码');
+            }
             if ($actPam->setPassword($this->pam, $password)) {
                 return Resp::success('设置密码成功', '_top_reload|1');
             }

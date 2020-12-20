@@ -35,10 +35,16 @@ class FormPassword extends FormWidget
 
         $old_password = input('old_password');
         $password     = input('password');
+        $id           = input('account_id');
 
-        $Pam = new Pam();
+        $Pam       = new Pam();
+        $this->pam = PamAccount::find($id);
         if (!app(PasswordContract::class)->check($this->pam, $old_password)) {
             return Resp::error('原密码错误!');
+        }
+
+        if (config('poppy.system.demo')) {
+            return Resp::error('演示模式下无法修改密码');
         }
 
         $Pam->setPassword($this->pam, $password);
@@ -48,12 +54,20 @@ class FormPassword extends FormWidget
 
     }
 
+    public function data()
+    {
+        return [
+            'account_id' => data_get($this->pam, 'id'),
+        ];
+    }
+
     /**
      * Build a form here.
      * @throws FormException
      */
     public function form()
     {
+        $this->hidden('account_id', 'account_id');
         $this->password('old_password', '原密码')->rules([
             Rule::required(),
         ]);

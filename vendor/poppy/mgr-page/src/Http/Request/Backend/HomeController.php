@@ -65,15 +65,12 @@ class HomeController extends BackendController
 
     /**
      * 修改本账户密码
-     * todo
      */
     public function password()
     {
-
         $form = new FormPassword();
         $form->setPam($this->pam());
         return (new Content())->body($form);
-        return view('py-mgr-page::backend.home.password');
     }
 
     public function clearCache()
