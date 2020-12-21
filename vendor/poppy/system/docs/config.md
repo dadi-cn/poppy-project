@@ -3,104 +3,110 @@
 > 本模块的配置是注入到 `poppy.php` 文件中, 以下的所有配置均可配置
 > key 是 `poppy.system`
 
-## enable_cross
+## cross_origin
 
-- Type : `array`
-- Default : `['origin' =>'*','headers'=> '']`
+- Type : `string|array`
+- Default : `*`
 
-接口请求的时候可以对来源进行设定, 防止web端跨域访问资源
+接口请求的时候可以对来源进行设定, 防止web端跨域访问资源, 这里的来源可以为 `*` 或者数组, 数组为类似于 `http://poppy.wulicode.com` 这种形式, 如果是网址则只能填写一个完整字串, 或者多个网址, 使用
+数组进行设定
 
 ```
-'enable_cross'      => [
-    // 允许的来源
-    // 这里的来源可以为 `*` 或者数组, 数组为类似于 `http://poppy.wulicode.com` 这种形式
-    'origin'  => '*',
-    
-    // 允许的Header
-    // 如果有自定义的Header 允许访问的, 可以通过设置此参数来定义比如`X-APP-VERSION`
-    // 多个参数使用 `,` 分隔
-    'headers' => '',
+'cross_origin'      => [
+    'http://poppy.wulicode.com'
 ],
 ```
 
+## cross_headers
 
-## Demo
+- Type : `string`
+- Default : `''`
+
+允许的Header, 可以允许设定前端访问的时候指定的 Header 可以通过浏览器跨域验证, 多个参数使用 `,` 分隔
+
+```
+cross_headers => 'X-APP-VERSION'
+```
+
+## demo
+
 - Type : `bool`
 - Default : `false`
 
 演示模式, 开启则无法上传文件, 修改密码
 
+## upload_image_district
 
-**CSRF 访问**
+- Type : `array`
+- Default : `['default' => 1920,'avatar'  => 300,]`
+
+上传图片大小限制, 根据接口上传的 `image_type` 类型对图片进行压缩
 
 ```
-// 这里是数组模式
-// 支持 laravel 的 csrf 格式来忽略固定的路由
-'csrf_except'       => [
-
+'upload_image_district' => [
+    'default' => 1920,
+    'avatar'  => 300,
+    ...
 ],
 ```
 
-**Cookie 输出**
+## csrf_except
 
-```
-// 对这些数据进行 Cookie 原样输出
-// 比如 `uid`, `order_no`
-'uncrypt_cookies'   => [
+- Type : `array`
+- Default : `[]`
 
-],
-```
+支持 Laravel 的路由过滤的方式来移除匹配的路由不进行 csrf 验证. 参考 : [CSRF 保护](https://learnku.com/docs/laravel/6.x/csrf/5137)
 
-**密码加载器**
+## uncrypt_cookies
 
-```
-// 为了兼容多个平台进行相应的密码校验算法  
-// 需要实现PasswordContract
-'password_provider' => DefaultPasswordProvider::class
-```
+- Type : `array`
+- Default : `[]`
 
-**登录跳转地址**
+使用 laravel cookie 进行设定时, 设定的 cookie 不进行加密输出, 方便 js 进行读取, 共享数据
 
-当前台用户去做授权失败跳转时候的地址
+## password_provider
 
-```
-'user_location'        => '/login',
-```
+- Type : `string`
+- Default : ``
 
-**支付类型**
+密码加载器, 这里这里设定密码算法, 为了保护用户数据安全, 特设定此方式来保护密码计算 默认是 `\Poppy\System\Classes\Auth\Password\DefaultPasswordProvider::class`
+替换该实现方式需要实现 `\Poppy\System\Classes\Contracts\PasswordContract::class` 约定.
 
-```
-// 可根据支付的类型, 用于区分进行回调
-payment_types' => [
+## user_location
 
-],
-```
+- Type : `string`
+- Default : ``
 
-**隐藏路由**
+登录跳转地址, 使用默认的 `web-auth` guard 做验证则需要设定此配置, 当验证失败, 自动跳转到此路径, 这里是路径, 不是路由地址
 
-后台可以隐藏的路由, 写在这里, 后台列表不予显示
+## route_hide
 
-```
-'route_hide'        => [
+- Type : `array`
+- Default : `[]`
 
-],
-```
+隐藏路由, 后台可以隐藏的路由, 写在这里, 后台列表不予显示
 
-**ApiSign 验证**
+## prefix
 
-```
-'api_sign_provider' => '',
-```
+- Type : `string`
+- Default : `mgr-page`
 
-**是否进行签名验证**
+后台默认登陆入口
 
-```
-'api_enable_sign'   => true,
-```
+## api_enable_sign
 
-**后台登录的地址**
+- Type : `bool`
+- Default : `true`
 
-```
-'prefix'            => 'mgr-page',
-```
+是否启用 api 签名验证
 
+## api_sign_provider
+
+接口签名算法, 需要实现  `\Poppy\System\Classes\Contracts\ApiSignContract:class` 约定
+
+## (*)payment_types
+
+- Type : `array`
+- Default : `[]`
+
+[待定]支付类型

@@ -89,7 +89,7 @@ class Poppy
     private function registerServiceProvider($module): void
     {
         $serviceProvider = poppy_class($module['slug'], 'ServiceProvider');
-        
+
         if (class_exists($serviceProvider)) {
             $this->app->register($serviceProvider);
         }

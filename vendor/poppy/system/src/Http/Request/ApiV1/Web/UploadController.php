@@ -38,11 +38,9 @@ class UploadController extends WebApiController
         }
 
         $validator = Validator::make($all, [
-            'type'       => 'required|in:form,base64',
-            'image_type' => 'required|in:default',
+            'type' => 'required|in:form,base64',
         ], [], [
-            'type'       => '上传图片的类型',
-            'image_type' => '图片存储类型',
+            'type' => '上传图片的类型',
         ]);
         if ($validator->fails()) {
             return Resp::web(Resp::ERROR, $validator->messages());
@@ -54,8 +52,12 @@ class UploadController extends WebApiController
 
         $Image = app(UploadContract::class);
         $Image->setFolder($image_type);
-        if ($image_type === 'default') {
-            $Image->setResizeDistrict(1920);
+
+        /* 图片上传大小限制,过大则需要手都进行缩放
+         * ---------------------------------------- */
+        $district = config('poppy.system.upload_image_district');
+        if (isset($district[$image_type]) && (int) $district[$image_type] > 0) {
+            $Image->setResizeDistrict((int) $district[$image_type]);
         }
 
         $urls = [];
