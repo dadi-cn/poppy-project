@@ -1,5 +1,7 @@
 # 生成 php api 文档
 
+> 先睹为快, 使用 sami 生成的 php api 地址 [PhpApi For Poppy](https://poppy-demo.wulicode.com/docs/php/)
+
 ## 生成配置文件
 
 ```

@@ -56,9 +56,6 @@ develop:
           route: py-mgr-page:develop.doc.index
           route_param:
             - backend
-        -
-          title: 后台前端文档
-          route: py-mgr-page:develop.layout.fe
     -
       title: 系统信息
       children:

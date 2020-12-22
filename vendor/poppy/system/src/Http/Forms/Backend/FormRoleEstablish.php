@@ -13,6 +13,11 @@ class FormRoleEstablish extends FormWidget
 
     public $ajax = true;
 
+    protected $width = [
+        'label' => 3,
+        'field' => 9,
+    ];
+
     private $id;
 
     /**

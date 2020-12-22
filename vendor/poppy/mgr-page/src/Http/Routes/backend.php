@@ -11,8 +11,6 @@ Route::group([
         ->name('py-mgr-page:backend.home.password');
     $router->any('clear_cache', 'HomeController@clearCache')
         ->name('py-mgr-page:backend.home.clear_cache');
-    $router->any('fe/{type?}', 'HomeController@fe')
-        ->name('py-mgr-page:backend.home.fe');
     $router->any('logout', 'HomeController@logout')
         ->name('py-mgr-page:backend.home.logout');
     $router->any('setting/{path?}/{index?}', 'HomeController@setting')

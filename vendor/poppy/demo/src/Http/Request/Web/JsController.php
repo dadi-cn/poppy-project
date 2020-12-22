@@ -1,4 +1,4 @@
-<?php namespace Poppy\MgrPage\Http\Request\Develop;
+<?php namespace Poppy\Demo\Http\Request\Web;
 
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -10,11 +10,12 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Poppy\Framework\Classes\Resp;
+use Poppy\System\Http\Request\Web\WebController;
 
 /**
- * 基础布局文件
+ * 内容生成器
  */
-class LayoutController extends DevelopController
+class JsController extends WebController
 {
     public function __construct()
     {
@@ -64,8 +65,14 @@ class LayoutController extends DevelopController
      */
     public function fe()
     {
+        $type = input('type');
+        if ($type === 'popup') {
+            if (is_post()) {
+                return Resp::success('提交信息成功', '_top_reload|1');
+            }
+            return view('py-demo::js.fe-popup');
+        }
         if (is_post()) {
-            $type = input('type');
             if ($type === 'submit') {
                 return Resp::success('J_submit 提交, title:' . input('title'));
             }
@@ -76,7 +83,7 @@ class LayoutController extends DevelopController
             return Resp::success('J_request 请求测试');
         }
 
-        return view('py-mgr-page::develop.layout.fe', [
+        return view('py-demo::js.fe', [
             'pam' => $this->pam(),
         ]);
     }

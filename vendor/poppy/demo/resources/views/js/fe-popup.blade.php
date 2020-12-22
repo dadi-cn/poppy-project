@@ -1,6 +1,7 @@
 @extends('py-mgr-page::backend.tpl.dialog')
 @section('backend-main')
     {!! Form::open(['route'=> [$_route, 'popup'], 'class'=> 'layui-form']) !!}
+    {!! Form::hidden('type', 'popup') !!}
     <div class="layui-form-item">
         <label class="layui-form-label w108">说明:</label>
         <div class="layui-input-inline">

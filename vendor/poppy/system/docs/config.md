@@ -67,7 +67,7 @@ cross_headers => 'X-APP-VERSION'
 ## password_provider
 
 - Type : `string`
-- Default : ``
+- Default : `''`
 
 密码加载器, 这里这里设定密码算法, 为了保护用户数据安全, 特设定此方式来保护密码计算 默认是 `\Poppy\System\Classes\Auth\Password\DefaultPasswordProvider::class`
 替换该实现方式需要实现 `\Poppy\System\Classes\Contracts\PasswordContract::class` 约定.
@@ -75,7 +75,7 @@ cross_headers => 'X-APP-VERSION'
 ## user_location
 
 - Type : `string`
-- Default : ``
+- Default : `''`
 
 登录跳转地址, 使用默认的 `web-auth` guard 做验证则需要设定此配置, 当验证失败, 自动跳转到此路径, 这里是路径, 不是路由地址
 

@@ -8,7 +8,7 @@ use Poppy\System\Tests\Base\SystemTestCase;
 
 class PictureTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->initPam();
@@ -19,7 +19,7 @@ class PictureTest extends SystemTestCase
      */
     public function testUpload()
     {
-        $file   = base_path('modules/system/resources/images/system/spacer.gif');
+        $file   = poppy_path('poppy.system', 'tests/files/demo.jpg');
         $result = $this->jsonPost('system/upload/image', 'v1', [
             'type'  => 'base64',
             'image' => base64_encode(file_get_contents($file)),

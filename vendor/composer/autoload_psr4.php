@@ -54,6 +54,8 @@ return array(
     'Poppy\\Framework\\Tests\\' => array($vendorDir . '/poppy/framework/tests'),
     'Poppy\\Framework\\' => array($vendorDir . '/poppy/framework/src'),
     'Poppy\\Faker\\' => array($vendorDir . '/poppy/faker/src'),
+    'Poppy\\Demo\\Tests\\' => array($vendorDir . '/poppy/demo/tests'),
+    'Poppy\\Demo\\' => array($vendorDir . '/poppy/demo/src'),
     'Poppy\\Core\\Tests\\' => array($vendorDir . '/poppy/core/tests'),
     'Poppy\\Core\\' => array($vendorDir . '/poppy/core/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),

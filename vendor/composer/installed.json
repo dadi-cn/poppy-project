@@ -3044,19 +3044,19 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/core.git",
-            "reference": "6ef6e0db2e102e4f3549f74051dbf6a626f9f03c"
+            "reference": "db2458adef73b08993f2c64bbb24543c922f77b4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-932ebd.zip",
-            "reference": "6ef6e0db2e102e4f3549f74051dbf6a626f9f03c",
-            "shasum": "e5889d6c5dbfc7e7e227812110e780b450405b82"
+            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-0222c0.zip",
+            "reference": "db2458adef73b08993f2c64bbb24543c922f77b4",
+            "shasum": "6f6de01f44f6ddf2543d0c223d88c6435b08a6dc"
         },
         "require": {
             "ext-bcmath": "*",
             "php": ">=7.0.0"
         },
-        "time": "2020-12-22T00:53:59+00:00",
+        "time": "2020-12-22T03:52:44+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3078,6 +3078,51 @@
             }
         ],
         "description": "An admin plugin for poppy."
+    },
+    {
+        "name": "poppy/demo",
+        "version": "3.0.x-dev",
+        "version_normalized": "3.0.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@codeup.aliyun.com:dadi/poppy/demo.git",
+            "reference": "3537ec750f2c7146c0a8a561b5c867c818441720"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packagist.iliexiang.com/dist/poppy/demo/poppy-demo-3.0.x-dev-80bc18.zip",
+            "reference": "3537ec750f2c7146c0a8a561b5c867c818441720",
+            "shasum": "f745fa5526d1efc55156e11d3093f237e7046317"
+        },
+        "require": {
+            "php": ">=7.2.0"
+        },
+        "time": "2020-12-22T04:29:38+00:00",
+        "type": "poppy",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Poppy\\Demo\\ServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Poppy\\Demo\\": "src/",
+                "Poppy\\Demo\\Tests\\": "tests/"
+            }
+        },
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Mark Zhao",
+                "email": "zhaody901@126.com"
+            }
+        ],
+        "description": "Poppy Demo Module, For Demo Output"
     },
     {
         "name": "poppy/faker",
@@ -3140,13 +3185,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/framework.git",
-            "reference": "9db1a810a6e7caa274b4d2a5cc78fc6d09f365fd"
+            "reference": "181516750f8db9dd6b0bb84aaafffff7c4ec7d72"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-ed0e8f.zip",
-            "reference": "9db1a810a6e7caa274b4d2a5cc78fc6d09f365fd",
-            "shasum": "018180c5aa16ca71ade50389ff0bbd97d30db867"
+            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-e27f32.zip",
+            "reference": "181516750f8db9dd6b0bb84aaafffff7c4ec7d72",
+            "shasum": "2e69fd2aa29f0623a1f50ffdfe34dd752ab18d0e"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3155,7 +3200,7 @@
             "php": ">=7.0.0",
             "symfony/yaml": "^5.1"
         },
-        "time": "2020-12-22T00:53:59+00:00",
+        "time": "2020-12-22T03:52:44+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -3192,20 +3237,20 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/mgr-page.git",
-            "reference": "eda1e8258dd82e1d8029bb85573e02757a9086d8"
+            "reference": "d8203445a02a5f9d744bda1e1ae2b8f8630f01a0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-b0378c.zip",
-            "reference": "eda1e8258dd82e1d8029bb85573e02757a9086d8",
-            "shasum": "de1f1c1e3d1b31c521ea2907dfb83a6fc30f5471"
+            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-ee0bfa.zip",
+            "reference": "d8203445a02a5f9d744bda1e1ae2b8f8630f01a0",
+            "shasum": "0ca7135a81fda6bc2152dcb118b6f4d946db4f03"
         },
         "require": {
             "mews/captcha": "3.*",
             "php": ">=7.2.0",
             "poppy/system": "3.0.x-dev"
         },
-        "time": "2020-12-21T09:53:49+00:00",
+        "time": "2020-12-22T04:21:30+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3232,13 +3277,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/system.git",
-            "reference": "3543a22dd3f944d217cc41af4059f5edb29f4a9c"
+            "reference": "3696159555c0cb9f435b148c0e7c5d71944ca492"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-9fa7c4.zip",
-            "reference": "3543a22dd3f944d217cc41af4059f5edb29f4a9c",
-            "shasum": "a2e205a92ef071e61def0406e9d2ec7efc56ed5d"
+            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-ae6fc4.zip",
+            "reference": "3696159555c0cb9f435b148c0e7c5d71944ca492",
+            "shasum": "53e5f7839c3ab373ebce522508b0a341efc6acbc"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3250,7 +3295,7 @@
             "tucker-eric/eloquentfilter": "^2",
             "tymon/jwt-auth": "1.0.*"
         },
-        "time": "2020-12-22T00:53:59+00:00",
+        "time": "2020-12-22T03:52:44+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

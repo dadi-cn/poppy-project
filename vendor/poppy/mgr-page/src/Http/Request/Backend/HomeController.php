@@ -90,29 +90,6 @@ class HomeController extends BackendController
     }
 
     /**
-     * 后台前端帮助文件
-     * @param $param
-     * @return array|Factory|JsonResponse|RedirectResponse|Response|Redirector|View
-     */
-    public function fe($param = null)
-    {
-        if ($param) {
-            if (is_post()) {
-                return Resp::success('提交信息成功', '_top_reload|1');
-            }
-
-            return view('py-mgr-page::backend.home.fe-' . $param);
-        }
-        try {
-            $random = random_int(0, 9999);
-        } catch (Exception $e) {
-            $random = 0;
-        }
-
-        return view('py-mgr-page::backend.home.fe', compact('random'));
-    }
-
-    /**
      * 登出
      * @return RedirectResponse|Redirector
      */

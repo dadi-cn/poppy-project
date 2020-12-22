@@ -43,6 +43,10 @@ class OpCommand extends Command
                     $this->error(sys_mark('poppy.core', self::class, $e->getMessage()));
                 }
                 break;
+            case 'clear':
+                sys_cache('py-core')->flush();
+                $this->info(sys_mark('poppy.core', self::class, 'Clear Core Cache'));
+                break;
             default:
                 $this->warn('Error type in maintain tool.');
                 break;

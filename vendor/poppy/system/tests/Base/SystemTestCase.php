@@ -10,8 +10,8 @@ use Log;
 use Poppy\Faker\Generator;
 use Poppy\Framework\Application\TestCase;
 use Poppy\Framework\Exceptions\FakerException;
-use Poppy\Framework\Helper\ArrayHelper;
 use Poppy\Framework\Helper\StrHelper;
+use Poppy\System\Classes\Contracts\ApiSignContract;
 use Poppy\System\Models\PamAccount;
 use Poppy\System\Models\SysCaptcha;
 use Symfony\Component\Console\Helper\Table;
@@ -150,10 +150,10 @@ class SystemTestCase extends TestCase
         $this->params              = $params;
         $this->params['timestamp'] = Carbon::now()->timestamp;
         $token                     = str_replace('Bearer ', '', $this->headers['Authorization'] ?? '');
-        ksort($this->params);
-        $kvStr                = ArrayHelper::toKvStr($this->params);
-        $signLong             = md5(md5($kvStr) . $token);
-        $this->params['sign'] = $signLong[1] . $signLong[3] . $signLong[15] . $signLong[31];
+        $this->params['token']     = $token;
+        /** @var ApiSignContract $Sign */
+        $Sign                 = app('poppy.system.api_sign');
+        $this->params['sign'] = $Sign->sign($this->params);
         $resp                 = $this->json('POST', $this->request, $this->params, $this->headers);
         $resp->assertStatus(200);
 

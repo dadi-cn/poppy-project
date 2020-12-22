@@ -43,7 +43,7 @@ class FormPassword extends FormWidget
             return Resp::error('原密码错误!');
         }
 
-        if (config('poppy.system.demo')) {
+        if (sys_is_demo()) {
             return Resp::error('演示模式下无法修改密码');
         }
 

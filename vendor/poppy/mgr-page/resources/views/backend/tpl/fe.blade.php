@@ -7,7 +7,6 @@
 @section('head-script')
     @include('py-mgr-page::backend.tpl._script')
 @endsection
-@section('body-class', 'mdb-skin-custom fixed-sn')
 @section('body-main')
     @yield('backend-fe')
 @endsection

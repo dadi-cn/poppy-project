@@ -100,6 +100,8 @@ class ComposerStaticInitd5483b200879ecf7e201d875ee4af7dd
             'Poppy\\Framework\\Tests\\' => 22,
             'Poppy\\Framework\\' => 16,
             'Poppy\\Faker\\' => 12,
+            'Poppy\\Demo\\Tests\\' => 17,
+            'Poppy\\Demo\\' => 11,
             'Poppy\\Core\\Tests\\' => 17,
             'Poppy\\Core\\' => 11,
             'PhpParser\\' => 10,
@@ -370,6 +372,14 @@ class ComposerStaticInitd5483b200879ecf7e201d875ee4af7dd
         'Poppy\\Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/poppy/faker/src',
+        ),
+        'Poppy\\Demo\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/poppy/demo/tests',
+        ),
+        'Poppy\\Demo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/poppy/demo/src',
         ),
         'Poppy\\Core\\Tests\\' => 
         array (

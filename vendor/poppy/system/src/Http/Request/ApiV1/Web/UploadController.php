@@ -46,7 +46,7 @@ class UploadController extends WebApiController
             return Resp::web(Resp::ERROR, $validator->messages());
         }
 
-        if (config('poppy.system.demo')) {
+        if (sys_is_demo()) {
             return $this->demo();
         }
 
@@ -161,7 +161,7 @@ class UploadController extends WebApiController
             return Resp::web(Resp::ERROR, $validator->messages());
         }
 
-        if (config('poppy.system.demo')) {
+        if (sys_is_demo()) {
             return $this->demo();
         }
 

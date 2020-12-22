@@ -42,15 +42,6 @@ Route::group([
     $router->any('api_doc/{type?}', 'ApiDocController@auto')
         ->name('py-mgr-page:develop.doc.index');
 
-    /* Layout
-     * ---------------------------------------- */
-    $router->any('layout/fe', 'LayoutController@fe')
-        ->name('py-mgr-page:develop.layout.fe');
-    $router->any('l/{page?}', 'LayoutController@index')
-        ->name('py-mgr-page:develop.layout.index');
-    $router->any('mail/{slug}/{page?}', 'LayoutController@mail')
-        ->name('py-mgr-page:develop.layout.mail');
-
     // progress
     $router->any('progress', 'ProgressController@index')
         ->name('py-mgr-page:develop.progress.index');

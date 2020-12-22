@@ -378,7 +378,7 @@ CONTENT;
         $template = str_replace(["\n", "\t", PHP_EOL], '', $template);
 
         $display_str = !$value ? 'class="hidden"' : '';
-        $uploadUrl   = route('py-mgr-page:api_v1.upload.file');
+        $uploadUrl   = route('py-system:api_v1.upload.file');
         $parseStr    = /** @lang text */
             <<<CONTENT
 <div class="layui-form-upload">

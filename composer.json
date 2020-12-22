@@ -1,5 +1,5 @@
 {
-	"name": "poppy/demo",
+	"name": "poppy/project-demo",
 	"description": "The Poppy Demo Project",
 	"keywords": [
 		"framework",
@@ -27,6 +27,7 @@
 		"poppy/framework": "3.0.x-dev",
 		"poppy/system": "3.0.x-dev",
 		"poppy/core": "3.0.x-dev",
+		"poppy/demo": "3.0.x-dev",
 		"poppy/mgr-page": "3.0.x-dev"
 	},
 	"require-dev": {

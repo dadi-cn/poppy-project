@@ -10,28 +10,27 @@ system  : 模块
 global.manage : 权限操作
 ```
 
-权限分为全局权限和操作权限, 全局权限用在 控制器中, 赋值
-static::\$permission 权限来进行限定,操作权限用于在操作步骤中进行限定
+权限分为全局权限和操作权限, 全局权限用在 控制器中, 赋值 `static::$permission` 权限来进行限定,操作权限用于在操作步骤中进行限定
 
-```{.yaml}
+```yaml
 -
-    title: 系统
-    description: 系统权限
-    slug: backend:system
-    groups:
+  title: 系统
+  description: 系统权限
+  slug: backend:system
+  groups:
+    -
+      slug: global
+      title: 全局
+      description: 管理配置内容
+      permissions:
         -
-            slug: global
-            title: 全局
-            description: 管理配置内容
-            permissions:
-                -
-                    slug: manage
-                    description: 全局设置菜单
-                    default: false
-                -
-                    slug: page
-                    description: 系统设置
-                    default: false
+          slug: manage
+          description: 全局设置菜单
+          default: false
+        -
+          slug: page
+          description: 系统设置
+          default: false
 ```
 
 ## 初始化
@@ -50,8 +49,7 @@ $ php artisan py-core:permission init
 
 ### 控制器
 
-在控制器中定义变量 `self::$permission`, 并赋值全局权限,
-则可以对控制器进行权限控制
+在控制器中定义变量 `self::$permission`, 并赋值全局权限, 则可以对控制器进行权限控制
 
 ```php
 /**

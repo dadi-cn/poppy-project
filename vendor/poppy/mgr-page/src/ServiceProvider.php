@@ -35,7 +35,6 @@ class ServiceProvider extends PoppyServiceProvider
 
         // 注册 api 文档配置
         $this->publishes([
-            __DIR__ . '/../resources/images/system/spacer.gif'                => public_path('assets/images/system/spacer.gif'),
             __DIR__ . '/../resources/views/vendor/pagination-layui.blade.php' => resource_path('views/vendor/pagination/layui.blade.php'),
         ], 'poppy');
         $this->publishes([
