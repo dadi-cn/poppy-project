@@ -3,12 +3,8 @@
 ## 生成配置文件
 
 ```
-$ php artisan vendor:publish
- Which provider or tag's files would you like to publish?:
-  ...
-  [20] Tag: poppy-framework
-  [21] Tag: poppy-module
- > 21
+$ php artisan vendor:publish --tag=poppy
+...
 Copied File [/modules/system/resources/config/sami.php] To [/storage/sami/config.php]
 Publishing complete.
 ```
@@ -33,7 +29,7 @@ php /data/workbench/www/wulicode/storage/sami/sami.phar update /data/workbench/w
 
 我们运行命令来生成 php 文档
 
-由于 sami 最新版是基于 php7.1 版本的, 所以我们必须以相应的版本来运行. 如果版本不正确则无法运行
+由于 sami 最新版是基于 php7.1 版本的, 所以我们必须以正确版本来运行. 如果版本不正确则无法运行
 
 ```
 $ php71 /data/workbench/www/wulicode/storage/sami/sami.phar update /data/workbench/www/wulicode/storage/sami/config.php
@@ -59,43 +55,5 @@ Version master
 
 ![023624](./media/15810398480492/023624.png)
 
-## 附录
 
-### sami.php 源文件
-
-```php
-<?php
-
-// config/sami.php
-// php ./resources/sami/sami.phar update ./resources/sami/config.php
-
-$baseDir          = dirname(dirname(__DIR__));
-$folders          = glob($baseDir . '/{poppy,modules}/*/src', GLOB_BRACE);
-$vendorFolders    = glob($baseDir . '/vendor/poppy/**/src', GLOB_BRACE);
-
-$folders = array_merge($folders, $vendorFolders);
-
-$excludes = [];
-foreach ($folders as $folder) {
-    $excludes[] = $folder . '/database/seeds';
-    $excludes[] = $folder . '/database/migrations';
-    $excludes[] = $folder . '/database/factories';
-    $excludes[] = $folder . '/update';
-}
-
-$iterator = Symfony\Component\Finder\Finder::create()
-    ->files()
-    ->name('*.php')
-    ->exclude('database')
-    ->exclude('update')
-    ->in($folders);
-
-$options = [
-    'theme'     => 'default',
-    'title'     => 'Lemon Framework API Documentation',
-    'build_dir' => $baseDir . '/public/docs/php',
-    'cache_dir' => $baseDir . '/storage/sami/cache',
-];
-
-return new \Sami\Sami($iterator, $options);
-```
+Sami 配置文件查看 : [sami-config.php](https://github.com/imvkmark/poppy-core/blob/3.0/resources/config/sami-config.php)

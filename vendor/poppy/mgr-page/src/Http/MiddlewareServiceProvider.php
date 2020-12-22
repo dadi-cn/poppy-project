@@ -7,9 +7,8 @@ class MiddlewareServiceProvider extends ServiceProvider
 {
     public function boot(Router $router)
     {
-        /* Single
+        /* MgrPage Permission
          * ---------------------------------------- */
-        $router->aliasMiddleware('mgr-append_data', Middlewares\AppendData::class);
         $router->aliasMiddleware('mgr-permission', Middlewares\RbacPermission::class);
 
         $router->middlewareGroup('develop-auth', [
@@ -30,7 +29,6 @@ class MiddlewareServiceProvider extends ServiceProvider
             'sys-auth:backend',
             'sys-disabled_pam',
             'sys-encrypt_cookies',
-            'mgr-append_data',
             'mgr-permission',
         ]);
     }

@@ -20,7 +20,7 @@ trait RbacRoleTrait
         $rolePrimaryKey = $this->primaryKey;
         $cacheKey       = 'rbac.permissions.for.role.' . $this->$rolePrimaryKey;
         if (!isset($cache[$cacheKey])) {
-            $cache[$cacheKey] = sys_cache('poppy:core:rbac')->remember($cacheKey, config('cache.ttl'), function () {
+            $cache[$cacheKey] = sys_cache('py-core-rbac')->remember($cacheKey, config('cache.ttl'), function () {
                 return $this->perms()->get();
             });
         }
@@ -94,7 +94,7 @@ trait RbacRoleTrait
      */
     public function flushPermissionRole()
     {
-        sys_cache('poppy:core:rbac')->flush();
+        sys_cache('py-core-rbac')->flush();
     }
 
     /**

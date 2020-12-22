@@ -21,7 +21,7 @@ trait RbacUserTrait
         $userPrimaryKey = $this->primaryKey;
         $cacheKey       = 'roles.for.user.' . $this->$userPrimaryKey;
         if (!isset($cache[$cacheKey])) {
-            $cache[$cacheKey] = sys_cache('poppy:core:rbac')->remember($cacheKey, config('cache.ttl'), function () {
+            $cache[$cacheKey] = sys_cache('py-core-rbac')->remember($cacheKey, config('cache.ttl'), function () {
                 return $this->roles()->get();
             });
         }
@@ -36,7 +36,7 @@ trait RbacUserTrait
     public function save(array $options = [])
     {   //both inserts and updates
         parent::save($options);
-        sys_cache('poppy:core:rbac')->flush();
+        sys_cache('py-core-rbac')->flush();
     }
 
     /**
@@ -46,7 +46,7 @@ trait RbacUserTrait
     public function delete(array $options = [])
     {   //soft or hard
         parent::delete($options);
-        sys_cache('poppy:core:rbac')->flush();
+        sys_cache('py-core-rbac')->flush();
     }
 
     /**
@@ -74,7 +74,7 @@ trait RbacUserTrait
     public function restore()
     {   //soft delete undo's
         parent::restore();
-        sys_cache('poppy:core:rbac')->flush();
+        sys_cache('py-core-rbac')->flush();
     }
 
     /**

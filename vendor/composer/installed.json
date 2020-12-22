@@ -3044,19 +3044,19 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/core.git",
-            "reference": "a138ed1b9e274a210a5bab7ddc075632814f5008"
+            "reference": "6ef6e0db2e102e4f3549f74051dbf6a626f9f03c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-17f3ad.zip",
-            "reference": "a138ed1b9e274a210a5bab7ddc075632814f5008",
-            "shasum": "a7e4eaebd7ff60418d0570c0ce90a1a5865dbd7d"
+            "url": "https://packagist.iliexiang.com/dist/poppy/core/poppy-core-3.0.x-dev-932ebd.zip",
+            "reference": "6ef6e0db2e102e4f3549f74051dbf6a626f9f03c",
+            "shasum": "e5889d6c5dbfc7e7e227812110e780b450405b82"
         },
         "require": {
             "ext-bcmath": "*",
             "php": ">=7.0.0"
         },
-        "time": "2020-12-21T06:21:53+00:00",
+        "time": "2020-12-22T00:53:59+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3140,13 +3140,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/framework.git",
-            "reference": "afab510a6ecabe45795cdd051de53c9c994aebcb"
+            "reference": "9db1a810a6e7caa274b4d2a5cc78fc6d09f365fd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-dc4df1.zip",
-            "reference": "afab510a6ecabe45795cdd051de53c9c994aebcb",
-            "shasum": "bc45e1f99157044904a9c183ada458b4773c45af"
+            "url": "https://packagist.iliexiang.com/dist/poppy/framework/poppy-framework-3.0.x-dev-ed0e8f.zip",
+            "reference": "9db1a810a6e7caa274b4d2a5cc78fc6d09f365fd",
+            "shasum": "018180c5aa16ca71ade50389ff0bbd97d30db867"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3155,7 +3155,7 @@
             "php": ">=7.0.0",
             "symfony/yaml": "^5.1"
         },
-        "time": "2020-12-21T08:15:23+00:00",
+        "time": "2020-12-22T00:53:59+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -3192,20 +3192,20 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/mgr-page.git",
-            "reference": "5187723bd023a009363fdba2b224ca0fefd0ed7b"
+            "reference": "eda1e8258dd82e1d8029bb85573e02757a9086d8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-9babda.zip",
-            "reference": "5187723bd023a009363fdba2b224ca0fefd0ed7b",
-            "shasum": "29faab1c596d16b65b9942424180621edc87ec61"
+            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-b0378c.zip",
+            "reference": "eda1e8258dd82e1d8029bb85573e02757a9086d8",
+            "shasum": "de1f1c1e3d1b31c521ea2907dfb83a6fc30f5471"
         },
         "require": {
             "mews/captcha": "3.*",
             "php": ">=7.2.0",
             "poppy/system": "3.0.x-dev"
         },
-        "time": "2020-12-20T01:55:57+00:00",
+        "time": "2020-12-21T09:53:49+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3232,13 +3232,13 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/system.git",
-            "reference": "d73698fca985f2dfe162bfd17dbf0785eb29655a"
+            "reference": "3543a22dd3f944d217cc41af4059f5edb29f4a9c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-6ff10e.zip",
-            "reference": "d73698fca985f2dfe162bfd17dbf0785eb29655a",
-            "shasum": "3d288055907cf9d9be1cd7445f5305a8ab1cc615"
+            "url": "https://packagist.iliexiang.com/dist/poppy/system/poppy-system-3.0.x-dev-9fa7c4.zip",
+            "reference": "3543a22dd3f944d217cc41af4059f5edb29f4a9c",
+            "shasum": "a2e205a92ef071e61def0406e9d2ec7efc56ed5d"
         },
         "require": {
             "ext-bcmath": "*",
@@ -3250,7 +3250,7 @@
             "tucker-eric/eloquentfilter": "^2",
             "tymon/jwt-auth": "1.0.*"
         },
-        "time": "2020-12-21T07:56:01+00:00",
+        "time": "2020-12-22T00:53:59+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

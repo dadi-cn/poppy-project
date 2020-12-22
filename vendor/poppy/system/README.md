@@ -50,11 +50,3 @@ $reg_datetime : 注册时间(datetime) 类型
 $randomKey    : 六位随机值
 md5(sha1($password . $reg_datetime) . $randomKey);
 ```
-
-## change-log
-**0.2.0**
-- 支持 laravel 6.0
-**0.1.0**
-- 测试版本发布
-- 支持 RBAC
-- 支持 系统配置以及后台功能

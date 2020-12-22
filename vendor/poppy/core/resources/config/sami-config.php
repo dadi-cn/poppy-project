@@ -13,24 +13,24 @@ $folders = array_merge($folders, $vendorFolders);
 
 $excludes = [];
 foreach ($folders as $folder) {
-	$excludes[] = $folder . '/database/seeds';
-	$excludes[] = $folder . '/database/migrations';
-	$excludes[] = $folder . '/database/factories';
-	$excludes[] = $folder . '/update';
+    $excludes[] = $folder . '/database/seeds';
+    $excludes[] = $folder . '/database/migrations';
+    $excludes[] = $folder . '/database/factories';
+    $excludes[] = $folder . '/update';
 }
 
 $iterator = Symfony\Component\Finder\Finder::create()
-	->files()
-	->name('*.php')
-	->exclude('database')
-	->exclude('update')
-	->in($folders);
+    ->files()
+    ->name('*.php')
+    ->exclude('database')
+    ->exclude('update')
+    ->in($folders);
 
 $options = [
-	'theme'     => 'default',
-	'title'     => 'Lemon Framework API Documentation',
-	'build_dir' => $baseDir . '/public/docs/php',
-	'cache_dir' => $baseDir . '/storage/sami/cache',
+    'theme'     => 'default',
+    'title'     => 'Lemon Framework API Documentation',
+    'build_dir' => $baseDir . '/public/docs/php',
+    'cache_dir' => $baseDir . '/storage/sami/cache',
 ];
 
 return new Sami($iterator, $options);

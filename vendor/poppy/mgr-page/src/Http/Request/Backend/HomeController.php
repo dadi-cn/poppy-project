@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
+use Poppy\Core\Classes\Traits\CoreTrait;
+use Poppy\Core\Exceptions\PermissionException;
 use Poppy\Framework\Classes\Resp;
 use Poppy\Framework\Classes\Traits\PoppyTrait;
 use Poppy\Framework\Helper\EnvHelper;
@@ -18,6 +20,7 @@ use Poppy\System\Action\Pam;
 use Poppy\System\Classes\Layout\Content;
 use Poppy\System\Http\Forms\Backend\FormPassword;
 use Poppy\System\Models\PamAccount;
+use Poppy\System\Models\PamRole;
 use Throwable;
 
 /**
@@ -25,14 +28,19 @@ use Throwable;
  */
 class HomeController extends BackendController
 {
-    use PoppyTrait;
+    use PoppyTrait, CoreTrait;
 
     /**
      * 主页
      * @return View
+     * @throws PermissionException
      */
     public function index()
     {
+        $isFullPermission = $this->pam->hasRole(PamRole::BE_ROOT);
+        $this->pyView()->share([
+            '_menus' => $this->coreModule()->menus()->withPermission(PamAccount::TYPE_BACKEND, $isFullPermission, $this->pam),
+        ]);
         $host = StrHelper::formatId(EnvHelper::host()) . '-backend';
         return view('py-mgr-page::backend.home.index', [
             'host' => $host,

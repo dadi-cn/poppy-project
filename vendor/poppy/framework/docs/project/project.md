@@ -166,14 +166,6 @@ bug # 308 用户管理操作
 release # 2.3.2
 ```
 
-### 缓存规范
-
-```
-sys_cache('{module}')->get('{folder}.{class}.{method}')
-folder    : 根据模块目录来进行判定
-    action, controller, job
-```
-
 ## 单元测试
 
 必须对接口写单元测试, 否则测试不通过的代码一律打回
