@@ -3237,20 +3237,20 @@
         "source": {
             "type": "git",
             "url": "git@codeup.aliyun.com:dadi/poppy/mgr-page.git",
-            "reference": "d8203445a02a5f9d744bda1e1ae2b8f8630f01a0"
+            "reference": "94f880d7cb75dc59a80be6214dbdd5123ecbcd45"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-ee0bfa.zip",
-            "reference": "d8203445a02a5f9d744bda1e1ae2b8f8630f01a0",
-            "shasum": "0ca7135a81fda6bc2152dcb118b6f4d946db4f03"
+            "url": "https://packagist.iliexiang.com/dist/poppy/mgr-page/poppy-mgr-page-3.0.x-dev-eab8f1.zip",
+            "reference": "94f880d7cb75dc59a80be6214dbdd5123ecbcd45",
+            "shasum": "c0f3bc6edfa11a73db6d159a182c9c1c74b08e46"
         },
         "require": {
             "mews/captcha": "3.*",
             "php": ">=7.2.0",
             "poppy/system": "3.0.x-dev"
         },
-        "time": "2020-12-22T04:21:30+00:00",
+        "time": "2020-12-22T06:54:09+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
