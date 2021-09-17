@@ -30,12 +30,27 @@ $ composer create-project poppy/project poppy_v3 3.1.* --repository=https://pack
 # run server
 $ cd poppy_v3
 $ php artisan serve
+```
 
-# test demo && api
-$ curl http://127.0.0.1:8000/demo
-Demo Web Request Success
-$ curl http://127.0.0.1:8000/api/demo
-Demo Api Request Success%
+## 创建 test 模块
+
+```
+# 快速创建模块
+$ php artisan poppy:make test -Q
+
+# test web request
+$ curl http://127.0.0.1:8000/test
+
+# test api request
+Test Web Request Success
+$ curl http://127.0.0.1:8000/api/test
+Test Api Request Success
+```
+
+## 拉取 Demo 数据
+
+```
+$ git clone git@github.com:imvkmark/poppy-module-demo.git modules/demo
 ```
 
 ## 初始化数据库
