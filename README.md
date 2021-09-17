@@ -22,10 +22,10 @@
 
 ```
 # install
-$ composer create-project poppy/project poppy_v3 3.1.x-dev  
+$ composer create-project poppy/project poppy_v3 3.1.*
 
 # 内部安装
-$ composer create-project poppy/project poppy_v3 3.1.x-dev --repository=https://packagist.sour-lemon.com
+$ composer create-project poppy/project poppy_v3 3.1.* --repository=https://packagist.sour-lemon.com
 
 # run server
 $ cd poppy_v3
