@@ -19,7 +19,7 @@
         "ext-curl": "*",
         "ext-mbstring": "*",
         "ext-bcmath": "*",
-        "laravel/framework": "6.0.*",
+        "laravel/framework": "6.*",
         "intervention/image": "2.*",
         "laravelcollective/html": "6.*",
         "predis/predis": "~1.1",
