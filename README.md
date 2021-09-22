@@ -1,6 +1,6 @@
 # 说明
 
-本项目是基于 Laravel 6.0 LTS 的模块化开发框架, 项目为了便于管理分为 框架, 核心, 管理, 组件, 使用 composer 进行模块化安装
+本项目是基于 Laravel 6 LTS 的模块化开发框架, 项目为了便于管理分为 框架, 核心, 管理, 组件, 使用 composer 进行模块化安装
 
 - 项目文档 : https://poppy.wulicode.com/doc/
 - V3 Demo : https://v3.wulicode.com
@@ -135,6 +135,7 @@ $ php artisan py-system:user create_user
 
 User v3_develop created
 ```
+
 ## 登录
 
 **登录后台**
@@ -152,7 +153,6 @@ http://127.0.0.1:8000/mgr-page/develop
 ![](./resources/docs/images/dev-login.jpg)
 
 ![](./resources/docs/images/dev-page.jpg)
-
 
 ## 反馈
 
