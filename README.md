@@ -24,10 +24,10 @@
 
 ```
 # install
-$ composer create-project poppy/project poppy_v3 ^3.1
+$ composer create-project poppy/project poppy_v3 ^3.2
 
 # Internal install
-$ composer create-project poppy/project poppy_v3 ^3.1 --repository=https://packagist.sour-lemon.com
+$ composer create-project poppy/project poppy_v3 ^3.2 --repository=https://packagist.sour-lemon.com
 
 # Start service server
 $ cd poppy_v3
