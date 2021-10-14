@@ -31,7 +31,8 @@
     "require-dev": {
         "itsgoingd/clockwork": "~5.0",
         "barryvdh/laravel-ide-helper": "~2.6",
-        "poppy/faker": "~3.2"
+        "poppy/faker": "~3.2",
+        "doctrine/dbal": "^2.6"
     },
     "autoload": {
         "classmap": [
